@@ -1,0 +1,11 @@
+
+.header-row{
+    background-color: #13141a;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+}
