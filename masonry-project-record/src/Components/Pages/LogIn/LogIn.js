@@ -30,7 +30,7 @@ function LogIn() {
             <Card >
             
             <Card.Body>
-                <Card.Title>DeleGator Log In</Card.Title>
+                <Card.Title>Masonry Fixings Project Report Log In</Card.Title>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>

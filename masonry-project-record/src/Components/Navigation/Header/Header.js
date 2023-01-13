@@ -6,8 +6,8 @@ function Header(){
     
     return(
         <Row className={"header-row"}>
-            <Col className={"col-md-2"}>
-                <h1 style={{color: 'white'}}>Masonry Fixings Project Records</h1>
+            <Col >
+                <h1 style={{color: 'white', display: 'flex', justifyContent: 'center'}}>Masonry Fixings Project Records</h1>
             </Col>
             
         </Row>
