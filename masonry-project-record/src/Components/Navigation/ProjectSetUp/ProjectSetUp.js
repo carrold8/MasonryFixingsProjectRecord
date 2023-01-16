@@ -5,80 +5,104 @@ function ProjectSetUp(){
 
     return(
         <div style={{marginTop: '2%', marginLeft: '1%', marginRight: '1%'}}>
-            <Card style={{borderColor: 'blue',backgroundColor: '#f0f1f2', width: '80%'}}>
-                <Card.Header>Project Details</Card.Header>
-                <Card.Body>
+
+            <h1>Log New Project</h1>
+            
                     <Form>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2} >Project Name</Form.Label>
+                            <Form.Label size="lg" column sm={2} >Project Name</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2} >Applicant</Form.Label>
+                            <Form.Label size="lg" column sm={2} >Applicant</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2}>Architect</Form.Label>
+                            <Form.Label size="lg" column sm={2}>Architect</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                         
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2}>Architect</Form.Label>
+                        <Form.Group  as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Architect</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                             
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalCheck">
                             <Col sm={{ span: 10, offset: 2 }}>
-                            <Form.Check label="Remember me" />
+                            <Form.Check label="Contacted" />
                             </Col>
                         </Form.Group>
                         
-                    </Form>
-
-                </Card.Body>
-            </Card>
-
-            <Card style={{borderColor: 'blue',backgroundColor: '#f0f1f2', width: '80%'}}>
-                <Card.Body>
-                    <Form>
-                        <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2} >Category</Form.Label>
+                   
+                        <Form.Group  as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2} >Category</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2} >Sector</Form.Label>
+                            <Form.Label size="lg" column sm={2} >Sector</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2}>Start Date</Form.Label>
+                            <Form.Label size="lg" column sm={2}>Start Date</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
                         
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={2}>Finish Date</Form.Label>
+                            <Form.Label size="lg" column sm={2}>Finish Date</Form.Label>
                             <Col sm={8}>
-                                <Form.Control/>
+                                <Form.Control size="lg"/>
                             </Col>
                         </Form.Group>
+
+
                                  
+                        <Form.Group as={Row} className="mb-3" controlId="formHorizontalCheck">
+                            <Col sm={{ span: 10, offset: 2 }}>
+                            <Form.Check label="Is Induction Required?" />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>When is it provided</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3" controlId="formHorizontalCheck">
+                            <Col sm={{ span: 10, offset: 2 }}>
+                            <Form.Check label="Were you inducted?" />
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Name</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Date</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
                     </Form>
 
-                </Card.Body>
-            </Card>
+    
         </div>
     );
 

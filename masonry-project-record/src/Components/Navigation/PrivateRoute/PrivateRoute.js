@@ -13,10 +13,10 @@ function PrivateRoute() {
                 <div>
                     <Header/>
                 </div>
-                <div style={{display: 'flex', marginTop: '7vh'}}>
+                <div style={{display: 'flex', marginTop: '10vh'}}>
               
 
-                    <div style={{overflow: 'auto', height: '93vh', width: '100%'}}>
+                    <div style={{overflow: 'auto', height: '90vh', width: '100%'}}>
                         <Outlet/>
                     </div>
 
