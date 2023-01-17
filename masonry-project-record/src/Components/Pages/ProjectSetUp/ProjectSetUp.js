@@ -1,12 +1,15 @@
 import React from "react";
-import {Row, Col, Button, Form, Card} from 'react-bootstrap';
+import {Row, Col, Form} from 'react-bootstrap';
 
 function ProjectSetUp(){
 
     return(
-        <div style={{marginTop: '2%', marginLeft: '1%', marginRight: '1%'}}>
+        <div style={{marginTop: '2%', marginLeft: '5%', marginRight: '5%'}}>
 
-            <h1>Log New Project</h1>
+            <div style={{marginBottom: '2%', display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <h1>Log New Project</h1>
+            </div>
+            
             
                     <Form>
                         <Form.Group as={Row} className="mb-3">
@@ -95,6 +98,86 @@ function ProjectSetUp(){
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label size="lg" column sm={2}>Date</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3" >
+                            <Form.Label size="lg" column sm={2}>Building Description</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control as="textarea" rows={5} />
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Footprint m<sup>2</sup></Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Frame Material</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Floor Material</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Envelope Material</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Roof Material</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Partitioning Material</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+
+
+
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Main Contractor</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Head Office</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Head Office Phone</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Account Contact</Form.Label>
+                            <Col sm={8}>
+                                <Form.Control size="lg"/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label size="lg" column sm={2}>Account Contact</Form.Label>
                             <Col sm={8}>
                                 <Form.Control size="lg"/>
                             </Col>
