@@ -1,26 +1,20 @@
 import React from "react";
-import {Button, Row, Col} from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { Row, Col} from 'react-bootstrap';
+import ProjectsTable from "../Projects/ProjectsTable/ProjectsTable";
+import { ProjectsData } from "../../../TempData/ProjectsData";
 
 function Home(){
 
-    const navigate = useNavigate();
 
     return(
-        <div style={{marginTop: '2%'}}>
-            <div>
-                <h1>Home</h1>
+        <div >
+            <div style={{width: '100%', display: 'flex', justifyContent: "center", alignItems: "center"}}>
+                <Row style={{width: '75%'}}>
+                    <Col>
+                        <ProjectsTable projectsData={ProjectsData}/>
+                    </Col>
+                </Row>
             </div>
-            
-            <Row>
-                <Col>
-                    <Button onClick={() => navigate('/project-setup')}>Go to set up</Button>
-                </Col>
-                <Col>
-                    <Button onClick={() => navigate('/first-stage')}>Go to First Stage</Button>
-                </Col>
-            </Row>
-            
         </div>
     );
 }
