@@ -1,19 +1,20 @@
 import React from "react";
-import { Row, Col} from 'react-bootstrap';
-import ProjectsTable from "../Projects/ProjectsTable/ProjectsTable";
-import { ProjectsData } from "../../../TempData/ProjectsData";
+import {Card} from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 function Home(){
 
+    const navigate = useNavigate();
 
     return(
         <div >
             <div style={{width: '100%', display: 'flex', justifyContent: "center", alignItems: "center"}}>
-                <Row style={{width: '75%'}}>
-                    <Col>
-                        <ProjectsTable projectsData={ProjectsData}/>
-                    </Col>
-                </Row>
+                <Card onClick={() => navigate('projects')} style={{width: '50%'}}>
+                    <Card.Header>Go to Projects</Card.Header>
+                    <Card.Body>
+                        <h1>Projects</h1>
+                    </Card.Body>
+                </Card>
             </div>
         </div>
     );

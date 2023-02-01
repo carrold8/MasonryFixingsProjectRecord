@@ -1,15 +1,17 @@
 import React from "react";
 import {Card, Row, Col, Button, Table} from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import { MsnryBlue } from "../../../../Constants/Constants";
 
 function ProjectsTable({projectsData}){
-    
+
+    const navigate = useNavigate();
     const headerColumns = ["ID", "Title", "Contractor", "Current Stage"];
 
     const handleClick = (data) => {
 
         localStorage.setItem("ProjectData", JSON.stringify(data));
-
+        navigate('stages');
     }
 
     const thData = () => {
@@ -43,7 +45,7 @@ function ProjectsTable({projectsData}){
     
     return(
         
-        <Card>
+        <Card style={{width: '75%'}}>
             <Card.Header style={{color: "white", backgroundColor: MsnryBlue, fontWeight: "bold"}}>
                 <Row>
                     <Col sm={10}>
@@ -54,7 +56,9 @@ function ProjectsTable({projectsData}){
             <Card.Body style={{height: '300px', overflow: "auto"}}>
                 <Table striped bordered hover>
                     <thead>
-                        {thData()}
+                        <tr>
+                            {thData()}
+                        </tr>
                     </thead>
                     <tbody>
                         {tdData()}

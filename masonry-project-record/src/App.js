@@ -5,6 +5,8 @@ import PrivateRoute from './Components/Navigation/PrivateRoute/PrivateRoute';
 import LogIn from './Components/Pages/LogIn/LogIn';
 import ProjectSetUp from './Components/Pages/ProjectSetUp/ProjectSetUp';
 import FirstStage from './Components/Pages/FirstStage/FirstStage';
+import Projects from './Components/Pages/Projects/Projects';
+import ProjectStages from './Components/Pages/Projects/ProjectStages/ProjectStages';
 
 
 function App() {
@@ -13,13 +15,25 @@ function App() {
         <Routes>
           {/* Protected Route */}
           <Route element={<PrivateRoute/>}>
-            <Route exact path='/home' element={<Home/>} />
+            <Route exact path='/' element={<Home/>} />
+
+            {/* Projects */}
+            <Route path="projects">
+              <Route index element={<Projects/>}/>
+              <Route path="stages">
+                <Route index element={<ProjectStages/>} />
+                <Route path='1'>
+                  <Route index element={<FirstStage/>} />
+                </Route>
+              </Route>
+            </Route>
+
+
             <Route path='/project-setup' element={<ProjectSetUp/>} />
-            <Route path='first-stage' element={<FirstStage/>} />
           </Route>
           
           {/* Public Pages */}
-          <Route exact path='/' element={<LogIn/>} />
+          <Route exact path='/login' element={<LogIn/>} />
 
         </Routes>
 
