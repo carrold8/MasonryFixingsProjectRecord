@@ -1,5 +1,6 @@
 import React from "react";
 import {Card, Row, Col} from 'react-bootstrap';
+import { Outlet } from "react-router-dom";
 import Breadcrumbs from "../../Navigation/Breadcrumbs/Breadcrumbs";
 
 
@@ -23,6 +24,9 @@ function Projects(){
                     </Row>
                 </Card.Body>
             </Card>
+
+            <hr style={{height: '1%', background: 'grey'}}/>
+            <Outlet/>
             
         </div>
 

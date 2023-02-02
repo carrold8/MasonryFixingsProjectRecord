@@ -53,8 +53,8 @@ function ProjectsTable({projectsData}){
                     </Col>
                 </Row>
             </Card.Header>
-            <Card.Body style={{height: '300px', overflow: "auto"}}>
-                <Table striped bordered hover>
+            <Card.Body style={{maxHeight: '300px', overflow: "auto"}}>
+                <Table size="sm" striped bordered hover >
                     <thead>
                         <tr>
                             {thData()}
