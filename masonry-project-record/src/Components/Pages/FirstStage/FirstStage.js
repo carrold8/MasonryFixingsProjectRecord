@@ -14,6 +14,12 @@ function FirstStage(){
                 <h1>First Stage</h1>
             </div>
 
+
+            <div>
+                <h1>Title</h1>
+                
+            </div>
+
             <Row>
                 <Col sm={2} className={'stage-column'}>
                     <h1>Task</h1>

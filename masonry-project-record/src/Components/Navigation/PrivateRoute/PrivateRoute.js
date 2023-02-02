@@ -1,5 +1,7 @@
+import React from "react";
 import { Outlet, Navigate} from "react-router-dom";
 import Header from "../Header/Header";
+import SideBar from "../SideBar/Sidebar";
 
 
 
@@ -10,19 +12,15 @@ function PrivateRoute() {
 
     if(isLoggedIn){
         return(
-            <div>
-                <div >
-                    <Header />
-                </div>
-                <div style={{display: 'flex', marginTop: '10vh'}}>
-              
+            <div style={{display: "flex"}}>
+                <SideBar/>
 
-                    <div style={{overflow: 'auto', height: '90vh', width: '100%'}}>
+                <div style={{width: '100%'}}>
+                    <Header/>
+                    <div style={{overflow: "auto", height: '93vh', top: '7vh', width: '100%'}}>
                         <Outlet/>
                     </div>
-
                 </div>
-
 
             </div>
         )

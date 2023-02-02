@@ -7,6 +7,7 @@ import ProjectSetUp from './Components/Pages/ProjectSetUp/ProjectSetUp';
 import FirstStage from './Components/Pages/FirstStage/FirstStage';
 import Projects from './Components/Pages/Projects/Projects';
 import ProjectStages from './Components/Pages/Projects/ProjectStages/ProjectStages';
+import ProjectsHome from './Components/Pages/Projects/ProjectsHome/ProjectsHome';
 
 
 function App() {
@@ -18,9 +19,9 @@ function App() {
             <Route exact path='/' element={<Home/>} />
 
             {/* Projects */}
-            <Route path="projects">
-              <Route index element={<Projects/>}/>
-              <Route path="stages">
+            <Route path="/projects" element={<Projects/>}>
+              <Route index element={<ProjectsHome/>} />
+              <Route path="stages" >
                 <Route index element={<ProjectStages/>} />
                 <Route path='1'>
                   <Route index element={<FirstStage/>} />

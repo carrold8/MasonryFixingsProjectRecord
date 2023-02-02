@@ -7,9 +7,9 @@ function Home(){
     const navigate = useNavigate();
 
     return(
-        <div >
+        <div style={{paddingTop: '2%', height: '100%'}}>
             <div style={{width: '100%', display: 'flex', justifyContent: "center", alignItems: "center"}}>
-                <Card onClick={() => navigate('projects')} style={{width: '50%'}}>
+                <Card onClick={() => navigate('/projects')} style={{width: '50%'}}>
                     <Card.Header>Go to Projects</Card.Header>
                     <Card.Body>
                         <h1>Projects</h1>
