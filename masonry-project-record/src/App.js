@@ -4,10 +4,10 @@ import Home from './Components/Pages/Home/Home';
 import PrivateRoute from './Components/Navigation/PrivateRoute/PrivateRoute';
 import LogIn from './Components/Pages/LogIn/LogIn';
 import ProjectSetUp from './Components/Pages/ProjectSetUp/ProjectSetUp';
-import FirstStage from './Components/Pages/FirstStage/FirstStage';
 import Projects from './Components/Pages/Projects/Projects';
 import ProjectStages from './Components/Pages/Projects/ProjectStages/ProjectStages';
 import ProjectsHome from './Components/Pages/Projects/ProjectsHome/ProjectsHome';
+import StageOne from './Components/Pages/Projects/ProjectStages/StageOne/StageOne';
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
               <Route path="stages" >
                 <Route index element={<ProjectStages/>} />
                 <Route path='1'>
-                  <Route index element={<FirstStage/>} />
+                  <Route index element={<StageOne/>} />
                 </Route>
               </Route>
             </Route>
