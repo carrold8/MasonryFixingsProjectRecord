@@ -2,37 +2,37 @@ import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import StageItem from "../StageItem/StageItem";
 
-function StageOne(){
-
-    const [hoarding, setHoarding] = useState({
+function StageTwo(){
+    
+    const [secSteelWork, setSecSteelWork] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [scaffolding, setScaffolding] = useState({
+    const [balconies, setBalconies] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [groundWorks, setGroundWorks] = useState({
+    const [handrails, setHandrails] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [waterProofing, setWaterProofing] = useState({
+    const [raisedFloors, setRaisedFloors] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [formwork, setFormwork] = useState({
+    const [suspCeilings, setSuspCeilings] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [precast, setPrecast] = useState({
+    const [electrical, setElectrical] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [structSteel, setStructSteel] = useState({
+    const [mechanical, setMechanical] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
-    const [decking, setDecking] = useState({
+    const [hvac, setHvac] = useState({
         timeline: "May",
         company: "Hoarding King's 97"
     });
@@ -43,44 +43,42 @@ function StageOne(){
         <div style={{padding: '20px'}}>
             <Row>
                 <Col>
-                    <StageItem title={'Hoarding'} data={hoarding} setArray={setHoarding} />
+                    <StageItem title={'Secondary Steelwork'} data={secSteelWork} setArray={setSecSteelWork} />
                 </Col>
                 <Col>
-                    <StageItem title={'Scaffolding'} data={scaffolding} setArray={setScaffolding} />
-                </Col>
-            </Row>
-
-            <Row style={{marginTop: '20px'}}>
-                <Col>
-                    <StageItem title={'Ground Works'} data={groundWorks} setArray={setGroundWorks}/>
-                </Col>
-                <Col>
-                    <StageItem title={'Waterproofing'} data={waterProofing} setArray={setWaterProofing} />
+                    <StageItem title={'Balconies'} data={balconies} setArray={setBalconies} />
                 </Col>
             </Row>
 
             <Row style={{marginTop: '20px'}}>
                 <Col>
-                    <StageItem title={'Formwork'} data={formwork}  setArray={setFormwork}/>
+                    <StageItem title={'Handrails'} data={handrails} setArray={setHandrails}/>
                 </Col>
                 <Col>
-                    <StageItem title={'Precast'} data={precast} setArray={setPrecast} />
+                    <StageItem title={'Raised Floors'} data={raisedFloors} setArray={setRaisedFloors} />
                 </Col>
             </Row>
 
             <Row style={{marginTop: '20px'}}>
                 <Col>
-                    <StageItem title={'Structural Steel'} data={structSteel} setArray={setStructSteel}/>
+                    <StageItem title={'Suspended Ceilings'} data={suspCeilings}  setArray={setSuspCeilings}/>
                 </Col>
                 <Col>
-                    <StageItem title={'Decking'} data={decking} setArray={setDecking} />
+                    <StageItem title={'Electrical'} data={electrical} setArray={setElectrical} />
+                </Col>
+            </Row>
+
+            <Row style={{marginTop: '20px'}}>
+                <Col>
+                    <StageItem title={'Mechanical'} data={mechanical} setArray={setMechanical}/>
+                </Col>
+                <Col>
+                    <StageItem title={'HVAC'} data={hvac} setArray={setHvac} />
                 </Col>
             </Row>
             
             
         </div>
     );
-
-
 }
-export default StageOne;
+export default StageTwo;

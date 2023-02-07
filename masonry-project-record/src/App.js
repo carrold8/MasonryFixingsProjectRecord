@@ -8,6 +8,7 @@ import Projects from './Components/Pages/Projects/Projects';
 import ProjectStages from './Components/Pages/Projects/ProjectStages/ProjectStages';
 import ProjectsHome from './Components/Pages/Projects/ProjectsHome/ProjectsHome';
 import StageOne from './Components/Pages/Projects/ProjectStages/StageOne/StageOne';
+import StageTwo from './Components/Pages/Projects/ProjectStages/StageTwo/StageTwo';
 
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
                 <Route index element={<ProjectStages/>} />
                 <Route path='1'>
                   <Route index element={<StageOne/>} />
+                </Route>
+                <Route path='2'>
+                  <Route index element={<StageTwo/>} />
                 </Route>
               </Route>
             </Route>

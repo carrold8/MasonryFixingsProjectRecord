@@ -18,6 +18,8 @@ function ProjectStages(){
                 <Card.Header>{projectData.title}</Card.Header>
                 <Card.Body>
                     <div>Stage 1: <Button onClick={() => navigate('1')}>Go to</Button></div>
+
+                    <div style={{marginTop: '10px'}}>Stage 2: <Button onClick={() => navigate('2')}>Go to</Button></div>
                 </Card.Body>
             </Card>
 

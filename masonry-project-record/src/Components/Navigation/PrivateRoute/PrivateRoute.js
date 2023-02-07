@@ -17,7 +17,7 @@ function PrivateRoute() {
 
                 <div style={{width: '100%'}}>
                     <Header/>
-                    <div style={{overflow: "auto", height: '93vh', top: '7vh', width: '100%'}}>
+                    <div style={{overflow: "auto", height: '93vh', top: '7vh', width: '100%', background: '#ededed'}}>
                         <Outlet/>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ function Projects(){
 
         <div style={{paddingTop: '1%', height: '100%'}}>
 
-            <Card style={{marginLeft: '1%', marginRight: '1%', backgroundColor: 'grey'}}>
+            <Card style={{marginLeft: '1%', marginRight: '1%', backgroundColor: '#0C2145'}}>
                 <Card.Body>
                     <Row>
                         <Col sm={9}>

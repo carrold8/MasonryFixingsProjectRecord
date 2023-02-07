@@ -1,5 +1,7 @@
 import React from "react";
 import * as AiIcons from 'react-icons/ai';
+import * as IoIcons from 'react-icons/io';
+import * as FaIcons from 'react-icons/fa';
 
 
 export const SideBarData = [
@@ -12,19 +14,13 @@ export const SideBarData = [
     {
         title: 'Projects',
         path: '/projects',
-        icon: <AiIcons.AiFillHome/>,
+        icon: <IoIcons.IoIosConstruct/>,
         cName: 'nav-text',
-        children: [
-            {
-                title: 'Test child',
-                path: '/projects',
-                cName: 'nav-text'
-            },
-            {
-                title: 'Test two',
-                path: '/projects',
-                cName: 'nav-text'
-            }
-        ]
-    }
+    },
+    {
+        title: 'Contractors',
+        path: '/',
+        icon: <FaIcons.FaFileContract/>,
+        cName: 'nav-text',
+    },
 ]
