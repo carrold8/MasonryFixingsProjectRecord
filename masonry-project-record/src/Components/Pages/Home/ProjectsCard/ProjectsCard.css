@@ -1,0 +1,12 @@
+
+.project-card{
+    font-family: sans-serif;
+    margin: 10px;
+    height: 250px;
+    padding: 10px;
+    background-color: #ffff;
+}
+
+.project-card:hover{
+    cursor: pointer;
+}
