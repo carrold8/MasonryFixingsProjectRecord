@@ -1,6 +1,7 @@
 import React from "react";
 import {Card, Button} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import ProjectStageCards from "./ProjectStageCards/ProjectStageCards";
 
 function ProjectStages(){
 
@@ -20,6 +21,13 @@ function ProjectStages(){
                     <div>Stage 1: <Button onClick={() => navigate('1')}>Go to</Button></div>
 
                     <div style={{marginTop: '10px'}}>Stage 2: <Button onClick={() => navigate('2')}>Go to</Button></div>
+
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <ProjectStageCards />
+                        <ProjectStageCards />
+                        <ProjectStageCards />
+                    </div>
+                    
                 </Card.Body>
             </Card>
 

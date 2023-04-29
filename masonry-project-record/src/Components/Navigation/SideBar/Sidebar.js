@@ -21,7 +21,7 @@ function SideBar(){
                     {showSideBar ? 
                     <Row>
                         <Col sm={8}>
-                            <h1 className={showSideBar ? 'nav-header active' : 'nav-header'}>Title</h1>
+                            <h1 className={showSideBar ? 'nav-header active' : 'nav-header'}>Hello</h1>
                         </Col>
                         <Col sm={4}>
                             <Link to={'#'} className={showSideBar ? 'menu-toggle active' : 'menu-toggle'} onClick={() => setShowSideBar(!showSideBar)}>

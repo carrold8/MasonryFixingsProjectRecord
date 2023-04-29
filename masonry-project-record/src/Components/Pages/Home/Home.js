@@ -6,30 +6,29 @@ function Home(){
 
 
     return(
-        <div style={{paddingTop: '2%', height: '100%', marginLeft: '20px', marginRight: '20px'}}>
+        <div style={{paddingTop: '2%', height: '100%', marginLeft: '2%', marginRight: '2%'}}>
             
 
             <Row>
-                <Col sm={6}>
+                <Col sm={6} align={'center'}>
                     <ProjectsCard/>
                 </Col>
-                <Col sm={6}>
+                <Col sm={6} align={'center'}>
                     <ProjectsCard/>
                 </Col>
             </Row>
 
             <Row>
-                <Col>
+                <Col align={'center'}>
                     <ProjectsCard/>
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col align={'center'}>
                     <ProjectsCard/>
                 </Col>
             </Row>
-            
-
+          
         </div>
     );
 }
