@@ -1,6 +1,7 @@
 
 const Project = {
     id: 1,
+    cisID: 1,
     title: 'Test Project',
     completed: false,
     address: {
@@ -18,14 +19,21 @@ const Project = {
         }
     },
     applicant: 'Facebook',
+    architectCompany: {
+        id: 1,
+        company: 'PM Group',
+        architects: [
+            {
+                id: 2,
+                firstName: 'John',
+                lastName: 'Doe',
+            }
+        ]
+    },
     architect: {
         id: 2,
         firstName: 'John',
         lastName: 'Doe',
-        architectCompany: {
-            id: 1,
-            company: 'PM Group'
-        }
     },
     engineerCompany: {
         id: 1,
@@ -67,6 +75,7 @@ const Project = {
     startDate: 1682790957,
     endDate: 1682790957,
     induction: {
+        id: 1,
         required: true,
         completed: false,
         dateOfCompletion: 1682790957,
@@ -108,22 +117,22 @@ const Project = {
                     id: 3,
                     county: 'Dublin'
                 }
+            }
+        },
+        accountContacts: [
+            {
+                id: 1,
+                firstName: 'Derek',
+                lastName: 'Mayburry',
+                phone: '123456789'
             },
-            accountContacts: [
-                {
-                    id: 1,
-                    firstName: 'Derek',
-                    lastName: 'Mayburry',
-                    phone: '123456789'
-                },
-                {
-                    id: 2,
-                    firstName: 'Mary',
-                    lastName: 'Donnnelly',
-                    phone: '987654321'
-                }
-            ]
-        }
+            {
+                id: 2,
+                firstName: 'Mary',
+                lastName: 'Donnnelly',
+                phone: '987654321'
+            }
+        ]
     },
     accountContact: {
         id: 2,
@@ -133,8 +142,8 @@ const Project = {
     },
     foremanName: 'Bob Builder',
     foremanPhone: '9871234',
-    safetyOffice: 'Safeman James',
-    safetyOfficePhone: '34556',
+    safetyOfficer: 'Safeman James',
+    safetyOfficerPhone: '34556',
     storeManName: 'Happy Gilmore',
     storeManPhone: '0983453',
     anchorTraining: true,
@@ -158,8 +167,9 @@ const Project = {
             startDate: 1682790957,
             endDate: 1682790957,
             approxValue: 0, 
-            products: [
+            taskProducts: [
                 {
+                    id: 2,
                     product: {
                         id: 1,
                         name: 'Bolt',
