@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form, Card} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios'
 
 
 function LogIn() {
@@ -23,10 +24,22 @@ function LogIn() {
 
 
     }
+
+    const handleTest = () => {
+        
+        const rootURL = ""
+        console.log('Testing');
+        axios.get('http://localhost:8081/')
+        .then((response) => {
+            console.log(response);
+        })
+
+    }
     
 
     return(
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: '100vh'}}>
+            <Button onClick={() => handleTest()}>Test</Button>
             <Card >
             
             <Card.Body>
