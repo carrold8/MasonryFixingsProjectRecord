@@ -29,9 +29,9 @@ function LogIn() {
         
         const rootURL = ""
         console.log('Testing');
-        axios.get('http://localhost:8081/')
+        axios.get('http://localhost:8080/county/' + 2)
         .then((response) => {
-            console.log(response);
+            console.log(response.data.data);
         })
 
     }
