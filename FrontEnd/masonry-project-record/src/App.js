@@ -10,6 +10,10 @@ import ProjectStages from './Components/Pages/Projects/ProjectStages/ProjectStag
 import ProjectsHome from './Components/Pages/Projects/ProjectsHome/ProjectsHome';
 import StageOne from './Components/Pages/Projects/ProjectStages/StageOne/StageOne';
 import StageTwo from './Components/Pages/Projects/ProjectStages/StageTwo/StageTwo';
+import Maintenance from './Components/Pages/Maintenance/Maintenance';
+import MaintenaceHome from './Components/Pages/Maintenance/MaintenanceHome/MaintenanceHome';
+import SearchContractors from './Components/Pages/Maintenance/MaintenanceContractors/SearchContractors/SearchContractors';
+import ViewContractor from './Components/Pages/Maintenance/MaintenanceContractors/ViewContractor/ViewContractor';
 
 
 function App() {
@@ -30,6 +34,16 @@ function App() {
                 </Route>
                 <Route path='2'>
                   <Route index element={<StageTwo/>} />
+                </Route>
+              </Route>
+            </Route>
+
+            <Route exact path='/maintenance' element={<Maintenance />}>
+              <Route index element={<MaintenaceHome/>}/>
+              <Route path='search-contractors'>
+                <Route index element={<SearchContractors/>} />
+                <Route path='view-contractor'>
+                    <Route index element={<ViewContractor/>} />
                 </Route>
               </Route>
             </Route>

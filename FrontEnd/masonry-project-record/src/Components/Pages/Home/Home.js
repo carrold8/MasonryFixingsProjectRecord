@@ -1,6 +1,8 @@
 import React from "react";
 import { Row, Col} from 'react-bootstrap';
-import ProjectsCard from "./ProjectsCard/ProjectsCard";
+import MaintenanceCard from "./HomeCards/MaintenanceCard/MaintenanceCard";
+import ProjectsCard from "./HomeCards/ProjectsCard/ProjectsCard";
+
 
 function Home(){
 
@@ -14,20 +16,10 @@ function Home(){
                     <ProjectsCard/>
                 </Col>
                 <Col sm={6} align={'center'}>
-                    <ProjectsCard/>
+                    <MaintenanceCard/>
                 </Col>
             </Row>
 
-            <Row>
-                <Col align={'center'}>
-                    <ProjectsCard/>
-                </Col>
-            </Row>
-            <Row>
-                <Col align={'center'}>
-                    <ProjectsCard/>
-                </Col>
-            </Row>
           
         </div>
     );
