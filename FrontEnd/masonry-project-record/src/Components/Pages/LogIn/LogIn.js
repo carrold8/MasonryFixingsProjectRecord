@@ -12,6 +12,10 @@ function LogIn() {
     const [invalidForm, setInvalidForm] = useState("");
 
 
+    const [countyID, setCountyID] = useState(0);
+
+    const [countyData, setCountyData] = useState([]);
+
     // Verify user credentials
     const handleSubmit = e => {
 
@@ -29,8 +33,9 @@ function LogIn() {
         
         const rootURL = ""
         console.log('Testing');
-        axios.get('http://localhost:8080/county/' + 2)
+        axios.get('http://localhost:8080/county/' + countyID)
         .then((response) => {
+            setCountyData(response.data.data);
             console.log(response.data.data);
         })
 
@@ -39,7 +44,15 @@ function LogIn() {
 
     return(
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: '100vh'}}>
+            <Form>
+                <Form.Control 
+                    type='number'
+                    value={countyID}
+                    onChange={(e) => setCountyID(e.target.value)}
+                />
+            </Form>
             <Button onClick={() => handleTest()}>Test</Button>
+            {countyData.length > 0 && <h1>{countyData[0].county}</h1>}
             <Card >
             
             <Card.Body>

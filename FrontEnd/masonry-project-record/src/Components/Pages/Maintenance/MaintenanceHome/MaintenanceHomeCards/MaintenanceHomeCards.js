@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import ArchitectureCard from "./ArchitectureCard/ArchitectureCard";
 import ContractorCard from "./ContractorCard/ContractorCard";
 import EngineeringCard from "./EngineeringCard/EngineeringCard";
+import './MaintenanceHomeCards.css'
 
 function MaintenaceHomeCards(){
 
@@ -10,9 +11,11 @@ function MaintenaceHomeCards(){
     return(
         <div>
             
-            <ContractorCard />
 
             <Row>
+                <Col>
+                    <ContractorCard />
+                </Col>
                 <Col>
                     <EngineeringCard />
                 </Col>

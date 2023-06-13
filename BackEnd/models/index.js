@@ -1,23 +1,10 @@
-const dbConfig = requite('../config/db.config.js');
+const express = require('express');
+const app = express();
 
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
-    operationAliases: false,
+app.get('/', (req, res) =>{
+    res.send('hello world');
+})
 
-    pool: {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle
-    }
+app.listen(8081, () => {
+    console.log('listening on port 8081');
 });
-
-const db = {};
-
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.county = require('./county.model.js');
-
-module.exports = db;

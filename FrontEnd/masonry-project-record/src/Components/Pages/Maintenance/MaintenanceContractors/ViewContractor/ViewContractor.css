@@ -1,0 +1,24 @@
+
+.contractor-card{
+    min-height: 30vh;
+    margin: 2% 2% 5% 2%;
+    border-color: blue;
+    box-shadow: 2px 3px 4px blue;
+
+}
+
+.contractor-card .header{
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+}
+
+
+.contractor-card .accounts-contact-card {
+    min-height: 10vh;
+}
+.accounts-contact-card .accounts-contact-card .header{
+    background-color: #0000ff33;
+    color: white;
+    font-weight: bold;
+}

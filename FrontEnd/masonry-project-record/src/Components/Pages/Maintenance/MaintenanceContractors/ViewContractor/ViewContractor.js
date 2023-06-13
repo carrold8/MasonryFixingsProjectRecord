@@ -1,11 +1,13 @@
 import React from "react";
+import './ViewContractor.css';
 import { Card, Form, Row, Col, Table} from "react-bootstrap";
+
 
 function ViewContractor(){
 
     return(
-        <Card style={{margin: '2%'}}>
-            <Card.Header>Contractor A</Card.Header>
+        <Card className="contractor-card">
+            <Card.Header className="header">Contractor A</Card.Header>
 
             <Card.Body>
                 <Form>
@@ -95,8 +97,9 @@ function ViewContractor(){
                     
                 </Form>
                 <hr/>
-                <Card>
-                    <Card.Header>Account Contacts</Card.Header>
+                <Card className="accounts-contact-card">
+                    <Card.Header className="header">Account Contacts</Card.Header>
+                    <Card.Body>
                     <Table striped hover>
                         <thead>
                             <tr>
@@ -118,6 +121,7 @@ function ViewContractor(){
                             </tr>
                         </tbody>
                     </Table>
+                    </Card.Body>
                 </Card>
             </Card.Body>
         </Card>
