@@ -6,9 +6,15 @@ function SearchContractors(){
 
     return(
         
-        <div>
-            <FilterContractors />
+        <div style={{margin: '2%', padding: '1%', border: '1px solid orange', boxShadow: '2px 3px 4px orange'}}>
+            <div>
+                <FilterContractors />
+            </div>
+            <div>
             <ContractorsTable />
+            </div>
+            
+            
 
         </div>
     )

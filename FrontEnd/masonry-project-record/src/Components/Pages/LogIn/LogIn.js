@@ -9,7 +9,7 @@ function LogIn() {
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [invalidForm, setInvalidForm] = useState("");
+    // const [invalidForm, setInvalidForm] = useState("");
 
 
     const [countyID, setCountyID] = useState(0);
@@ -25,13 +25,14 @@ function LogIn() {
         
         localStorage.setItem("user", "Logged In");
         navigate('/home');
+        
 
 
     }
 
     const handleTest = () => {
         
-        const rootURL = ""
+        // const rootURL = ""
         console.log('Testing');
         axios.get('http://localhost:8080/county/' + countyID)
         .then((response) => {
@@ -64,7 +65,7 @@ function LogIn() {
                             type={'username'}
                             placeholder={'Username'}
                             value={userName}
-                            isInvalid = {invalidForm}
+                            isInvalid = {false}
                             onChange={(e) => setUserName(e.target.value)}
                             required
                         />
@@ -76,7 +77,7 @@ function LogIn() {
                             type={'password'}
                             placeholder={'Password'}
                             value={password}
-                            isInvalid = {invalidForm}
+                            isInvalid = {false}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />

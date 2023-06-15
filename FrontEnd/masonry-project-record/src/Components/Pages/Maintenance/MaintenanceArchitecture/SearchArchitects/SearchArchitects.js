@@ -6,10 +6,14 @@ function SearchArchitects(){
 
 
     return(
-        <div>
-            Search Architects 
-            <FilterArchitects />
-            <ArchitectTable />
+        <div style={{margin: '2%', padding: '1%', border: '1px solid rgb(3, 162, 3)', boxShadow: '2px 3px 4px rgb(3, 162, 3)'}}>
+        
+            <div>
+            <   FilterArchitects />
+            </div>
+            <div style={{marginTop: '2%'}}>
+                <ArchitectTable />
+            </div>
         </div>
     )
 }

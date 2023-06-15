@@ -6,9 +6,14 @@ function SearchEngineers(){
 
 
     return(
-        <div>
-            <FilterEngineers />
-            <EngineersTable />
+        <div style={{margin: '2%', padding: '1%', border: '1px solid blue', boxShadow: '2px 3px 4px blue'}}>
+            
+            <div>
+                <FilterEngineers />
+            </div>
+            <div style={{marginTop: '2%'}}>
+                <EngineersTable />
+            </div>
         </div>
     );
 

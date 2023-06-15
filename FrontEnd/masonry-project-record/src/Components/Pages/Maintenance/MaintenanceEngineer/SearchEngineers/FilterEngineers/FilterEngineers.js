@@ -5,20 +5,22 @@ function FilterEngineers(){
 
     return (
         <div style={{display: 'flex', alignItems: 'center'}}>
-            <div>
+            <div style={{width: '15%', marginRight: '5%'}}>
                 <Form.Control
                     placeholder="Search Name"
                 />
             </div>
-            <div>
-                <Form.Control
+            <div style={{width: '15%', marginRight: '5%'}}>
+            <Form.Control
                     placeholder="Search City"
                 />
             </div>
-            <div>
-                <Form.Control
-                    placeholder="Search County"
-                />
+            <div style={{width: '15%', marginRight: '5%'}}>
+                <Form.Select>
+                    <option value={0}>Head Office</option>
+                    <option value={1}>Blanch</option>
+                    <option value={2}>Middleton</option>
+                </Form.Select>
             </div>
         </div>
     )

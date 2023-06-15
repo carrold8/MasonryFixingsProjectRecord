@@ -6,7 +6,7 @@ import { MsnryBlue } from "../../../../Constants/Constants";
 function ProjectsTable({projectsData}){
 
     const navigate = useNavigate();
-    const headerColumns = ["ID", "Title", "Contractor", "Current Stage"];
+    const headerColumns = ["CIS ID", "Title", "Contractor", 'Engineer', 'Architect', "Current Stage"];
 
     const handleClick = (data) => {
 
@@ -29,9 +29,11 @@ function ProjectsTable({projectsData}){
 
             return (
                 <tr key={index}>
-                    <td>{data.id}</td>
+                    <td>{data.cisID}</td>
                     <td>{data.title}</td>
                     <td>{data.contractor}</td>
+                    <td>{data.engineer}</td>
+                    <td>{data.architect}</td>
                     <td>{data.currentStage}</td>
                     <td><Button size="sm" onClick={() => handleClick(data)}>Edit</Button></td>
                 </tr>

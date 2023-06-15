@@ -3,6 +3,10 @@
     min-height: 30vh;
     box-shadow: 2px 3px 4px orange;
     margin: 1%;
+    cursor: pointer;
+}
+.maintenance-contractor-card:hover{
+    transform: translateY(-2px);
 }
 
 .maintenance-contractor-card .header{
@@ -15,6 +19,11 @@
     min-height: 30vh;
     box-shadow: 2px 3px 4px rgb(3, 162, 3);
     margin: 1%;
+    cursor: pointer;
+}
+
+.maintenance-architect-card:hover{
+    transform: translateY(-2px);
 }
 
 .maintenance-architect-card .header{
@@ -28,6 +37,10 @@
     min-height: 30vh;
     box-shadow: 2px 3px 4px rgb(6, 6, 210);
     margin: 1%;
+    cursor: pointer;
+}
+.maintenance-engineer-card:hover{
+    transform: translateY(-2px);
 }
 
 .maintenance-engineer-card .header{
