@@ -12,12 +12,7 @@ import StageOne from './Components/Pages/Projects/ProjectStages/StageOne/StageOn
 import StageTwo from './Components/Pages/Projects/ProjectStages/StageTwo/StageTwo';
 import Maintenance from './Components/Pages/Maintenance/Maintenance';
 import MaintenaceHome from './Components/Pages/Maintenance/MaintenanceHome/MaintenanceHome';
-import SearchContractors from './Components/Pages/Maintenance/MaintenanceContractors/SearchContractors/SearchContractors';
-import ViewContractor from './Components/Pages/Maintenance/MaintenanceContractors/ViewContractor/ViewContractor';
-import SearchEngineers from './Components/Pages/Maintenance/MaintenanceEngineer/SearchEngineers/SearchEngineers';
-import ViewEngineer from './Components/Pages/Maintenance/MaintenanceEngineer/ViewEngineer/ViewEngineer';
-import SearchArchitects from './Components/Pages/Maintenance/MaintenanceArchitecture/SearchArchitects/SearchArchitects';
-import ViewArchitect from './Components/Pages/Maintenance/MaintenanceArchitecture/ViewArchitect/ViewArchitect';
+import Companies from './Components/Pages/Companies/Companies';
 
 
 function App() {
@@ -44,32 +39,18 @@ function App() {
 
             <Route exact path='/maintenance' element={<Maintenance />}>
               <Route index element={<MaintenaceHome/>}/>
-                <Route path='search-contractors'>
-                  <Route index element={<SearchContractors/>} />
-                  <Route path='view-contractor'>
-                      <Route index element={<ViewContractor/>} />
-                  </Route>
-                </Route>
-
-                <Route path='search-engineers'>
-                  <Route index element={<SearchEngineers/>} />
-                  <Route path='view-engineer'>
-                      <Route index element={<ViewEngineer/>} />
-                  </Route>
-                </Route>
-
-                <Route path='search-architects'>
-                  <Route index element={<SearchArchitects/>} />
-                  <Route path='view-architect'>
-                      <Route index element={<ViewArchitect/>} />
-                  </Route>
-                </Route>
-
+            
             </Route>
 
+          
 
             <Route path='/project-setup' element={<ProjectSetUp/>} />
+
+            <Route exact path='/companies' element={<Companies/>}/>
+
           </Route>
+
+          
           
           {/* Public Pages */}
           <Route exact path='/login' element={<LogIn/>} />
