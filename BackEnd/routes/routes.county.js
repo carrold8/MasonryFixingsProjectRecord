@@ -21,4 +21,15 @@ router.get('/:id', async function(req, res, next){
     }
 });
 
+router.post('/county', async function(req, res, next){
+
+    console.log('Res in post: ', res)
+    try{
+        res.json(await countyService.createNew(1, req.body));
+    } catch(err) {
+        console.error(`Error while updating county`, err.message);
+    next(err);
+    }
+});
+
 module.exports = router;

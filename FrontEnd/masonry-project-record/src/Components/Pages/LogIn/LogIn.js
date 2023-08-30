@@ -16,6 +16,27 @@ function LogIn() {
 
     const [countyData, setCountyData] = useState([]);
 
+    // const [newCounty, setNewCounty] = useState('')
+
+    // const handleNewCounty = (e) => {
+    //     e.preventDefault();
+    //     e.stopPropagation();
+
+    //     console.log('in new')
+    //     axios.post(
+    //         'http://localhost:8080/county/county',
+    //         { county: newCounty}    
+    //     )
+    //     .then((response) => {
+    //         console.log(response);
+    //         handleTest(response.data.data.insertId)
+    //     }) 
+    //     .catch((err) => {
+    //         console.log(console.log(err))
+    //     })
+
+    // }
+
     // Verify user credentials
     const handleSubmit = e => {
 
@@ -30,16 +51,29 @@ function LogIn() {
 
     }
 
-    const handleTest = () => {
+    const handleTest = (id) => {
         
         // const rootURL = ""
+
+        axios.get('http://localhost:8080/county')
+        .then((response) => {
+            console.log(response.data.data);
+        })
+
         console.log('Testing');
-        axios.get('http://localhost:8080/county/' + countyID)
+        axios.get('http://localhost:8080/county/' + id)
         .then((response) => {
             setCountyData(response.data.data);
             console.log(response.data.data);
         })
 
+    }
+
+    const getCompany = () => {
+        axios.get('http://localhost:8080/company')
+        .then((response) => {
+            console.log(response);
+        })
     }
     
 
@@ -52,7 +86,7 @@ function LogIn() {
                     onChange={(e) => setCountyID(e.target.value)}
                 />
             </Form>
-            <Button onClick={() => handleTest()}>Test</Button>
+            <Button onClick={() => handleTest(countyID)}>Test</Button>
             {countyData.length > 0 && <h1>{countyData[0].county}</h1>}
             <Card >
             
@@ -88,6 +122,14 @@ function LogIn() {
                     </Button>
                 </Form>
 
+
+                {/* <form onSubmit={handleNewCounty}>
+                    <label>County Name</label>
+                    <input value={newCounty} onChange={(e) => setNewCounty(e.target.value)}/>
+                    <button type='submit' >Save</button>
+                </form> */}
+
+                <button onClick={() => getCompany()}>Company</button>
             </Card.Body>
 
         </Card>

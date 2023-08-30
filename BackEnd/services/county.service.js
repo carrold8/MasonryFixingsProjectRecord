@@ -35,8 +35,28 @@ async function getByID(page = 1, id){
         }
 }
 
+async function createNew(page = 1, county){
+
+    const countyString = county.county;
+    console.log(county);
+    console.log("County String: '", countyString, "'");
+    const queryString = "insert into county (county) values ('" + county.county + "')"; 
+    console.log(queryString);
+    const offset = helper.getOffset(page, config.listPerPage);
+    const rows = await dbServices.query(
+        queryString
+    );
+    const data = helper.emptyOrRows(rows);
+    const meta = {page};
+      
+        return {
+          data,
+          meta
+        }
+}
 
 module.exports = {
     getAll,
-    getByID
+    getByID,
+    createNew
 }

@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const app = express();
 const countyRouter = require("./routes/routes.county");
+const companyRouter = require('./routes/routes.company');
 // const countyService = require("./services/county.service")
 
 var corsOptions = {
@@ -31,6 +32,8 @@ app.get('/', (req, res) => {
 
 app.use('/county', countyRouter);
 
+app.use('/company', companyRouter);
+
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     console.error(err.message, err.stack);
@@ -41,5 +44,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
-    console.log('Server is running on port ${PORT}');
+    console.log('Server is running on port ', PORT);
 });

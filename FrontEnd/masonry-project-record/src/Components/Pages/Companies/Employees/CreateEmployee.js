@@ -34,6 +34,5 @@ function CreateEmployee({AddNewEmployee}){
             <button type="submit">Create</button>
         </form>
     )
-
 }
 export default CreateEmployee;
