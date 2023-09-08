@@ -55,16 +55,27 @@ function LogIn() {
         
         // const rootURL = ""
 
-        axios.get('http://localhost:8080/county')
+        // axios.get('http://localhost:8080/county')
+        // .then((response) => {
+        //     console.log(response.data.data);
+        // })
+
+        console.log('Testing');
+        // axios.get('http://localhost:8080/county/' + id)
+        // .then((response) => {
+        //     setCountyData(response.data.data);
+        //     console.log(response.data.data);
+        // })
+        axios.get('http://localhost:8080/address')
         .then((response) => {
+            // setCountyData(response.data.data);
             console.log(response.data.data);
         })
 
-        console.log('Testing');
-        axios.get('http://localhost:8080/county/' + id)
+        axios.get('http://localhost:8080/address/1')
         .then((response) => {
-            setCountyData(response.data.data);
-            console.log(response.data.data);
+            // setCountyData(response.data.data);
+            console.log(response.data);
         })
 
     }

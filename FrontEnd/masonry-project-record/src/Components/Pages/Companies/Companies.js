@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CreateCompany from './CreateCompany';
 import DisplayCompany from './DisplayCompany';
+import axios from 'axios';
 
 export default function Companies(){
 
@@ -23,29 +24,26 @@ export default function Companies(){
     ]
     
     
-    const [CompaniesData, setCompaniesData] =  useState([
-    
-        {
-            id: 1,
-            name: 'Contractor',
-            companyType: 1,
-            headOfficeID: 1,
-        },
-        {
-            id: 2,
-            name: 'Engineering',
-            companyType: 2,
-            headOfficeID: 1,
-        },
-        {
-            id: 3,
-            name: 'Architect',
-            companyType: 3,
-            headOfficeID: 1,
-        }
-    
-    ])
+    const [CompaniesData, setCompaniesData] =  useState([])
 
+
+    const getAllCompanies = (typeID) => {
+
+   
+        axios.get('http://localhost:8080/company')
+        .then((response) => {
+            console.log(response.data);
+            setCompaniesData(response.data.companies);
+        }) 
+        .catch((err) => {
+            console.log(err);
+        })
+
+    }
+
+    useEffect(() => {
+        getAllCompanies(companyTypeID);
+    }, [companyTypeID])
 
     
     return(
@@ -85,7 +83,7 @@ export default function Companies(){
                         return(
                             <div key={company.id}>
                                 {
-                                parseInt(company.companyType) === parseInt(companyTypeID) && 
+                                parseInt(company.company_type_id) === parseInt(companyTypeID) && 
                                     <DisplayCompany key={company.id} CompanyData={company} />
                                 }    
                             </div>
