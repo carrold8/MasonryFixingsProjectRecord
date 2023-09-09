@@ -31,9 +31,8 @@ var Address = database.define('address', {
 }, {tableName: 'address', timestamps: false})
 
 Address.belongsTo(County, {foreignKey: 'county_id'});
-County.hasOne(Address, {foreignKey: 'county_id'});
 
 Address.belongsTo(Country, {foreignKey: 'country_id'});
-Country.hasOne(Address, {foreignKey: 'country_id'});
+// Country.hasOne(Address, {foreignKey: 'country_id'});
 
 module.exports.Address = Address;

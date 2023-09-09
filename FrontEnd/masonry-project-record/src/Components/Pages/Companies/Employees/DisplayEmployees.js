@@ -7,39 +7,48 @@ function DisplayEmployees({CompanyID}){
 
     const EmployeeTypes = ['Engineer', 'Account Contact', 'Foreman', 'Architect']
 
-    // const dummyEmployees = [
-    //     {id: 1, companyID: 1, employeeType: 2, firstName: 'Joe', lastName: 'Bloggs', phone: '1'},
-    //     {id: 2, companyID: 3, employeeType: 3, firstName: 'Bill', lastName: 'Flaked', phone: '2'},
-    //     {id: 3, companyID: 3, employeeType: 1, firstName: 'Grahamn', lastName: 'McGee', phone: '3'},
-    //     {id: 4, companyID: 2, employeeType: 0, firstName: 'Sarah', lastName: "O'Connor", phone: '4'},
-    //     {id: 5, companyID: 1, employeeType: 1, firstName: 'Joe', lastName: 'Bloggs', phone: '5'},
-    //     {id: 6, companyID: 2, employeeType: 3, firstName: 'Joe', lastName: 'Bloggs', phone: '6'},
-    //     {id: 7, companyID: 1, employeeType: 1, firstName: 'Joe', lastName: 'Bloggs', phone: '7'},
-    // ]
-
 
     const [employeeData, setEmployeeData] = useState([]);
     const [showAdd, setShowAdd] = useState(false);
 
 
-    const AddNewEmployee = (employeeType, firstName, lastName, phone) => {
+    // const AddNewEmployee = (employeeType, firstName, lastName, phone) => {
 
 
-        const tempData = [...employeeData];
-        tempData.push(
-            {id: tempData.length + 1, companyID: CompanyID, employeeType: employeeType, firstName: firstName, lastName: lastName, phone: phone},
-        )
-        setEmployeeData(tempData);
-        setShowAdd(false)
+    //     const tempData = [...employeeData];
+    //     tempData.push(
+    //         {id: tempData.length + 1, companyID: CompanyID, employeeType: employeeType, firstName: firstName, lastName: lastName, phone: phone},
+    //     )
+    //     setEmployeeData(tempData);
+    //     setShowAdd(false)
+
+    // }
+
+    const addEmployee = (employeeType, firstName, lastName, phone) => {
+        
+        const PostJSON = {
+            first_name: firstName,
+            last_name: lastName,
+            phone: phone,
+            employee_type_id: employeeType,
+            company_id: CompanyID
+        }
+
+        axios.post(
+            'http://localhost:8080/company/' + CompanyID + '/employee',
+            PostJSON)
+            .then((newEmployee) => {
+                setShowAdd(false);
+                getCompanyEmployees(CompanyID)
+            })            
 
     }
 
     const getCompanyEmployees = (id) => {
    
-        axios.get('http://localhost:8080/company/' + id + '/employees')
+        axios.get('http://localhost:8080/company/' + id +'/employees')
         .then((response) => {
-            console.log(response.data.data);
-            setEmployeeData(response.data.data);
+            setEmployeeData(response.data);
         }) 
         .catch((err) => {
             console.log(err);
@@ -79,7 +88,7 @@ function DisplayEmployees({CompanyID}){
                 </tbody>
             </table>
             <button onClick={() => setShowAdd(!showAdd)} style={{backgroundColor: 'grey', padding: '0.25rem'}}>Add Employeee: </button>
-            {showAdd && <CreateEmployee AddNewEmployee={AddNewEmployee} />}
+            {showAdd && <CreateEmployee AddNewEmployee={addEmployee} />}
         </div>
     )
 

@@ -27,13 +27,11 @@ export default function Companies(){
     const [CompaniesData, setCompaniesData] =  useState([])
 
 
-    const getAllCompanies = (typeID) => {
+    const getAllCompanies = () => {
 
-   
         axios.get('http://localhost:8080/company')
         .then((response) => {
-            console.log(response.data);
-            setCompaniesData(response.data.companies);
+            setCompaniesData(response.data);
         }) 
         .catch((err) => {
             console.log(err);
@@ -42,8 +40,8 @@ export default function Companies(){
     }
 
     useEffect(() => {
-        getAllCompanies(companyTypeID);
-    }, [companyTypeID])
+        getAllCompanies();
+    }, [])
 
     
     return(
@@ -83,7 +81,7 @@ export default function Companies(){
                         return(
                             <div key={company.id}>
                                 {
-                                parseInt(company.company_type_id) === parseInt(companyTypeID) && 
+                                parseInt(company.company_type.id) === parseInt(companyTypeID) && 
                                     <DisplayCompany key={company.id} CompanyData={company} />
                                 }    
                             </div>

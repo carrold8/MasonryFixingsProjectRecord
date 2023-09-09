@@ -1,30 +1,36 @@
 const database = require('../../config/database').database;
 const {  DataTypes } = require('sequelize');
-const { CompanyType } = require('./companytype.model');
-const {HeadOffice} = require('./headoffice.model');
 
+const EmployeeType = require('./employeetype.model').EmployeeType;
 
-var Company = database.define('company', {
+var Employee = database.define('employee', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
+    first_name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    company_type_id: {
+    last_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    employee_type_id: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    head_office_id: {
+    company_id: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
 }, {freezeTableName: true, timestamps: false})
 
-Company.belongsTo(CompanyType, {foreignKey: 'company_type_id'});
-Company.belongsTo(HeadOffice, {foreignKey: 'head_office_id'});
+Employee.belongsTo(EmployeeType, {foreignKey: 'employee_type_id'});
 
-module.exports.Company = Company;
+module.exports.Employee = Employee;
