@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const { CompanyType } = require('../models/companytype.model');
 const { Country } = require('../models/country.model');
 const { Employee } = require('../models/employee.model');
@@ -78,6 +79,42 @@ module.exports = function(app) {
       })
      });
 
+     app.put('/company/:id', function(request, response) {
+      Address.update(
+        {
+            line1: request.body.head_office.address.line1,
+            line2: request.body.head_office.address.line2,
+            city: request.body.head_office.address.city,
+            county_id: request.body.head_office.address.county_id,
+            country_id: request.body.head_office.address.country_id,
+        },
+        { where: {id: request.body.head_office.address.id},
+          
+      })
+      .then(function(address) {
+        HeadOffice.update(
+          {
+            phone: request.body.head_office.phone,
+            address_id: address.id
+          },
+          {where: {id: request.body.head_office.id}}
+        )
+        .then(function(head_office) {
+          Company.update(
+            {
+              name: request.body.name,
+              company_type_id: request.body.company_type_id,
+              head_office_id: head_office.id,
+            },
+            {where: {id: request.body.id}}
+          )
+        })
+        .then(function(company){
+          response.json(company);
+        })
+      })
+     });
+
      app.get('/company/:id/employees', function(request, response) {
       Employee.findAll({
           
@@ -100,6 +137,25 @@ module.exports = function(app) {
       })
       .then(function(employees) {
         response.json(employees);
+      })
+     });
+
+
+
+     app.put('/company/:company_id/employee', function(request, response){
+
+        Employee.update({
+          
+          first_name: request.body.first_name,
+          last_name: request.body.last_name,
+          phone: request.body.phone,
+          employee_type_id: request.body.employee_type_id,
+          company_id: request.params.company_id
+        }, 
+        {where: { id: request.body.id}
+      })
+     .then(function(employee) {
+        response.json(employee);
       })
      });
 
