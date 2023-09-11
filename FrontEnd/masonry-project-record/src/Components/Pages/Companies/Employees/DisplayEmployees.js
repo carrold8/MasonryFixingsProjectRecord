@@ -1,28 +1,14 @@
 import React, {useEffect, useState} from "react";
 import CreateEmployee from "./CreateEmployee";
 import axios from 'axios';
+import { FiChevronDown} from 'react-icons/fi';
 
 function DisplayEmployees({CompanyID}){
 
-
-    const EmployeeTypes = ['Engineer', 'Account Contact', 'Foreman', 'Architect']
-
-
     const [employeeData, setEmployeeData] = useState([]);
+    const [showEmployees, setShowEmployees] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
 
-
-    // const AddNewEmployee = (employeeType, firstName, lastName, phone) => {
-
-
-    //     const tempData = [...employeeData];
-    //     tempData.push(
-    //         {id: tempData.length + 1, companyID: CompanyID, employeeType: employeeType, firstName: firstName, lastName: lastName, phone: phone},
-    //     )
-    //     setEmployeeData(tempData);
-    //     setShowAdd(false)
-
-    // }
 
     const addEmployee = (employeeType, firstName, lastName, phone) => {
         
@@ -61,16 +47,24 @@ function DisplayEmployees({CompanyID}){
     }, [CompanyID])
 
     return(
-        <div style={{border: '1px solid green', padding: '1rem'}}>
-            <h3>Employees:</h3>
-
-            <table >
+        <div className="company-card">
+            <div className="component-card-title">
+                <h4>Employees:</h4>
+                <div>{employeeData.length}</div>
+                <div><FiChevronDown onClick={() => setShowEmployees(!showEmployees)} /></div>
+            </div>
+            
+            { showEmployees && 
+            <>           
+            <hr/> 
+            <table style={{width: '100%'}}>
                 <thead>
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Role</th>
                         <th>Phone</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,14 +74,18 @@ function DisplayEmployees({CompanyID}){
                                 <tr key={employee.id}>
                                     <td>{employee.first_name} </td> 
                                     <td>{employee.last_name} </td> 
-                                    <td>{EmployeeTypes[employee.employee_type_id]}</td> 
+                                    <td>{employee.employee_type.name}</td> 
                                     <td>{employee.phone}</td> 
+                                    <td>Edit</td> 
                                 </tr>       
                             )
                     })}
                 </tbody>
             </table>
             <button onClick={() => setShowAdd(!showAdd)} style={{backgroundColor: 'grey', padding: '0.25rem'}}>Add Employeee: </button>
+            </>
+
+                }
             {showAdd && <CreateEmployee AddNewEmployee={addEmployee} />}
         </div>
     )

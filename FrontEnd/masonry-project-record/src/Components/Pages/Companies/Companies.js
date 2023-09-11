@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Companies.css';
 import CreateCompany from './CreateCompany';
 import DisplayCompany from './DisplayCompany';
 import axios from 'axios';
@@ -68,7 +69,7 @@ export default function Companies(){
             }
             {companyTypeID === 0 ?
 
-                <div>
+                <div className='company-display'>
                     {CompaniesData.map((company) => {
                         return(
                             <DisplayCompany key={company.id} CompanyData={company} />
