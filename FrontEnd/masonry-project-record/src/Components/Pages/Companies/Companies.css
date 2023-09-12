@@ -32,12 +32,15 @@
 }
 
 .company-details{
-    height: 0;
+    max-height: 0;
     overflow: hidden;
+    transition: 1s ease;
 }
 
 .company-details.active{
-    height: fit-content;
+    max-height: 50vh;
+    transition: 1s ease;
+    overflow: auto;
 }
 
 .head-office-container label{
@@ -49,4 +52,20 @@
     grid-template-columns: 1fr 1fr;
     column-gap: 0.2rem;
     row-gap: 0.2rem;
+}
+
+.employee-details{
+    max-height: 0;
+    overflow: hidden;
+    transition: 1s ease;
+}
+
+.employee-details.active{
+    max-height: 50vh;
+    transition: 1s ease;
+}
+
+.single-employee{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
 }

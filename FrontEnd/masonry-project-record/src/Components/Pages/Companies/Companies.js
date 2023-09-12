@@ -72,7 +72,7 @@ export default function Companies(){
                 <div className='company-display'>
                     {CompaniesData.map((company) => {
                         return(
-                            <DisplayCompany key={company.id} CompanyData={company} />
+                            <DisplayCompany key={company.id} CompanyData={company} getCompany={getAllCompanies}/>
                         )
                     })}
                 </div>

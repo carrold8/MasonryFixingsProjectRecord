@@ -120,7 +120,7 @@ module.exports = function(app) {
           
           where: {company_id: request.params.id},
           include: {model: EmployeeType},
-          attributes: {exclude: ['company_id', 'employee_type_id']}
+          attributes: {exclude: ['employee_type_id']}
       })
       .then(function(employees) {
         response.json(employees ? employees : []);

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import CreateEmployee from "./CreateEmployee";
 import axios from 'axios';
-import { FiChevronDown} from 'react-icons/fi';
+import { FiChevronDown, FiChevronUp} from 'react-icons/fi';
+import SingleEmployee from "./SingleEmployee";
 
 function DisplayEmployees({CompanyID}){
 
@@ -16,7 +17,7 @@ function DisplayEmployees({CompanyID}){
             first_name: firstName,
             last_name: lastName,
             phone: phone,
-            employee_type_id: employeeType,
+            employee_type_id: parseInt(employeeType),
             company_id: CompanyID
         }
 
@@ -41,6 +42,9 @@ function DisplayEmployees({CompanyID}){
         })
 
     }
+
+
+    
     
     useEffect(() => {
         getCompanyEmployees(CompanyID);
@@ -51,41 +55,34 @@ function DisplayEmployees({CompanyID}){
             <div className="component-card-title">
                 <h4>Employees:</h4>
                 <div>{employeeData.length}</div>
-                <div><FiChevronDown onClick={() => setShowEmployees(!showEmployees)} /></div>
+                <div>{showEmployees ? <FiChevronUp onClick={() => {setShowEmployees(!showEmployees); setShowAdd(false)}} /> : <FiChevronDown onClick={() => setShowEmployees(!showEmployees)} />}</div>
             </div>
             
-            { showEmployees && 
-            <>           
+            
+            <div className={showEmployees ? 'employee-details active' : 'employee-details'}>           
             <hr/> 
-            <table style={{width: '100%'}}>
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Phone</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
+            
+                <div className="single-employee">
+                    
+                        <strong>First Name</strong>
+                        <strong>Last Name</strong>
+                        <strong>Role</strong>
+                        <strong>Phone</strong>
+                        <strong>Edit</strong>
+                    
+                </div>
+                <div>
                     {employeeData.map((employee) => {
                     
                             return (
-                                <tr key={employee.id}>
-                                    <td>{employee.first_name} </td> 
-                                    <td>{employee.last_name} </td> 
-                                    <td>{employee.employee_type.name}</td> 
-                                    <td>{employee.phone}</td> 
-                                    <td>Edit</td> 
-                                </tr>       
+                                <SingleEmployee key={employee.id} employeeData={employee} getEmployee={getCompanyEmployees} />      
                             )
                     })}
-                </tbody>
-            </table>
+                </div>
+            {/* </table> */}
             <button onClick={() => setShowAdd(!showAdd)} style={{backgroundColor: 'grey', padding: '0.25rem'}}>Add Employeee: </button>
-            </>
+            </div>
 
-                }
             {showAdd && <CreateEmployee AddNewEmployee={addEmployee} />}
         </div>
     )
