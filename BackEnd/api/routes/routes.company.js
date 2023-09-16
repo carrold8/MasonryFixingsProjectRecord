@@ -1,45 +1,141 @@
 const express = require('express');
 const router = express.Router();
-const companyService = require('../../services/company.service');
-const employeeService = require('../../services/employee.service');
+const { where } = require('sequelize');
 
-router.get('/', async function(req, res, next){
-    try{
-        res.json(await companyService.getAll());
-    } catch(err) {
-        console.error(`Error while getting companies`, err.message);
-    next(err);
-    }
-})
+const {Company} = require('../models/company.model');
+const { HeadOffice } = require('../models/headoffice.model');
+const {Address} = require('../models/address.model');
+const { Employee } = require('../models/employee.model');
+const { EmployeeType } = require('../models/employeetype.model');
 
-router.get('/:id', async function(req, res, next){
+router.get('/', function(request, response) {
+    Company.findAll({
+        include: {all: true, nested: true},
+        attributes: {exclude: ['company_type_id', 'head_office_id']}
+    })
+    .then(function(address) {
+      response.json(address);
+    })
+   });
 
-    try{
-        res.json(await companyService.getByID(1, req.params.id));
-    } catch(err) {
-        console.error(`Error while getting companies`, err.message);
-    next(err);
-    }
-});
+   router.post( '/', function(request, response) {
+    Address.create({
+        line1: request.body.head_office.address.line1,
+        line2: request.body.head_office.address.line2,
+        city: request.body.head_office.address.city,
+        county_id: request.body.head_office.address.county_id,
+        country_id: request.body.head_office.address.country_id,
+    })
+    .then(function(address) {
+      
+      HeadOffice.create({
+        phone: request.body.head_office.phone,
+        address_id: address.id
+      }).then(function(head_office){
+        Company.create({
+          name: request.body.name,
+          company_type_id: request.body.company_type_id,
+          head_office_id: head_office.id
+        }).then(function(company){
+          response.json(company);
+        })
+      })
 
-router.get('/type/:company_type_id', async function(req, res, next){
+    })
+   });
 
-    try{
-        res.json(await companyService.getByComapnyTypeID(1, req.params.company_type_id));
-    } catch(err) {
-        console.error(`Error while getting companies`, err.message);
-    next(err);
-    }
-});
+   router.get('/:id', function(request, response) {
+    Company.findOne({ 
+        where: {id: request.params.id},
+        include: {all: true, nested: true},
+        attributes: {exclude: ['company_type_id', 'head_office_id']}
+    })
+    .then(function(address) {
+      response.json(address);
+    })
+   });
 
-router.get('/:id/employees', async function(req, res, next){
 
-    try{
-        res.json(await employeeService.getAllForCompany(1, req.params.id));
-    } catch(err) {
-        console.error(`Error while getting employees of company id:` + req.params.id, err.message);
-    next(err);
-    }
-});
+   router.put('/:id', function(request, response) {
+    Address.update(
+      {
+          line1: request.body.head_office.address.line1,
+          line2: request.body.head_office.address.line2,
+          city: request.body.head_office.address.city,
+          county_id: request.body.head_office.address.county_id,
+          country_id: request.body.head_office.address.country_id,
+      },
+      { where: {id: request.body.head_office.address.id},
+        
+    })
+    .then(function(address) {
+      HeadOffice.update(
+        {
+          phone: request.body.head_office.phone,
+          address_id: address.id
+        },
+        {where: {id: request.body.head_office.id}}
+      )
+      .then(function(head_office) {
+        Company.update(
+          {
+            name: request.body.name,
+            company_type_id: request.body.company_type_id,
+            head_office_id: head_office.id,
+          },
+          {where: {id: request.body.id}}
+        )
+      })
+      .then(function(company){
+        response.json(company);
+      })
+    })
+   });
+
+
+   router.get('/:id/employees', function(request, response) {
+    Employee.findAll({
+        
+        where: {company_id: request.params.id},
+        include: {model: EmployeeType},
+        attributes: {exclude: ['employee_type_id']}
+    })
+    .then(function(employees) {
+      response.json(employees ? employees : []);
+    })
+   });
+
+   router.post('/:id/employee', function(request, response) {
+    Employee.create({
+        first_name: request.body.first_name,
+        last_name: request.body.last_name,
+        phone: request.body.phone,
+        employee_type_id: request.body.employee_type_id,
+        company_id: request.body.company_id
+    })
+    .then(function(employees) {
+      response.json(employees);
+    })
+   });
+
+   router.put('/:company_id/employee', function(request, response){
+
+        Employee.update({
+        
+        first_name: request.body.first_name,
+        last_name: request.body.last_name,
+        phone: request.body.phone,
+        employee_type_id: request.body.employee_type_id,
+        company_id: request.params.company_id
+        }, 
+        {where: { id: request.body.id}
+    })
+    .then(function(employee) {
+        response.json(employee);
+    })
+    });
+
+
+
 
 module.exports = router;

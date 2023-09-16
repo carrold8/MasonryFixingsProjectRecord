@@ -34,11 +34,11 @@ const { County } = require('../models/county.model');
 // });
 
 
-router.get('/api/county', function(request, response) {
-    County.findAll()
-    .then(function(county) {
-      response.json(county);
-    })
-   });
+router.get('/', function(request, response) {
+  County.findAll()
+  .then(function(county) {
+    response.json(county);
+  })
+ });
 
 module.exports = router;

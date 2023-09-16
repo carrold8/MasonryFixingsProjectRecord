@@ -8,6 +8,8 @@ function getOffset(currentPage = 1, listPerPage) {
     }
     return rows;
   }
+
+
   
   module.exports = {
     getOffset,
