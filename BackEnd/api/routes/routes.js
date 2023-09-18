@@ -14,6 +14,14 @@ const Company = require('../models/company.model').Company;
 
 const countyRouter = require('./routes.county');
 const companyRouter = require('./routes.company');
+const { User } = require('../models/user.model');
+const { Product } = require('../models/product.model');
+const { ProjectTask } = require('../models/projecttask.model');
+const { ProjectTaskProduct } = require('../models/projecttaskproduct.model');
+const { Stage } = require('../models/stage.model');
+const { Task } = require('../models/task.model');
+const { TaskType } = require('../models/tasktype.model');
+const { Project } = require('../models/project.model');
 
 module.exports = function(app) {
 
@@ -28,6 +36,7 @@ module.exports = function(app) {
 
     app.use('/county', countyRouter);
     app.use('/company', companyRouter);
+
    
     //  app.get('/company', function(request, response) {
     //   Company.findAll({
@@ -194,5 +203,94 @@ module.exports = function(app) {
           response.json(address);
         })
        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    app.get('/user', function(request, response) {
+      User.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+
+     app.get('/product', function(request, response) {
+      Product.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+     app.get('/project', function(request, response) {
+      Project.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+     app.get('/project-task', function(request, response) {
+      ProjectTask.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+     app.get('/project-task-product', function(request, response) {
+      ProjectTaskProduct.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+     app.get('/stage', function(request, response) {
+      Stage.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+     app.get('/task', function(request, response) {
+      Task.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+     app.get('/task-type', function(request, response) {
+      TaskType.findAll({
+          include: {all: true, nested: true},
+      })
+      .then(function(address) {
+        response.json(address);
+      })
+     });
+
+
+
 
    };
