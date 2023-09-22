@@ -135,6 +135,23 @@ router.get('/', function(request, response) {
     })
     });
 
+    router.put('/company/:company_id/employee', function(request, response){
+
+      Employee.update({
+        
+        first_name: request.body.first_name,
+        last_name: request.body.last_name,
+        phone: request.body.phone,
+        employee_type_id: request.body.employee_type_id,
+        company_id: request.params.company_id
+      }, 
+      {where: { id: request.body.id}
+    })
+   .then(function(employee) {
+      response.json(employee);
+    })
+   });
+
 
 
 

@@ -3,6 +3,7 @@ import { Row, Col} from 'react-bootstrap';
 import MaintenanceCard from "./HomeCards/MaintenanceCard/MaintenanceCard";
 import ProjectsCard from "./HomeCards/ProjectsCard/ProjectsCard";
 import { useNavigate } from "react-router-dom";
+import DisplayProjectTasks from "../DisplayProjectTasks/DisplayProjectTasks";
 
 
 function Home(){
@@ -24,6 +25,8 @@ function Home(){
                     <div onClick={() => navigate('companies')}>Companies</div>
                 </Col>
             </Row>
+
+            <DisplayProjectTasks projectID={1} />
 
           
         </div>

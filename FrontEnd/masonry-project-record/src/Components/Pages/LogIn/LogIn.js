@@ -12,9 +12,7 @@ function LogIn() {
     // const [invalidForm, setInvalidForm] = useState("");
 
 
-    const [countyID, setCountyID] = useState(0);
-
-    const [countyData, setCountyData] = useState([]);
+  
 
     // const [newCounty, setNewCounty] = useState('')
 
@@ -51,34 +49,7 @@ function LogIn() {
 
     }
 
-    const handleTest = (id) => {
-        
-        // const rootURL = ""
-
-        // axios.get('http://localhost:8080/county')
-        // .then((response) => {
-        //     console.log(response.data.data);
-        // })
-
-        console.log('Testing');
-        // axios.get('http://localhost:8080/county/' + id)
-        // .then((response) => {
-        //     setCountyData(response.data.data);
-        //     console.log(response.data.data);
-        // })
-        axios.get('http://localhost:8080/address')
-        .then((response) => {
-            // setCountyData(response.data.data);
-            console.log(response.data.data);
-        })
-
-        axios.get('http://localhost:8080/address/1')
-        .then((response) => {
-            // setCountyData(response.data.data);
-            console.log(response.data);
-        })
-
-    }
+    
 
     const getCompany = () => {
         axios.get('http://localhost:8080/company')
@@ -90,15 +61,6 @@ function LogIn() {
 
     return(
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: '100vh'}}>
-            <Form>
-                <Form.Control 
-                    type='number'
-                    value={countyID}
-                    onChange={(e) => setCountyID(e.target.value)}
-                />
-            </Form>
-            <Button onClick={() => handleTest(countyID)}>Test</Button>
-            {countyData.length > 0 && <h1>{countyData[0].county}</h1>}
             <Card >
             
             <Card.Body>

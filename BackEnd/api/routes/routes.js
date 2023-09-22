@@ -14,6 +14,8 @@ const Company = require('../models/company.model').Company;
 
 const countyRouter = require('./routes.county');
 const companyRouter = require('./routes.company');
+const projectRouter = require('./routes.project');
+const projectTaskRouter = require('./routes.projecttask');
 const { User } = require('../models/user.model');
 const { Product } = require('../models/product.model');
 const { ProjectTask } = require('../models/projecttask.model');
@@ -36,6 +38,8 @@ module.exports = function(app) {
 
     app.use('/county', countyRouter);
     app.use('/company', companyRouter);
+    app.use('/project', projectRouter);
+    app.use('/project-task', projectTaskRouter);
 
    
     //  app.get('/company', function(request, response) {
@@ -149,22 +153,22 @@ module.exports = function(app) {
 
 
 
-     app.put('/company/:company_id/employee', function(request, response){
+    //  app.put('/company/:company_id/employee', function(request, response){
 
-        Employee.update({
+    //     Employee.update({
           
-          first_name: request.body.first_name,
-          last_name: request.body.last_name,
-          phone: request.body.phone,
-          employee_type_id: request.body.employee_type_id,
-          company_id: request.params.company_id
-        }, 
-        {where: { id: request.body.id}
-      })
-     .then(function(employee) {
-        response.json(employee);
-      })
-     });
+    //       first_name: request.body.first_name,
+    //       last_name: request.body.last_name,
+    //       phone: request.body.phone,
+    //       employee_type_id: request.body.employee_type_id,
+    //       company_id: request.params.company_id
+    //     }, 
+    //     {where: { id: request.body.id}
+    //   })
+    //  .then(function(employee) {
+    //     response.json(employee);
+    //   })
+    //  });
 
      app.get('/address', function(request, response) {
         Address.findAll({
@@ -245,14 +249,14 @@ module.exports = function(app) {
       })
      });
 
-     app.get('/project-task', function(request, response) {
-      ProjectTask.findAll({
-          include: {all: true, nested: true},
-      })
-      .then(function(address) {
-        response.json(address);
-      })
-     });
+    //  app.get('/project-task', function(request, response) {
+    //   ProjectTask.findAll({
+    //       include: {all: true, nested: true},
+    //   })
+    //   .then(function(address) {
+    //     response.json(address);
+    //   })
+    //  });
 
      app.get('/project-task-product', function(request, response) {
       ProjectTaskProduct.findAll({
