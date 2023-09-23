@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TaskProduct from "../TaskProduct/TaskProduct";
+import axios from "axios";
 
 export default function DisplayTaskProducts({taskID}){
 
 
     //use taskID to get all the ProjectTaskProducts associated with it
 
-    const fakeProducts = [
-        {id: 1},
-        {id: 2},
-        {id: 3},
-    ]
+    const [taskProducts, setTaskProducts] = useState([])
+    const getTaskProducts = (taskID) => {
+        axios.get('http://localhost:8080/project-task/'+taskID+'/products')
+        .then((products) => {
+            setTaskProducts(products.data);
+            console.log(products.data);
+        })
+    }
+
+    useEffect(() => {
+        getTaskProducts(taskID);
+    }, [taskID])
+
 
     return(
         <div>
-            {fakeProducts.map((product) => {
+            {taskProducts.map((product) => {
                 return(
-                    <TaskProduct key={product.id} taskProductID={product.id} />
+                    <TaskProduct key={product.id} taskProduct={product} />
                 )
             }) }
         </div>

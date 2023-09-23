@@ -1,0 +1,15 @@
+
+
+.task-product-container{
+    padding: 1rem;
+    margin: 0.3rem;
+    border: 1px solid #777777;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px #777777;
+}
+
+.task-product-line{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+}

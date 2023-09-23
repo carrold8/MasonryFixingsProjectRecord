@@ -1,20 +1,17 @@
 import React from "react";
+import './TaskProduct.css' 
 
-export default function TaskProduct({taskProductID}){
+export default function TaskProduct({taskProduct}){
 
     //Use product Id to get the info related to the ProjectTaskProduct
 
-    const fakeProduct = {
-        name: 'Product ' + taskProductID,
-        quantity: taskProductID,
-        approxVal: 5,
-    }
-
     return(
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}> 
-            <div>{fakeProduct.name}</div>|
-            <div>{fakeProduct.quantity}</div>|
-            <div>{fakeProduct.approxVal}</div>|
+        <div className="task-product-container">
+        <div className="task-product-line"> 
+            <div>{taskProduct.product.name}</div>
+            <div>{taskProduct.quantity}</div>
+            <div>{taskProduct.project_task.approx_val}</div>
+        </div>
         </div>
     )
 

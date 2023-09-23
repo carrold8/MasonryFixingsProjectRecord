@@ -26,7 +26,7 @@ function Home(){
                 </Col>
             </Row>
 
-            <DisplayProjectTasks projectID={1} />
+            <DisplayProjectTasks projectID={2} />
 
           
         </div>

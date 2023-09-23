@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DisplayTaskProducts from './DisplayTaskProducts/DisplayTaskProducts';
 import axios from 'axios';
+import './ProjectTask.css';
 
 export default function ProjectTask({projectTaskID}){
 
@@ -12,11 +13,9 @@ export default function ProjectTask({projectTaskID}){
 
     const getProjectTaskInfo = (projectTaskID) => {
 
-        console.log('here')
-        axios.get('http://localhost:8080/project-task/1')
+        axios.get('http://localhost:8080/project-task/' + projectTaskID)
         .then((taskInfo) => {
             setTaskInfo(taskInfo.data);
-            console.log(taskInfo.data)
             setLoading(false);
             
         })
@@ -39,8 +38,8 @@ export default function ProjectTask({projectTaskID}){
 
     else{
         return(
-            <div>
-                <div onClick={() => setShowProducts(!showProducts)} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div className='project-task-container'>
+                <div className='project-task-line' onClick={() => setShowProducts(!showProducts)} >
 
                     <div>{taskInfo?.task.name ?? '' }</div>
                     <div>{taskInfo?.company.name ?? ''}</div>
