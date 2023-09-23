@@ -43,7 +43,6 @@ export default function Companies(){
     useEffect(() => {
         getAllCompanies();
     }, [])
-
     
     return(
         <div>

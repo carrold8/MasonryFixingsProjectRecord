@@ -16,6 +16,7 @@ const countyRouter = require('./routes.county');
 const companyRouter = require('./routes.company');
 const projectRouter = require('./routes.project');
 const projectTaskRouter = require('./routes.projecttask');
+const lookupRouter = require('./routes.lookup');
 const { User } = require('../models/user.model');
 const { Product } = require('../models/product.model');
 const { ProjectTask } = require('../models/projecttask.model');
@@ -40,6 +41,7 @@ module.exports = function(app) {
     app.use('/company', companyRouter);
     app.use('/project', projectRouter);
     app.use('/project-task', projectTaskRouter);
+    app.use('/lookup', lookupRouter);
 
    
     //  app.get('/company', function(request, response) {

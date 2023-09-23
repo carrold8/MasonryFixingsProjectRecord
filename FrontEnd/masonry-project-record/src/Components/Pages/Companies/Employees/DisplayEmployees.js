@@ -18,8 +18,10 @@ function DisplayEmployees({CompanyID}){
             last_name: lastName,
             phone: phone,
             employee_type_id: parseInt(employeeType),
-            company_id: CompanyID
+            company_id: parseInt(CompanyID)
         }
+
+        console.log(PostJSON)
 
         axios.post(
             'http://localhost:8080/company/' + CompanyID + '/employee',

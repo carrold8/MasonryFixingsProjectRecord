@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function CreateEmployee({AddNewEmployee}){
 
-    const EmployeeTypes = ['Engineer', 'Account Contact', 'Foreman', 'Architect']
+    const EmployeeTypes = ['Account Contact', 'Foreman','Safety Officer', 'Store Man', 'Architect', 'Engineer']
     const [employeeType, setEmployeeType] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -17,6 +17,8 @@ function CreateEmployee({AddNewEmployee}){
     }
     
 
+    
+
     return(
         <form onSubmit={handleSubmit}>
             <label>First Name</label>
@@ -27,7 +29,7 @@ function CreateEmployee({AddNewEmployee}){
             <label>Employee Type</label>
             <select onChange={(e) => setEmployeeType(e.target.value)} required value={employeeType} >
                 <option value={''}>Employee Type</option>
-                {EmployeeTypes.map((type, index) => {return(<option key={index} value={parseInt(index)}>{type}</option>)})}
+                {EmployeeTypes.map((type, index) => {return(<option key={index} value={parseInt(index + 1)}>{type}</option>)})}
             </select>
             <label>Phone</label>
             <input onChange={(e) => setPhone(e.target.value)} required value={phone} />

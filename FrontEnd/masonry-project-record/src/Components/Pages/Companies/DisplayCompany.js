@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import DisplayEmployees from "./Employees/DisplayEmployees";
 import { FiChevronDown, FiChevronUp} from 'react-icons/fi';
 import axios from "axios";
+import DropDown from "../../DropDown/DropDown";
+import { Button, Form } from "react-bootstrap";
 
 function DisplayCompany({CompanyData, getCompany}){
 
@@ -26,7 +28,7 @@ function DisplayCompany({CompanyData, getCompany}){
         e.stopPropagation();
 
         const postJSON = {
-            id: 1,
+            id: CompanyData.id,
             name: companyName,
             company_type_id: companyTypeID,
             head_office: {
@@ -42,10 +44,8 @@ function DisplayCompany({CompanyData, getCompany}){
                 }
             }
         }
-
-
         axios.put(
-            'http://localhost:8080/company/1',
+            'http://localhost:8080/company/' + CompanyData.id,
             postJSON,
         )
         .then((response) => {
@@ -58,73 +58,35 @@ function DisplayCompany({CompanyData, getCompany}){
 
     }
 
-    // const DisplayHeadOffice = () => {
-    //     return(
-    //         <div className="head-office-container">
-    //             <div align='right'><span onClick={() => setEdit(!edit)}>Edit</span></div>
-    //             <div>
-    //                 <label>Line 1:</label>
-    //                 {
-    //                     edit ? <div><input value={line1} onChange={(e) => setLine1(e.target.value)} /></div>
-    //                     : <div>{CompanyData.head_office.address.line1}</div>
-    //                 } 
-    //             </div>
-    //             <div>
-    //                 <label>Line 2:</label>
-    //                 {
-    //                     edit ? <div><input value={line2} onChange={(e) => setLine2(e.target.value)} /></div>
-    //                     : <div>{CompanyData.head_office.address.line2}</div>
-    //                 } 
-    //             </div>
-            
-    //             <div className="head-office-address">
-                    
-    //                 <div>
-    //                     <label>City:</label> {edit ? <input value={city} onChange={(e) => setCity(e.target.value)}/> : CompanyData.head_office.address.city}
-    //                 </div>
-    //                 <div>
-    //                     <label>County:</label> {edit ? <input value={countyID} onChange={(e) => setCountyID(e.target.value)}/> : CompanyData.head_office.address.county.county}
-    //                 </div>
-    //                 <div>
-    //                     <label>County:</label> {edit ? <input value={countryID} onChange={(e) => setCountryID(e.target.value)}/> : CompanyData.head_office.address.county.country}
-    //                 </div>
-    //                 <div>
-    //                     <label>County:</label> {edit ? <input value={phone} onChange={(e) => setPhone(e.target.value)}/> : CompanyData.head_office.phone}
-    //                 </div>
-    //             </div>
-    //             {edit && <button type="submit">Save Changes</button>}
-    //         </div>
-    //     )
-    // }
-
     return(
         <div className="company-card">
             
+            
             <div className="component-card-title">
                 <h2>{edit ? <input value={companyName} onChange={(e) => setCompanyName(e.target.value)} /> : CompanyData.name}</h2>
-                <div>{edit ? <input value={companyTypeID} onChange={(e) => setCompanyTypeID(e.target.value)} /> : CompanyData.company_type.name}</div>
+                <div>{edit ? <DropDown.CompanyType value={companyTypeID} onChange={(e) => setCompanyTypeID(e.target.value)} /> : CompanyData.company_type.name}</div>
                 <div>{showDetails ? <FiChevronUp onClick={() => setShowDetails(!showDetails)} /> : <FiChevronDown onClick={() => setShowDetails(!showDetails)} />}</div>
             </div>
             
             <div className={showDetails ? 'company-details active' : 'company-details'}>
                 <hr/>
-              
 
-                <form onSubmit={updateCompany}>
+
+                <Form onSubmit={updateCompany}>
 
                 <div className="head-office-container">
                     <div align='right'><span onClick={() => setEdit(!edit)}>Edit</span></div>
                     <div>
                         <label>Line 1:</label>
                         {
-                            edit ? <div><input value={line1} onChange={(e) => setLine1(e.target.value)} /></div>
+                            edit ? <div><Form.Control value={line1} onChange={(e) => setLine1(e.target.value)} /></div>
                             : <div>{CompanyData.head_office.address.line1}</div>
                         } 
                     </div>
                     <div>
                         <label>Line 2:</label>
                         {
-                            edit ? <div><input value={line2} onChange={(e) => setLine2(e.target.value)} /></div>
+                            edit ? <div><Form.Control value={line2} onChange={(e) => setLine2(e.target.value)} /></div>
                             : <div>{CompanyData.head_office.address.line2}</div>
                         } 
                     </div>
@@ -132,23 +94,23 @@ function DisplayCompany({CompanyData, getCompany}){
                     <div className="head-office-address">
                         
                         <div>
-                            <label>City:</label> {edit ? <input value={city} onChange={(e) => setCity(e.target.value)}/> : CompanyData.head_office.address.city}
+                            <label>City:</label> {edit ? <Form.Control required value={city} onChange={(e) => setCity(e.target.value)}/> : CompanyData.head_office.address.city}
                         </div>
                         <div>
-                            <label>County:</label> {edit ? <input value={countyID} onChange={(e) => setCountyID(e.target.value)}/> : CompanyData.head_office.address.county.county}
+                            <label>County:</label> {edit ? <DropDown.County required size='sm' value={countyID} onChange={(e) => setCountyID(e.target.value)} /> : CompanyData.head_office.address.county.county}
                         </div>
                         <div>
-                            <label>Country:</label> {edit ? <input value={countryID} onChange={(e) => setCountryID(e.target.value)}/> : CompanyData.head_office.address.country.country}
+                            <label>Country:</label> {edit ? <DropDown.Country required size='sm' value={countryID} onChange={(e) => setCountryID(e.target.value)} /> : CompanyData.head_office.address.country.country}
                         </div>
                         <div>
-                            <label>Phone:</label> {edit ? <input value={phone} onChange={(e) => setPhone(e.target.value)}/> : CompanyData.head_office.phone}
+                            <label>Phone:</label> {edit ? <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)}/> : CompanyData.head_office.phone}
                         </div>
                     </div>
-                {edit && <button type="submit">Save Changes</button>}
+                {edit && <Button size="sm" type="submit">Save Changes</Button>}
                 
               
                 </div>
-                </form>
+                </Form>
 
                 <DisplayEmployees CompanyID={CompanyData.id} />                
             </div>
