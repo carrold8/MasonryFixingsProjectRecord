@@ -21,7 +21,6 @@ function DisplayEmployees({CompanyID}){
             company_id: parseInt(CompanyID)
         }
 
-        console.log(PostJSON)
 
         axios.post(
             'http://localhost:8080/company/' + CompanyID + '/employee',

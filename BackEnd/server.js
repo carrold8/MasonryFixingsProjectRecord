@@ -58,10 +58,7 @@ const port = process.env.PORT || 8080;
 const database = require('./config/database');
 require('./api/routes/routes')(app);
 
-var corsOptions = {
-    origin: 'http://localhost:3000'
-}
-app.use(cors(corsOptions));
+
 
 app.use(function (error, request, response, next) {
  console.error(error.stack);
