@@ -63,12 +63,7 @@ router.get('/sector',  function(request, response) {
     })
 });
 
-router.get('/task-type',  function(request, response) {
-    TaskType.findAll()
-    .then(function(employeeType) {
-        response.json(employeeType);
-    })
-});
+
 
 router.get('/frame-material',  function(request, response) {
     FrameMaterial.findAll()
