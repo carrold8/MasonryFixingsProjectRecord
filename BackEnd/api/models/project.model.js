@@ -13,6 +13,10 @@ var Project = database.define('project', {
     type: DataTypes.TEXT, 
     allowNull: false 
 },
+cis_id: { 
+    type: DataTypes.TEXT, 
+    allowNull: false 
+},
 
 }, {freezeTableName: true, timestamps: false});
 

@@ -11,6 +11,7 @@ const { FloorMaterial } = require('../models/floormaterial.model');
 const { EnvelopeMaterial } = require('../models/envelopematerial.model');
 const { RoofMaterial } = require('../models/roofmaterial.model');
 const { PartitioningMaterial } = require('../models/partitioningmaterial.model');
+const { Task } = require('../models/task.model');
 const router = express.Router();
 
 
@@ -46,6 +47,13 @@ router.get('/task-type',  function(request, response) {
     TaskType.findAll()
     .then(function(taskType) {
         response.json(taskType);
+    })
+});
+
+router.get('/task',  function(request, response) {
+    Task.findAll()
+    .then(function(task) {
+        response.json(task);
     })
 });
 

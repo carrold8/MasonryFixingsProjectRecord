@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Card, Row, Col, Button, Table} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { MsnryBlue } from "../../../../Constants/Constants";
+import axios from "axios";
 
 function ProjectsTable({projectsData}){
 
+
+    const [projectList, setProjectList] = useState([]);
+
     const navigate = useNavigate();
-    const headerColumns = ["CIS ID", "Title", "Contractor", 'Engineer', 'Architect', "Current Stage"];
+    const headerColumns = ["CIS ID", "Title"];
 
-    const handleClick = (data) => {
+    const getProjectList = () => {
+        axios.get('http://localhost:8080/project')
+        .then((projects) => {
+            setProjectList(projects.data)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
 
-        localStorage.setItem("ProjectData", JSON.stringify(data));
-        navigate('stages');
+    const handleClick = (projectID) => {
+        navigate(projectID.toString());
     }
 
     const thData = () => {
@@ -25,24 +37,23 @@ function ProjectsTable({projectsData}){
 
     const tdData = () => {
 
-        return projectsData.map((data, index) => {
+        return projectList.map((project, index) => {
 
             return (
-                <tr key={index}>
-                    <td>{data.cisID}</td>
-                    <td>{data.title}</td>
-                    <td>{data.contractor}</td>
-                    <td>{data.engineer}</td>
-                    <td>{data.architect}</td>
-                    <td>{data.currentStage}</td>
-                    <td><Button size="sm" onClick={() => handleClick(data)}>Edit</Button></td>
+                <tr key={project.id}>
+                    <td>{project.cis_id}</td>
+                    <td>{project.name}</td>
+                    <td><Button size="sm" onClick={() => handleClick(project.id)}>View</Button></td>
                 </tr>
             );
 
-        })
-
-        
+        })        
     }
+
+
+    useEffect(() => {
+        getProjectList();
+    }, [])
 
     
     return(

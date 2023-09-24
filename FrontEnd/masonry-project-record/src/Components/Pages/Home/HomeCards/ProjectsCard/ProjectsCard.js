@@ -10,7 +10,7 @@ function ProjectsCard(){
     const navigate = useNavigate();
 
     return(
-        <Card className="project-card" style={{borderRadius: 0}} onClick={() => navigate('/projects')}>
+        <Card className="project-card" style={{borderRadius: 0}} onClick={() => navigate('/project')}>
             <Card.Header className="header">Testing</Card.Header>
             <Card.Body>
                 <h1> My Projects </h1>
