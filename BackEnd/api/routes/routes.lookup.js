@@ -64,7 +64,6 @@ router.get('/sector',  function(request, response) {
 });
 
 
-
 router.get('/frame-material',  function(request, response) {
     FrameMaterial.findAll()
     .then(function(frameMaterial) {
