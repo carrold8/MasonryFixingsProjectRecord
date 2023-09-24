@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 
-export default function EmployeeTypeDropDown(props){
+export default function TaskTypeDropDown(props){
 
     const [taskTypeData, setTaskTypeData] = useState([]);
     
