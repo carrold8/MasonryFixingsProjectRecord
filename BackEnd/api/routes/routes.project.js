@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/',  function(request, response) {
     Project.findAll({ 
-        include: {all: true, nested: true},
+        // include: {all: true, nested: true},
     })
     .then(function(projects) {
       response.json(projects);
