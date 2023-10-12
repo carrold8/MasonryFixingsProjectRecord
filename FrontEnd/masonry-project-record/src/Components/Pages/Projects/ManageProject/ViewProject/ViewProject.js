@@ -1,60 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DisplayProjectTasks from "../../../DisplayProjectTasks/DisplayProjectTasks";
+import ViewProjectInfo from "./ViewProjectInfo/ViewProjectInfo";
+import axios from "axios";
+import { useParams } from 'react-router-dom';
+import ViewProjectContacts from "./ViewProjectContacts/ViewProjectContacts";
+import ViewProjectInduction from "./ViewProjectInduction/ViewProjectInduction";
+import ViewProjectAnchorTraining from "./ViewProjectAnchorTraining/ViewProjectAnchorTraining";
 
 export default function ViewProject(){
 
+    const params = useParams();
 
-    return(
-        <div>
+    const [loading, setLoading] = useState(true);
+    const [projectInfo, setProjectInfo] = useState();
+    
+    const getProjectInfo = (projectID) => {
+        axios.get('http://localhost:8080/project/' + projectID )
+        .then((project) => {
+            setProjectInfo(project.data);
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
 
-            <h3>Project Info</h3>
-            <div>Name:</div>
-            <div>CIS ID:</div>
-            <div>Category</div>
-            <div>Sector</div>
+    useEffect(() => {
+        getProjectInfo(params.ProjectID);
+    }, [params.ProjectID])
 
-            <h3>Induction</h3>
-            <div>Basic Induction stuff</div>
-            <div>Table of staff that have completed it</div>
+    if(loading){
+        return(
+            <div>Loading</div>
+        )
+    }
+    else{
+    
+        return(
+            <div>
+
+                <ViewProjectInfo projectInfo={projectInfo}/>
+
+                
 
 
-            <h3>Building Description</h3>
-            <div>Long text box</div>
+                <ViewProjectContacts projectInfo={projectInfo}/>
 
-            <h3>More details</h3>
-            <div>Footprint etc </div>
-            <div>Materials</div>
+                <ViewProjectInduction projectInfo={projectInfo} />
 
-            <h3>Companies</h3>
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
-                <div>
-                    <h5>Contractor</h5>
-                    <div>Company</div>
-                    <div>Person</div>
-                </div>
+                <ViewProjectAnchorTraining projectInfo={projectInfo} />
 
-                <div>
-                    <h5>Engineer</h5>
-                    <div>Company</div>
-                    <div>Person</div>
-                </div>
+                <h3>Tasks</h3>
+                <DisplayProjectTasks projectID={1} />
 
-                <div>
-                    <h5>Architect</h5>
-                    <div>Company</div>
-                    <div>Person</div>
-                </div>
+                <h3>Calendar</h3>
+                <div>Calendar based off times of the tasks</div>
             </div>
-
-            <h3>Anchor Training</h3>
-            <div>Table of what has and has not been completed</div>
-
-            <h3>Tasks</h3>
-            <DisplayProjectTasks projectID={1} />
-
-            <h3>Calendar</h3>
-            <div>Calendar based off times of the tasks</div>
-        </div>
-    )
+        )
+    }
 
 }

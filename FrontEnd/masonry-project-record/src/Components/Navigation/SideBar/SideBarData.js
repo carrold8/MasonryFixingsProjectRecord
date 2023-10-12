@@ -13,7 +13,7 @@ export const SideBarData = [
     },
     {
         title: 'Projects',
-        path: '/projects',
+        path: '/project',
         icon: <IoIcons.IoIosConstruct/>,
         cName: 'nav-text',
     },

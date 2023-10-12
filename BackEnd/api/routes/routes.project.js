@@ -17,7 +17,16 @@ router.get('/',  function(request, response) {
       response.json(projects);
     })
    });
-
+   
+   router.get('/:projectID',  function(request, response) {
+    Project.findOne({ 
+        // include: {all: true, nested: true},
+        where: {id: request.params.projectID},
+    })
+    .then(function(project) {
+      response.json(project);
+    })
+   });
 router.post('/',  function(request, response) {
 Project.create({ 
    name: request.body.name,
