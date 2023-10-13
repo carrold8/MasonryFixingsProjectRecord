@@ -7,6 +7,8 @@ const { HeadOffice } = require('../models/headoffice.model');
 const {Address} = require('../models/address.model');
 const { Employee } = require('../models/employee.model');
 const { EmployeeType } = require('../models/employeetype.model');
+const { CompanyCompanyType } = require('../models/companycompanytype.model');
+const { CompanyType } = require('../models/companytype.model');
 
 router.get('/', function(request, response) {
     Company.findAll({
@@ -48,10 +50,23 @@ router.get('/', function(request, response) {
     Company.findOne({ 
         where: {id: request.params.id},
         include: {all: true, nested: true},
+        // include: [
+          // {model: CompanyCompanyType, as: 'types'}],
+        // include: {model: CompanyCompanyType},
+        // include: {model: CompanyCompanyType.findAll({where: {company_id: request.params.id}})},
         attributes: {exclude: ['company_type_id', 'head_office_id']}
     })
-    .then(function(address) {
-      response.json(address);
+    .then(function(company) {
+      response.json(company);
+      // CompanyCompanyType.findAll({
+      //   where: {company_id: company.id},
+      //   include: [{model: CompanyType, attributes: ['id','name']}],
+      //   attributes: {exclude: ['company_id', 'company_type_id']}
+      // })
+      // .then(function(types){
+      //   company.test = types;
+      //   response.json(company);
+      // })
     })
    });
 

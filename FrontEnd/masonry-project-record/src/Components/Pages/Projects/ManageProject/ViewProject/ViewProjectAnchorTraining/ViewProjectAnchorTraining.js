@@ -24,9 +24,9 @@ export default function ViewProjectAnchorTraining({projectInfo}){
                     <div>No Anchor Training Provided Yet</div>
                     :
                     <div>
-                        {anchorTrainingData.map((training) => {
+                        {anchorTrainingData.map((training, index) => {
                             return(
-                                <div>Anchor Training Item</div>
+                                <div key={index}>Anchor Training Item</div>
                             )
                         })}
                     </div>

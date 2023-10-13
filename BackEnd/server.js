@@ -56,9 +56,72 @@ const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 8080;
 const database = require('./config/database');
+const sequelize = require('sequelize');
+
+
 require('./api/routes/routes')(app);
 
+const{ County } = require('./api/models/county.model');
+const{ Country } = require('./api/models/country.model');
+const{ Address } = require('./api/models/address.model');
+const{ HeadOffice } = require('./api/models/headoffice.model');
+const{ CompanyType } = require('./api/models/companytype.model');
+const{ Company } = require('./api/models/company.model');
+const{ Stage } = require('./api/models/stage.model');
+const{ Task }= require('./api/models/task.model');
+const{ TaskType } = require('./api/models/tasktype.model');
+const { User } = require('./api/models/user.model');
+const { Employee } = require('./api/models/employee.model');
+const { EmployeeType } = require('./api/models/employeetype.model');
+const { Category } = require('./api/models/category.model');
+const { Sector } = require('./api/models/sector.model');
+const { EnvelopeMaterial } = require('./api/models/envelopematerial.model');
+const { FloorMaterial } = require('./api/models/floormaterial.model');
+const { FrameMaterial } = require('./api/models/framematerial.model');
+const { PartitioningMaterial } = require('./api/models/partitioningmaterial.model');
+const { Product } = require('./api/models/product.model');
+const { RoofMaterial } = require('./api/models/roofmaterial.model');
+const { Project } = require('./api/models/project.model');
+const { ProjectTask } = require('./api/models/projecttask.model');
+const { ProjectTaskProduct } = require('./api/models/projecttaskproduct.model');
+const { InductionRegister } = require('./api/models/inductionregister.model');
+const { AnchorTraining } = require('./api/models/anchortraining.model');
 
+
+const databaseSync = () => {
+
+    County.sync();
+    County.sync();
+    Country.sync();
+    Address.sync();
+    HeadOffice.sync();
+    CompanyType.sync();
+    Company.sync();
+    EmployeeType.sync();
+    Employee.sync();
+    Stage.sync();
+    Task.sync();
+    TaskType.sync();
+    User.sync();
+    Category.sync();
+    Sector.sync();
+    EnvelopeMaterial.sync();
+    FloorMaterial.sync();
+    FrameMaterial.sync();
+    PartitioningMaterial.sync();
+    Product.sync();
+    RoofMaterial.sync();
+    Project.sync();
+    ProjectTask.sync();
+    ProjectTaskProduct.sync();
+    InductionRegister.sync();
+    AnchorTraining.sync();
+
+    
+}
+
+
+// databaseSync();
 
 app.use(function (error, request, response, next) {
  console.error(error.stack);
