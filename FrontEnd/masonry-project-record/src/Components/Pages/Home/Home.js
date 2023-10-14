@@ -26,9 +26,6 @@ function Home(){
                 </Col>
             </Row>
 
-            <DisplayProjectTasks projectID={1} />
-
-          
         </div>
     );
 }

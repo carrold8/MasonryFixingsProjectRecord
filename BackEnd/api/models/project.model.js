@@ -29,7 +29,8 @@ cis_id: {
 },
 completed: { 
     type: DataTypes.BOOLEAN, 
-    allowNull: false 
+    allowNull: false,
+    defaultValue: false
 },
 address_id: { 
     type: DataTypes.INTEGER, 
@@ -57,7 +58,8 @@ engineer_id: {
 },
 contacted_engineer: { 
     type: DataTypes.BOOLEAN, 
-    allowNull: false 
+    allowNull: false,
+    defaultValue: false
 },
 category_id: { 
     type: DataTypes.INTEGER, 
@@ -69,7 +71,7 @@ sector_id: {
 },
 start_date: { 
     type: DataTypes.DATE, 
-    allowNull: false 
+    allowNull: false
 },
 end_date: { 
     type: DataTypes.DATE, 
@@ -77,7 +79,8 @@ end_date: {
 },
 induction_required: { 
     type: DataTypes.BOOLEAN, 
-    allowNull: false 
+    allowNull: false,
+    defaultValue: true
 },
 induction_provided: { 
     type: DataTypes.STRING, 

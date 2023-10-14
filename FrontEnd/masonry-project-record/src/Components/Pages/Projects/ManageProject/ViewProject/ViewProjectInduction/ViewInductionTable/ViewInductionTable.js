@@ -27,18 +27,18 @@ export default function ViewInductionTable({projectID}){
     const ColumnHeaderData = ['Name', 'Date']
 
     const thData = () => {
-        return ColumnHeaderData.map((header) => {
+        return ColumnHeaderData.map((header, index) => {
             return(
-                <th>{header}</th>
+                <th key={index}>{header}</th>
             )
         })
     }
 
     const tdData = () => {
 
-        return inductionInfo.map((inductee) => {
+        return inductionInfo.map((inductee, index) => {
             return(
-                <tr>
+                <tr key={index}>
                     <td>{inductee.user.name}</td>
                     <td>{inductee.date}</td>
                 </tr>

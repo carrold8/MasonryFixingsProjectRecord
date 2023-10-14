@@ -16,7 +16,6 @@ export default function DisplayProjectTasks({projectID}){
         axios.get('http://localhost:8080/project/' + projectID +'/tasks')
         .then((projectTasks) => {
             setProjectTasks(projectTasks.data);
-            console.log(projectTasks.data)
         })
         .catch((err) => {
             console.log(err)
