@@ -69,10 +69,10 @@ router.post('/',  function(request, response) {
         storeman_id: request.body.storeman_id,
 
     }            
-)})
-.then(function(newProject) {
+).then(function(newProject) {
     response.json(newProject);
-})
+})})
+
 });
 
 router.get('/:projectID/tasks',  function(request, response) {

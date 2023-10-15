@@ -4,12 +4,12 @@ import { Form } from 'react-bootstrap'
 
 export default function RoofMatrialsDropDown(props){
 
-    const [roofeMaterialData, setRoofMaterialData] = useState([]);
+    const [roofMaterialData, setRoofMaterialData] = useState([]);
     
     const getRoofMaterialData = () => {
         axios.get('http://localhost:8080/lookup/roof-material')
         .then((roofMaterial) => {
-            setEnvelopeMaterialData(roofMaterial.data)
+            setRoofMaterialData(roofMaterial.data)
         })
         .catch((err) => {
             console.log(err);

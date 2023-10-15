@@ -1,11 +1,21 @@
+import axios from "axios";
 import React, { useState } from "react";
+import DropDown from "../../DropDown/DropDown";
+import { Form } from "react-bootstrap";
 
 export default function CreateCompany({CompanyData, setCompanyData}){
 
 
     const [name, setName] = useState('');
-    const [companyType, setComanyType] = useState('');
-    const headOfficeID = 1;
+    const [companyTypeID, setComanyTypeID] = useState(0);
+
+    const [phone, setPhone] = useState('');
+    const [line1, setLine1] = useState('');
+    const [line2, setLine2] = useState('');
+    const [city, setCity] = useState('');
+    const [countyID, setCountyID] = useState(0);
+    const [countryID, setCountryID] = useState(0);
+
 
 
 
@@ -13,17 +23,37 @@ export default function CreateCompany({CompanyData, setCompanyData}){
 
         e.preventDefault();
         e.stopPropagation();
-        const tempData = [...CompanyData];
-        tempData.push(
-            {
-                id: tempData.length + 1,
-                name: name,
-                companyType: companyType,
-                headOfficeID: headOfficeID,
+        
+        const addressJSON = {
+            line1: line1,
+            line2: line2,
+            city: city,
+            county_id: countyID,
+            country_id: countryID,
+        }
+
+        const headOffice = {
+            phone: phone,
+            address: addressJSON
+        }
+
+        const postJSON = {
+            name: name,
+            company_type_id: companyTypeID,
+            head_office: headOffice
+        }
+
+        axios.post('http://localhost:8080/company', postJSON)
+        .then((response) => {
+            console.log(response);
+            if(response.status === 200){
+                console.log('success');
             }
-        )
-        console.log(tempData);
-        setCompanyData(tempData)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        
 
     }
 
@@ -34,15 +64,29 @@ export default function CreateCompany({CompanyData, setCompanyData}){
             <input onChange={(e) => setName(e.target.value)} required value={name} />
 
             <label>Type:</label>
-            <select onChange={(e) => setComanyType(e.target.value)} required value={companyType}>
-                <option value={''}>Type</option>
-                <option value={1}>Contractor</option>
-                <option value={2}>Engineering</option>
-                <option value={3}>Architect</option>
-            </select>
+            <DropDown.CompanyType value={companyTypeID} onChange={(e) => setComanyTypeID(e.target.value)} />
 
-            <label>headOfficeID:</label>
-            <input defaultValue={headOfficeID} />
+            <label>Head Office:</label>
+            <div>Phone:</div>
+            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)} />
+            
+            <h4>Address</h4>
+                <hr/>
+                <div>Line 1</div>
+                <Form.Control required value={line1} onChange={(e) => setLine1(e.target.value)} />
+
+                <div>Line 2</div>
+                <Form.Control required value={line2} onChange={(e) => setLine2(e.target.value)} />
+
+                <div>City</div>
+                <Form.Control required value={city} onChange={(e) => setCity(e.target.value)} />
+
+                <div>County</div>
+                <DropDown.County required value={countyID} onChange={(e) => setCountyID(e.target.value)} />
+
+                <div>County</div>
+                <DropDown.Country required value={countryID} onChange={(e) => setCountryID(e.target.value)} />
+
 
             <button type="submit">Create</button>
         </form>

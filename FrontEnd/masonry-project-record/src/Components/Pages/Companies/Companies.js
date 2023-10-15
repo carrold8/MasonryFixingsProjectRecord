@@ -3,28 +3,13 @@ import './Companies.css';
 import CreateCompany from './CreateCompany';
 import DisplayCompany from './DisplayCompany';
 import axios from 'axios';
+import DropDown from '../../DropDown/DropDown';
 
 export default function Companies(){
 
-    const [companyTypeID, setCompanyTypeID] = useState(0);
+    const [companyTypeID, setCompanyTypeID] = useState('');
     const [addNew, setAddNew] = useState(false);
-
-    const CompanyTypes = [
-        {
-            id: 1,
-            name: 'Contractor'
-        },
-        {
-            id: 2,
-            name: 'Engineering'
-        },
-        {
-            id: 3,
-            name: 'Architecture'
-        }
-    ]
-    
-    
+       
     const [CompaniesData, setCompaniesData] =  useState([])
 
 
@@ -47,18 +32,10 @@ export default function Companies(){
     return(
         <div>
             <div>{CompaniesData.length} companies</div>
-            <div onClick={() => setAddNew(true)}>Create new company</div>
+            <div onClick={() => setAddNew(!addNew)}>Create new company</div>
 
             <div>
-                <select value={companyTypeID} onChange={(e) => setCompanyTypeID(parseInt(e.target.value))}>
-                    <option value={0}>Comany Type</option>
-                
-                {CompanyTypes.map((companyType) => {
-                    return(
-                        <option key={companyType.id} value={companyType.id}>{companyType.name}</option>
-                    )
-                })}
-                </select>
+                <DropDown.CompanyType value={companyTypeID} onChange={(e) => setCompanyTypeID(e.target.value)} /> 
             </div>
 
             {addNew && 
@@ -66,7 +43,7 @@ export default function Companies(){
                     <CreateCompany setCompanyData={setCompaniesData} CompanyData={CompaniesData} /> 
                 </div>
             }
-            {companyTypeID === 0 ?
+            {companyTypeID === '' ?
 
                 <div className='company-display'>
                     {CompaniesData.map((company) => {
