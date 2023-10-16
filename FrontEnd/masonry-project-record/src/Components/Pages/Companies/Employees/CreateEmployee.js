@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import DropDown from "../../../DropDown/DropDown";
 
 function CreateEmployee({AddNewEmployee}){
-
-    const EmployeeTypes = ['Account Contact', 'Foreman','Safety Officer', 'Store Man', 'Architect', 'Engineer']
+    
     const [employeeType, setEmployeeType] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -27,10 +27,7 @@ function CreateEmployee({AddNewEmployee}){
             <input onChange={(e) => setLastName(e.target.value)} required value={lastName} />
 
             <label>Employee Type</label>
-            <select onChange={(e) => setEmployeeType(e.target.value)} required value={employeeType} >
-                <option value={''}>Employee Type</option>
-                {EmployeeTypes.map((type, index) => {return(<option key={index} value={parseInt(index + 1)}>{type}</option>)})}
-            </select>
+            <DropDown.EmployeeType required value={employeeType} onChange={(e) => setEmployeeType(e.target.value)} />
             <label>Phone</label>
             <input onChange={(e) => setPhone(e.target.value)} required value={phone} />
             <button type="submit">Create</button>

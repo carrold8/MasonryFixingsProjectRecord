@@ -12,6 +12,8 @@ const { EnvelopeMaterial } = require('../models/envelopematerial.model');
 const { RoofMaterial } = require('../models/roofmaterial.model');
 const { PartitioningMaterial } = require('../models/partitioningmaterial.model');
 const { Task } = require('../models/task.model');
+const { User } = require('../models/user.model');
+const { Stage } = require('../models/stage.model');
 const router = express.Router();
 
 
@@ -104,6 +106,20 @@ router.get('/partitioning-material',  function(request, response) {
     PartitioningMaterial.findAll()
     .then(function(partitioningMaterial) {
         response.json(partitioningMaterial);
+    })
+});
+
+router.get('/users',  function(request, response) {
+    User.findAll()
+    .then(function(users) {
+        response.json(users);
+    })
+});
+
+router.get('/stage',  function(request, response) {
+    Stage.findAll()
+    .then(function(stages) {
+        response.json(stages);
     })
 });
 

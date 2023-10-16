@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ProjectTask from './ProjectTask/ProjectTask'
 import axios from 'axios'
+import AddProjectTask from './AddProjectTask';
 
 export default function DisplayProjectTasks({projectID}){
 
     const [stageID, setStageID] = useState(0);
+    const [addNew, setAddNew] = useState(false);
 
     //use projectId to make a call to get all tasks associated with the project.
 
@@ -20,6 +22,11 @@ export default function DisplayProjectTasks({projectID}){
         .catch((err) => {
             console.log(err)
         })
+    }
+
+    const handleAddNew = () => {
+        setAddNew(false);
+        getProjectTasks(projectID);
     }
 
 
@@ -39,6 +46,7 @@ export default function DisplayProjectTasks({projectID}){
                 <option value={4}>Stage 4</option>
             </select>
 
+            <span onClick={() => setAddNew(!addNew)}>Add</span>
 
 
             {stageID > 0 ? 
@@ -58,6 +66,8 @@ export default function DisplayProjectTasks({projectID}){
                     )
                 })
         }
+
+        {addNew && <AddProjectTask projectID={projectID} handleAddNew={handleAddNew} />}
 
 
 

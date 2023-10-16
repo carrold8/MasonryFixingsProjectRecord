@@ -17,6 +17,7 @@ const companyRouter = require('./routes.company');
 const projectRouter = require('./routes.project');
 const projectTaskRouter = require('./routes.projecttask');
 const lookupRouter = require('./routes.lookup');
+const maintenanceRouter = require('./routes.maintenance');
 const { User } = require('../models/user.model');
 const { Product } = require('../models/product.model');
 const { ProjectTask } = require('../models/projecttask.model');
@@ -42,6 +43,7 @@ module.exports = function(app) {
     app.use('/project', projectRouter);
     app.use('/project-task', projectTaskRouter);
     app.use('/lookup', lookupRouter);
+    app.use('/maintenance', maintenanceRouter);
 
    
     //  app.get('/company', function(request, response) {

@@ -48,7 +48,7 @@ export default function ViewProject(){
                 <ViewProjectAnchorTraining projectInfo={projectInfo} />
 
                 <h3>Tasks</h3>
-                <DisplayProjectTasks projectID={2} />
+                <DisplayProjectTasks projectID={projectInfo.id} />
 
                 <h3>Calendar</h3>
                 <div>Calendar based off times of the tasks</div>

@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {Table} from 'react-bootstrap'  
+import AddInduction from "../AddInduction/AddInduciton";
 
 export default function ViewInductionTable({projectID}){
 
 
     const [loading, setLoading] = useState(true);
     const [inductionInfo, setInductionInfo] = useState([]);
+    const [addIndcution, setAddIndcution] = useState(false);
     
     const getInductions = (projectID) => {
         axios.get('http://localhost:8080/project/' + projectID + '/inductions')
@@ -22,6 +24,11 @@ export default function ViewInductionTable({projectID}){
     useEffect(() => {
         getInductions(projectID);
     }, [projectID])
+
+    const handleAddNew = () => {
+        setAddIndcution(false);
+        getInductions(projectID);
+    }
 
 
     const ColumnHeaderData = ['Name', 'Date']
@@ -50,26 +57,27 @@ export default function ViewInductionTable({projectID}){
         return(<div>Loading...</div>)
     }
     else{
+        return(
+            <div>
+                <span onClick={() => setAddIndcution(!addIndcution)}>Add</span>
+                <Table striped hover>
+                    <thead>
+                    <tr>{thData()}</tr>
+                    </thead>
+                    <tbody>
+                        {
+                            inductionInfo.length === 0 ?
+                            <tr><td>No inductions</td></tr>
+                            :
+                            <>{tdData()}</>
+                        }
 
-        if(inductionInfo.length === 0){
-            return(
-                <div>Nobody has been inducted yet</div>
-            )
-        }
-        else{
-            return(
-                <div>
-                    <Table striped hover>
-                        <thead>
-                        <tr>{thData()}</tr>
-                        </thead>
-                        <tbody>
-                            {tdData()}
-                        </tbody>
-                    </Table>
-                </div>
-            )
-            }
+                        {addIndcution && <AddInduction projectID={projectID} handleAddNew={handleAddNew} />}
+                    </tbody>
+                </Table>
+            </div>
+        )
+            
     }
 
 }

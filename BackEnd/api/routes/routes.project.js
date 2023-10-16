@@ -123,6 +123,16 @@ router.get('/:projectID/inductions',  function(request, response) {
         response.json(inductions);
     })
 });
+router.post('/:projectID/inductions',  function(request, response) {
+    InductionRegister.create({ 
+        project_id: request.params.projectID,
+        user_id: request.body.user_id,
+        date: request.body.date
+    })
+    .then(function(inductions) {
+        response.json(inductions);
+    })
+});
 
 router.get('/:projectID/anchor-training',  function(request, response) {
     AnchorTraining.findAll({ 
@@ -130,8 +140,60 @@ router.get('/:projectID/anchor-training',  function(request, response) {
         include: [{model: User, attributes: ['name']}],
         attributes: ['id', 'date', 'note']
     })
-    .then(function(inductions) {
-        response.json(inductions);
+    .then(function(anchorTraining) {
+        response.json(anchorTraining);
+    })
+});
+
+router.post('/:projectID/anchor-training', function(request, response){
+    AnchorTraining.create({
+        project_id: request.params.projectID,
+        user_id: request.body.user_id,
+        date: request.body.date,
+        note: request.body.note
+    })
+    .then(function(anchorTraining){
+        response.json(anchorTraining);
+    })
+});
+
+router.put('/:projectID/title-info',  function(request, response) {
+    Project.update(
+        { 
+            name: request.body.name,
+            cis_id: request.body.cis_id,
+            applicant: request.body.applicant,
+            category_id: request.body.category_id,
+            sector_id: request.body.sector_id,
+            building_description: request.body.building_description,
+            footprint: request.body.footprint
+        },
+        {where: {id: request.params.projectID}
+    })
+    .then(function(project) {
+        response.json(project);
+    })
+});
+
+
+router.put('/:projectID/contacts',  function(request, response) {
+    Project.update(
+        { 
+            architect_company_id: request.body.architect_company_id,
+            architect_id: request.body.architect_id,
+            engineering_company_id: request.body.engineering_company_id,
+            engineer_id: request.body.engineer_id,
+            contacted_engineer: request.body.contacted_engineer,
+            main_contractor_id: request.body.main_contractor_id,
+            account_contact_id: request.body.account_contact_id,
+            foreman_id: request.body.foreman_id,
+            safety_officer_id: request.body.safety_officer_id,
+            storeman_id: request.body.storeman_id
+        },
+        {where: {id: request.params.projectID}
+    })
+    .then(function(project) {
+        response.json(project);
     })
 });
 

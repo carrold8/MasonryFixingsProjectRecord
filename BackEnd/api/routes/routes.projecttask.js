@@ -23,6 +23,18 @@ router.get('/:projectTaskID/products',  function(request, response) {
     })
 });
 
+router.post('/:projectTaskID/products',  function(request, response) {
+    ProjectTaskProduct.create({ 
+        project_task_id: request.params.projectTaskID,
+        product_id: request.body.product_id,
+        quantity: request.body.quantity,
+        user_id: request.body.user_id
+    })
+    .then(function(projectTasksProducts) {
+        response.json(projectTasksProducts);
+    })
+});
+
 
 
 module.exports = router;
