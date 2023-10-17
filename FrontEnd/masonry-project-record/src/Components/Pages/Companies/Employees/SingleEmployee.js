@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import DropDown from "../../../DropDown/DropDown";
 
 function SingleEmployee({employeeData, getEmployee}){
 
@@ -43,7 +44,7 @@ function SingleEmployee({employeeData, getEmployee}){
        
             <div>{edit ? <input value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : employeeData.first_name} </div> 
             <div>{edit ? <input value={lastName} onChange={(e) => setLastName(e.target.value)} /> : employeeData.last_name} </div> 
-            <div>{edit ? <input value={employeeTypeID} onChange={(e) => setEmployeeTypeID(e.target.value)} /> : employeeData.employee_type.name}</div> 
+            <div>{edit ? <DropDown.EmployeeType value={employeeTypeID} onChange={(e) => setEmployeeTypeID(e.target.value)} /> : employeeData.employee_type.name}</div> 
             <div>{edit ? <input value={phone} onChange={(e) => setPhone(e.target.value)} /> : employeeData.phone}</div> 
             {edit ? 
                 <div><button type="submit">Save</button> <button onClick={() => setEdit(false)}>Cancel</button></div>

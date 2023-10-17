@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserMaintenance from "./UserMaintenance/UserMaintenance";
 import CategorySectorMaintenance from "./CategorySectorMaintenance/CategorySectorMaintenance";
-import CompanyTypeMaintenance from "../CompanyTypeMaintenance/CompanyTypeMaintenance";
+import CompanyTypeMaintenance from "./CompanyTypeMaintenance/CompanyTypeMaintenance";
 import MaterialsMaintenance from "./MaterialsMaintenance/MaterialsMaintenance";
 import EmployeeTypeMaintenance from "./EmployeeTypeMaintenance/EmployeeTypeMaintenance";
 import TaskMaintenance from "./TaskMaintenance/TaskMaintenance";

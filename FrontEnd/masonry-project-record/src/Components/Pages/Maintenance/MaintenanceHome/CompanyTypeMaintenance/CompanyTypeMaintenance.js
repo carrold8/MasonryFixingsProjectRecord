@@ -1,17 +1,18 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CreateEmployeeType from "./CreateEmployeeType/CreateEmployeeType";
+import axios from 'axios';
+import CreateCompanyType from "./CreateCompanyType/CreateCompanyType";
 
-export default function EmployeeTypeMaintenance(){
+export default function CompanyTypeMaintenance(){
 
-    const [employeeTypeData, setEmployeeTypeData] = useState([]);
+    const [companyTypeData, setCompTypeData] = useState([]);
     const [addNew, setAddNew] = useState(false);
 
-    const getEmployeeTypes = () => {
-        axios.get('http://localhost:8080/lookup/employee-type')
+    const getCompanyTypeData = () => {
+
+        axios.get('http://localhost:8080/lookup/company-type')
         .then((response) => {
             if(response.status === 200){
-                setEmployeeTypeData(response.data);
+                setCompTypeData(response.data);
             }
         })
         .catch((err) => {
@@ -19,26 +20,27 @@ export default function EmployeeTypeMaintenance(){
         })
     }
 
+
     const handleAddNew = () => {
         setAddNew(false);
-        getEmployeeTypes();
+        getCompanyTypeData();
     }
 
     useEffect(() => {
-        getEmployeeTypes();
+        getCompanyTypeData();
     }, [])
 
     return(
         <div>
-            <h5>Employee Types</h5>
+            <h5>Company Types</h5>
             <span onClick={() => setAddNew(!addNew)}>Add</span>
-            {employeeTypeData.map((type) => {
+            {companyTypeData.map((type) => {
                 return(
                     <div key={type.id}>{type.name}</div>
                 )
             })}
 
-            {addNew && <CreateEmployeeType handleAddNew={handleAddNew} />}
+            {addNew && <CreateCompanyType handleAddNew={handleAddNew} />} 
         </div>
     )
 }
