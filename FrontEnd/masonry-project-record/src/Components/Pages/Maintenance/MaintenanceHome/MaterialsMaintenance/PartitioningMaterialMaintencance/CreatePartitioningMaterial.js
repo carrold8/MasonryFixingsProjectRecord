@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
-export default function CreateCompanyType({handleAddNew}){
+export default function CreatePartitioningMaterial({handleAddNew}){
 
     const [name, setName] = useState('')
 
@@ -14,9 +14,9 @@ export default function CreateCompanyType({handleAddNew}){
             name: name
         }
 
-        axios.post('http://localhost:8080/maintenance/company-type', postJSON)
+        axios.post('http://localhost:8080/maintenance/partitioning-material', postJSON)
         .then((response) => {
-            if(response.status){
+            if(response.status === 200){
                 handleAddNew();
             }
         })
@@ -28,7 +28,7 @@ export default function CreateCompanyType({handleAddNew}){
     return(
         <Form onSubmit={handleSubmit}>
             <Form.Group as={Row}>
-                <Form.Label column sm={3}>New Company Type:</Form.Label>
+                <Form.Label column sm={3}>New Partitioning Material:</Form.Label>
                 <Col>
                     <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>

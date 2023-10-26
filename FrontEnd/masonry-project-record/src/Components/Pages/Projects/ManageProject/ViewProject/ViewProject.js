@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import ViewProjectContacts from "./ViewProjectContacts/ViewProjectContacts";
 import ViewProjectInduction from "./ViewProjectInduction/ViewProjectInduction";
 import ViewProjectAnchorTraining from "./ViewProjectAnchorTraining/ViewProjectAnchorTraining";
+import ViewProjectMaterials from "./ViewProjectMaterials/ViewProjectMaterials";
 
 export default function ViewProject(){
 
@@ -40,7 +41,10 @@ export default function ViewProject(){
             <div>
 
                 <ViewProjectInfo projectInfo={projectInfo}/>
-                
+
+                <div style={{width: '33%'}}>
+                <ViewProjectMaterials projectInfo={projectInfo} />
+                </div>
                 <ViewProjectContacts projectInfo={projectInfo}/>
 
                 <ViewProjectInduction projectInfo={projectInfo} />

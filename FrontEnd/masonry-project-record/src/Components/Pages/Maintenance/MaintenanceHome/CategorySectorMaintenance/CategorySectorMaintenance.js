@@ -4,7 +4,7 @@ import CategoryMaintenance from "./CategoryMaintenance/CategoryMaintenance";
 export default function CategorySectorMaintenance(){
 
     return(
-        <div>
+        <div style={{backgroundColor: '#77777722'}}>
             <CategoryMaintenance/>
         </div>
     )

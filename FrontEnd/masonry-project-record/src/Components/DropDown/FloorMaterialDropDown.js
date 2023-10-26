@@ -28,6 +28,7 @@ export default function FloorMatrialsDropDown(props){
             onChange={props.onChange}
             size={props.size}
             required={props.required}
+            disabled={props.disabled}
         >
             <option value={''}>Floor Material</option>
             {floorMaterialData.map((floorMaterial) => {

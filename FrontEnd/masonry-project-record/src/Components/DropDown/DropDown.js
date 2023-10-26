@@ -15,6 +15,7 @@ import PartitioningMatrialsDropDown from './PartitioningMaterialDropDown';
 import UsersDropDown from './UsersDropDown';
 import TaskDropDown from './TaskDropDown';
 import TaskTypeDropDown from './TaskTypeDropDown';
+import StageDropDown from './StageDropDown';
 
 export default function DropDown(props){
 
@@ -38,6 +39,7 @@ DropDown.FrameMaterial = FrameMaterialDropDown;
 DropDown.RoofMaterial = RoofMatrialsDropDown;
 DropDown.PartitioningMaterial = PartitioningMatrialsDropDown;
 DropDown.Sector = SectorDropDown;
+DropDown.Stage = StageDropDown;
 DropDown.Task = TaskDropDown;
 DropDown.TaskType = TaskTypeDropDown;
 DropDown.Users = UsersDropDown;

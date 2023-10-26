@@ -28,6 +28,7 @@ export default function RoofMatrialsDropDown(props){
             onChange={props.onChange}
             size={props.size}
             required={props.required}
+            disabled={props.disabled}
         >
             <option value={''}>Roof Material</option>
             {roofMaterialData.map((roofMaterial) => {

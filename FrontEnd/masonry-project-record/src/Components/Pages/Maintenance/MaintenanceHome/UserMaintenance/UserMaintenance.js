@@ -19,6 +19,9 @@ export default function UserMaintenance(){
                 setLoading(false);
             }
         })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     const handleAddUser = () => {

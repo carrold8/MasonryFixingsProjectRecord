@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
 
-export default function CreateCompanyType({handleAddNew}){
+export default function CreateSector({handleAddNew, categoryID}){
 
     const [name, setName] = useState('')
 
@@ -11,12 +11,13 @@ export default function CreateCompanyType({handleAddNew}){
         e.stopPropagation();
 
         const postJSON = {
-            name: name
+            name: name,
+            category_id: categoryID 
         }
 
-        axios.post('http://localhost:8080/maintenance/company-type', postJSON)
+        axios.post('http://localhost:8080/maintenance/sector', postJSON)
         .then((response) => {
-            if(response.status){
+            if(response.status === 200){
                 handleAddNew();
             }
         })
@@ -28,7 +29,7 @@ export default function CreateCompanyType({handleAddNew}){
     return(
         <Form onSubmit={handleSubmit}>
             <Form.Group as={Row}>
-                <Form.Label column sm={3}>New Company Type:</Form.Label>
+                <Form.Label column sm={3}>New Sector:</Form.Label>
                 <Col>
                     <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>

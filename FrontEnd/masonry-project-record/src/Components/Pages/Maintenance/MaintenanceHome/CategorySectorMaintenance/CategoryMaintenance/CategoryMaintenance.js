@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CreateCategory from "./CreateCategory/CreateCategory";
+import SectorMaintenance from "./SectorMaintenance/SectorMaintenance";
 
 export default function CategoryMaintenance(){
 
@@ -34,7 +35,12 @@ export default function CategoryMaintenance(){
             <span onClick={() => setAddNew(!addNew)}>Add</span>
             {categoryData.map((category) => {
                 return(
-                    <div key={category.id}>{category.name}</div>
+                    <div key={category.id} style={{backgroundColor: '#77000033', border: '2px solid black'}}>
+                        <span>{category.name}</span>
+                        <div style={{backgroundColor: '#00770033'}}>
+                            <SectorMaintenance categoryID={category.id} />    
+                        </div>
+                    </div>
                 )
             })}
 

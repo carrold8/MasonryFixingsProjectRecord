@@ -6,16 +6,13 @@
     box-shadow: 0px 0px 7px #777777;
 }
 
-.view-project-info-materials{
+.view-project-info-details{
     display: flex;
-    
     flex-wrap: wrap;
 }
 
-.view-project-info-materials .material{
-    margin: 1rem;
-    padding: 0.5rem;
+.view-project-info-details .detail{
     flex-grow: 1;
-    border-top: 1px solid blue; 
 }
+
 
