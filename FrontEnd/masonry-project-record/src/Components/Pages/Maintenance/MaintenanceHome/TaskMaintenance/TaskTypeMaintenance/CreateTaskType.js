@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
+import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 
 export default function CreateTaskType({handleAddNew, taskID}){
 
@@ -15,7 +15,7 @@ export default function CreateTaskType({handleAddNew, taskID}){
             task_id: taskID
         }
 
-        axios.post('http://localhost:8080/maintenance/task-type', postJSON)
+        MaintenanceAPIs.PostTaskType(postJSON)
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
@@ -33,8 +33,11 @@ export default function CreateTaskType({handleAddNew, taskID}){
                 <Col>
                     <Form.Control required placeholder="Type" value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>
+                <Col>
+                    <Button type='submit'>Save</Button>
+                </Col>
             </Form.Group>
-            <Button type='submit'>Save</Button>
+            
         </Form>
     )
 }

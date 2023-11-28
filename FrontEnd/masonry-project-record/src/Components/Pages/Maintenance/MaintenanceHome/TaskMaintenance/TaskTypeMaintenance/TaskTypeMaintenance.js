@@ -1,6 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CreateTaskType from "./CreateTaskType";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
+import ViewTaskType from "./ViewTaskType";
 
 export default function TaskTypeMaintenance({taskID}){
 
@@ -11,7 +14,7 @@ export default function TaskTypeMaintenance({taskID}){
 
     const getTaskTypeData = () => {
 
-        axios.get('http://localhost:8080/lookup/task-type')
+        LookupAPIs.GetTaskType()
         .then((response) => {
             if(response.status === 200){
                 setTaskTypeData(response.data);
@@ -41,26 +44,44 @@ export default function TaskTypeMaintenance({taskID}){
     }
     else{
         return(
-            <div style={{border: '1px solid black'}}>
-                <h3>Task Types</h3>
-                <span onClick={() => setAddNew(!addNew)}>Add</span>
-                {
-                taskTypeData.filter((type) => {return type.task_id === parseInt(taskID)})
-                .map((filteredTask) => {
-                    return(
-                        <div key={filteredTask.id}>
-                            <span>{filteredTask.name}</span> 
-                            <span>{filteredTask.task_id}</span>
-                        </div>
-                    )
-                })
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Task Types</strong>
+                        </Col>
+                        <Col align='end'>
+                            <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-                }
-
-                {addNew && <CreateTaskType taskID={taskID} handleAddNew={handleAddNew} />}
+                <Card.Body>
+                    {addNew && <CreateTaskType taskID={taskID} handleAddNew={handleAddNew} />}
             
+                <Table>
+                    <tbody>
+                    {taskTypeData.filter((type) => {return type.task_id === parseInt(taskID)})
+                    .map((filteredTaskType) => {
+                        return(
+                            // <div key={filteredTask.id}>
+                            //     <span>{filteredTask.name}</span> 
+                            //     <span>{filteredTask.task_id}</span>
+                            // </div>
+                            <ViewTaskType key={filteredTaskType.id} taskType={filteredTaskType} getTaskTypeData={getTaskTypeData}/>
+                        )
+                    })}
+                    </tbody>
+                </Table>
+                
 
-            </div>
+               
+                </Card.Body>
+                
+                
+                
+
+            </Card>
         )
     }
 

@@ -1,6 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CreateEmployeeType from "./CreateEmployeeType/CreateEmployeeType";
+import ViewEmployeeType from "./ViewEmployeeType";
+import { Card, Table, Row, Col } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
+import LookupAPIs from "../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
 
 export default function EmployeeTypeMaintenance(){
 
@@ -8,7 +11,7 @@ export default function EmployeeTypeMaintenance(){
     const [addNew, setAddNew] = useState(false);
 
     const getEmployeeTypes = () => {
-        axios.get('http://localhost:8080/lookup/employee-type')
+        LookupAPIs.GetEmployeeType()
         .then((response) => {
             if(response.status === 200){
                 setEmployeeTypeData(response.data);
@@ -29,16 +32,33 @@ export default function EmployeeTypeMaintenance(){
     }, [])
 
     return(
-        <div>
-            <h5>Employee Types</h5>
-            <span onClick={() => setAddNew(!addNew)}>Add</span>
-            {employeeTypeData.map((type) => {
-                return(
-                    <div key={type.id}>{type.name}</div>
-                )
-            })}
+        <Card>
+            <Card.Header>
+                <Row>
+                    <Col>
+                        Employee Type Maintenance
+                    </Col>   
+                    <Col align='end'>
+                    <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>
+                    </Col>
+                </Row>
 
-            {addNew && <CreateEmployeeType handleAddNew={handleAddNew} />}
-        </div>
+            </Card.Header>
+            <Card.Body>
+                {addNew && <CreateEmployeeType handleAddNew={handleAddNew} />}
+                <Table responsive>
+                    <tbody>
+                        {employeeTypeData.map((type) => {
+                            return(
+                                <ViewEmployeeType key={type.id} employeeType={type} getEmployeeTypeData={getEmployeeTypes} />
+                            )
+                        })}
+                    </tbody>
+                
+                </Table>
+            </Card.Body>
+
+            
+        </Card>
     )
 }

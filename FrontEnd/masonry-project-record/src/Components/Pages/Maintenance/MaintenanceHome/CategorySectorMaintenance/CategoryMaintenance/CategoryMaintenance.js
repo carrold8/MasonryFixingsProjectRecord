@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import CreateCategory from "./CreateCategory/CreateCategory";
-import SectorMaintenance from "./SectorMaintenance/SectorMaintenance";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Card, Col, Row } from "react-bootstrap";
+import ViewCategory from "./ViewCategory";
+import { MdAddCircle } from "react-icons/md";
 
 export default function CategoryMaintenance(){
 
@@ -9,7 +11,8 @@ export default function CategoryMaintenance(){
     const [addNew, setAddNew] = useState(false);
 
     const getCategoryData = () => {
-        axios.get('http://localhost:8080/lookup/category')
+        
+        LookupAPIs.GetCategory()
         .then((response) => {
             if(response.status === 200){
                 setCategoryData(response.data);
@@ -30,21 +33,30 @@ export default function CategoryMaintenance(){
     }, []);
 
     return(
-        <div>
-            <h5>Categories</h5>
-            <span onClick={() => setAddNew(!addNew)}>Add</span>
+        <Card>
+            <Card.Header>
+                <Row>
+                    <Col>
+                        <strong>Category Maintenance</strong>
+                    </Col>
+                    <Col align={'end'}>
+                        <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>
+                    </Col>
+                </Row>
+            </Card.Header>
+
+            <Card.Body>
+
+            {addNew && <CreateCategory handleAddNew={handleAddNew} />}
+            
             {categoryData.map((category) => {
                 return(
-                    <div key={category.id} style={{backgroundColor: '#77000033', border: '2px solid black'}}>
-                        <span>{category.name}</span>
-                        <div style={{backgroundColor: '#00770033'}}>
-                            <SectorMaintenance categoryID={category.id} />    
-                        </div>
-                    </div>
+                    <ViewCategory key={category.id} category={category} getCategoryData={getCategoryData}/>
                 )
             })}
 
-            {addNew && <CreateCategory handleAddNew={handleAddNew} />}
-        </div>
+            
+            </Card.Body>
+        </Card>
     )
 }

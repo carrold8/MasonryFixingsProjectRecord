@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import CreateSector from "./CreateSector";
+import LookupAPIs from "../../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Card, Row, Col, Table} from "react-bootstrap";
+import ViewSector from "./ViewSector";
+import { MdAddCircle } from "react-icons/md";
 
 export default function SectorMaintenance({categoryID}){
 
@@ -8,9 +11,9 @@ export default function SectorMaintenance({categoryID}){
     const [loading, setLoading] = useState(true);
     const [addNew, setAddNew] = useState(false);
 
-    const getSectorData = () => {
-
-        axios.get('http://localhost:8080/lookup/sector')
+    const getSectorData = (categoryID) => {
+        
+        LookupAPIs.GetSector()
         .then((response) => {
             if(response.status === 200){
                 setSectorData(response.data);
@@ -28,8 +31,8 @@ export default function SectorMaintenance({categoryID}){
     }
 
     useEffect(() => {
-        getSectorData();
-    }, []);
+        getSectorData(categoryID);
+    }, [categoryID]);
 
     if(loading){
         return(
@@ -38,24 +41,48 @@ export default function SectorMaintenance({categoryID}){
     }
     else{
         return(
-            <div>
-                <h5>Sector:</h5>
-                <span onClick={() => setAddNew(!addNew)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Sector Maintenance</strong>
+                        </Col>
+                        <Col align={'end'}>
+                            <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>
+                        </Col>    
+                    </Row></Card.Header>
 
-                {sectorData.filter((data) => {return data.id === parseInt(categoryID)}).length === 0 ? 
+                <Card.Body>
+                    {addNew && <CreateSector handleAddNew={handleAddNew} categoryID={categoryID} />}
+
+
+                    {sectorData.filter((data) => {return data.category_id === parseInt(categoryID)}).length === 0 ? 
                     <div>No Sectors</div>
                     :
-                    sectorData.filter((data) => {return data.category_id === parseInt(categoryID)})
-                    .map((sector) => {
-                        return(
-                            <div key={sector.id}>{sector.name}</div>
-                        )
-                    })
+
+                    <Table responsive>
+                        <tbody>
+                            {sectorData.filter((data) => {return data.category_id === parseInt(categoryID)})
+                                .map((sector) => {
+                                    return(
+                                        <ViewSector key={sector.id} sector={sector} getSectorData={getSectorData}/>
+                                    )
+                                })}
+                        </tbody>
+                    </Table>
+                    
                 }
 
 
-                {addNew && <CreateSector handleAddNew={handleAddNew} categoryID={categoryID} />}
-            </div>
+                </Card.Body>
+                
+                
+
+                
+
+
+                
+            </Card>
         )
     }
 

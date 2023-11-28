@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import CreatePartitioningMaterial from "./CreatePartitioningMaterial";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
+import ViewPartitioningMaterial from "./ViewPartitioningMaterial";
 
 export default function PartitioningMaterialMaintenance(){
 
@@ -10,7 +13,7 @@ export default function PartitioningMaterialMaintenance(){
 
     const getMaterialData = () => {
 
-        axios.get('http://localhost:8080/lookup/partitioning-material')
+        LookupAPIs.GetPartitioningMaterial()
         .then((response) => {
             if(response.status === 200){
                 setMaterialData(response.data);
@@ -38,23 +41,38 @@ export default function PartitioningMaterialMaintenance(){
     }
     else{
         return(
-            <div>
-                <h5>Partitioning Material:</h5>
-                <span onClick={() => setAddMat(!addMat)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Partitioning Material</strong>
+                        </Col>    
+                        <Col align='end'>
+                        <span onClick={() => setAddMat(!addMat)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-                {materialData.length === 0 ? 
-                    <div>No Partitioning Materials</div>
-                    :
-                    materialData.map((material) => {
-                        return(
-                            <div key={material.id}>{material.name}</div>
-                        )
-                    })
-                }
+                <Card.Body>
 
+                    {addMat && <CreatePartitioningMaterial handleAddNew={handleAddMaterial} />}
 
-                {addMat && <CreatePartitioningMaterial handleAddNew={handleAddMaterial} />}
-            </div>
+                    <Table>
+                        <tbody>
+                            {materialData.length === 0 ? 
+                                <div>No Partitioning Materials</div>
+                                :
+                                materialData.map((material) => {
+                                    return(
+                                        <ViewPartitioningMaterial key={material.id} material={material} getMaterialData={getMaterialData}/>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                    
+                </Card.Body>
+            </Card>
         )
     }
 

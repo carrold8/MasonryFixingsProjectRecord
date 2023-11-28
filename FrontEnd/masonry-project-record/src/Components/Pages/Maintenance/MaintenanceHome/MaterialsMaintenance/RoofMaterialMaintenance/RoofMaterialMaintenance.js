@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import CreateRoofMaterial from "./CreateRoofMaterial";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
+import ViewRoofMaterial from "./ViewRoofMaterial";
 
 export default function RoofMaterialMaintenance(){
 
@@ -10,7 +13,7 @@ export default function RoofMaterialMaintenance(){
 
     const getMaterialData = () => {
 
-        axios.get('http://localhost:8080/lookup/roof-material')
+        LookupAPIs.GetRoofMaterial()
         .then((response) => {
             if(response.status === 200){
                 setMaterialData(response.data);
@@ -38,23 +41,38 @@ export default function RoofMaterialMaintenance(){
     }
     else{
         return(
-            <div>
-                <h5>Roof Material:</h5>
-                <span onClick={() => setAddMat(!addMat)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Roof Material</strong>
+                        </Col>    
+                        <Col align='end'>
+                        <span onClick={() => setAddMat(!addMat)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-                {materialData.length === 0 ? 
-                    <div>No Roof Materials</div>
-                    :
-                    materialData.map((material) => {
-                        return(
-                            <div key={material.id}>{material.name}</div>
-                        )
-                    })
-                }
+                <Card.Body>
 
+                    {addMat && <CreateRoofMaterial handleAddNew={handleAddMaterial} />}
 
-                {addMat && <CreateRoofMaterial handleAddNew={handleAddMaterial} />}
-            </div>
+                    <Table>
+                        <tbody>
+                            {materialData.length === 0 ? 
+                                <div>No Roof Materials</div>
+                                :
+                                materialData.map((material) => {
+                                    return(
+                                        <ViewRoofMaterial key={material.id} material={material} getMaterialData={getMaterialData}/>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                    
+                </Card.Body>
+            </Card>
         )
     }
 

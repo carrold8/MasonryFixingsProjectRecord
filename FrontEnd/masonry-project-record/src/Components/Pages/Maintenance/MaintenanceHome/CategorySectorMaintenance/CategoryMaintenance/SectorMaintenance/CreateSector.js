@@ -33,8 +33,11 @@ export default function CreateSector({handleAddNew, categoryID}){
                 <Col>
                     <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>
+                <Col>
+                    <Button type='submit'>Save</Button>
+                </Col>
             </Form.Group>
-            <Button type='submit'>Save</Button>
+            
         </Form>
     )
 }

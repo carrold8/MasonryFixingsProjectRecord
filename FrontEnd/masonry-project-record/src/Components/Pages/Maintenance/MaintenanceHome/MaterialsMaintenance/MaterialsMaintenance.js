@@ -4,18 +4,26 @@ import FrameMaterialMaintenance from "./FrameMaterialMaintenance/FrameMaterialMa
 import EnvelopeMaterialMaintenance from "./EnvelopeMaterialMaintenance/EnvelopeMaterialMaintenance";
 import PartitioningMaterialMaintenance from "./PartitioningMaterialMaintencance/PartitioningMaterialMaintencance";
 import RoofMaterialMaintenance from "./RoofMaterialMaintenance/RoofMaterialMaintenance";
+import { Card } from "react-bootstrap";
 
 
 export default function MaterialsMaintenance(){
 
     return(
         <div>
-            <div>Materials</div>
-            <FrameMaterialMaintenance/>
-            <FloorMaterialMaintenance/>
-            <EnvelopeMaterialMaintenance/>
-            <PartitioningMaterialMaintenance/>
-            <RoofMaterialMaintenance/>
+            <Card>
+                <Card.Header>
+                    <strong>Materials Maintenance</strong>
+                </Card.Header>
+                <Card.Body>
+                    <FrameMaterialMaintenance/>
+                    <FloorMaterialMaintenance/>
+                    <EnvelopeMaterialMaintenance/>
+                    <PartitioningMaterialMaintenance/>
+                    <RoofMaterialMaintenance/>
+                </Card.Body>
+            </Card>
+            
         </div>
     )
 }

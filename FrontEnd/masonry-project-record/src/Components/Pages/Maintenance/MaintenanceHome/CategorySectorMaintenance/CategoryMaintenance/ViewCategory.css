@@ -1,0 +1,23 @@
+
+.category-container{
+    margin: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid #777777;
+    box-shadow: 1px 1px 5px #777777;
+}
+
+.category-container .body{
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr;
+}
+
+.category-container .sectors{
+    max-height: 0vh;
+    overflow: hidden;
+    transition: 0.25s ease-out;
+}
+
+.category-container .sectors.active{
+    max-height: 50vh;
+    transition: 0.25s ease-in;
+}

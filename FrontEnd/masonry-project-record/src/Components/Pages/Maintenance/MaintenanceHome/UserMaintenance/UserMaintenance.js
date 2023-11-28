@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
 import CreateUser from "./CreateUser/CreateUser";
+import LookupAPIs from "../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Table, Card, Row, Col} from "react-bootstrap";
+import ViewUser from "./ViewUser";
+import { MdAddCircle } from "react-icons/md";
 
 export default function UserMaintenance(){
 
@@ -12,7 +15,7 @@ export default function UserMaintenance(){
 
     const getUserData = () => {
 
-        axios.get('http://localhost:8080/lookup/users')
+        LookupAPIs.GetUsers()
         .then((response) => {
             if(response.status === 200){
                 setUserData(response.data);
@@ -29,6 +32,8 @@ export default function UserMaintenance(){
         getUserData();
     }
 
+ 
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -41,22 +46,44 @@ export default function UserMaintenance(){
     else{
         return(
             <div>
-                <h5>User Maintenacne</h5>
-                <span onClick={() => setAddUser(!addUser)}>Add new</span>
+                <Card>
+                    <Card.Header>
+                        <Row>
+                            <Col >
+                                <strong>User Maintenance</strong>
+                            </Col>
+                            <Col align={'end'}>
+                                <span onClick={() => setAddUser(!addUser)}><MdAddCircle/></span>
+                            </Col>
+                        </Row>
+                    </Card.Header>
+                    <Card.Body>
 
-                {userData.length === 0 ?
-                <div>No Users</div>
-                :
-                userData.map((user) => {
-                    return(
-                        <div key={user.id}>{user.name}</div>
-                    )
-                })    
-            }
+                    {addUser && <CreateUser handleAddUser={handleAddUser} />}
 
-            {addUser && <CreateUser handleAddUser={handleAddUser} />}
+                    {userData.length === 0 ?
+                    <div>No Users</div>
+                    :
+                    <Table striped hover responsive>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userData.map((user) => {
+                                return(
+                                    <ViewUser key={user.id} user={user} getUserData={getUserData}/>
+                                )
+                            }) }  
+                        </tbody>
+                    </Table>
+                }
+                    </Card.Body>
+                </Card>
+                
 
-
+                
             </div>
         )
     }

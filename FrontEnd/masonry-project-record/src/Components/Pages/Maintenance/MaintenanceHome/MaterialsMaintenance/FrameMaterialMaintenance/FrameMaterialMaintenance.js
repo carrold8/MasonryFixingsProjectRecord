@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import CreateFrameMaterial from "./CreateFrameMaterial";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import ViewFrameMaterial from "./ViewFrameMaterial";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
 
 export default function FrameMaterialMaintenance(){
 
@@ -10,7 +13,7 @@ export default function FrameMaterialMaintenance(){
 
     const getMaterialData = () => {
 
-        axios.get('http://localhost:8080/lookup/frame-material')
+        LookupAPIs.GetFrameMaterial()
         .then((response) => {
             if(response.status === 200){
                 setMaterialData(response.data);
@@ -33,28 +36,43 @@ export default function FrameMaterialMaintenance(){
 
     if(loading){
         return(
-            <div>Loading Frame Materials...</div>
+            <div>Loading Envelope Materials...</div>
         )
     }
     else{
         return(
-            <div>
-                <h5>Frame Material:</h5>
-                <span onClick={() => setAddMat(!addMat)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Frame Material</strong>
+                        </Col>    
+                        <Col align='end'>
+                        <span onClick={() => setAddMat(!addMat)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-                {materialData.length === 0 ? 
-                    <div>No Frame Materials</div>
-                    :
-                    materialData.map((material) => {
-                        return(
-                            <div key={material.id}>{material.name}</div>
-                        )
-                    })
-                }
+                <Card.Body>
 
+                    {addMat && <CreateFrameMaterial handleAddNew={handleAddMaterial} />}
 
-                {addMat && <CreateFrameMaterial handleAddNew={handleAddMaterial} />}
-            </div>
+                    <Table>
+                        <tbody>
+                            {materialData.length === 0 ? 
+                                <div>No Frame Materials</div>
+                                :
+                                materialData.map((material) => {
+                                    return(
+                                        <ViewFrameMaterial key={material.id} material={material} getMaterialData={getMaterialData}/>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                    
+                </Card.Body>
+            </Card>
         )
     }
 

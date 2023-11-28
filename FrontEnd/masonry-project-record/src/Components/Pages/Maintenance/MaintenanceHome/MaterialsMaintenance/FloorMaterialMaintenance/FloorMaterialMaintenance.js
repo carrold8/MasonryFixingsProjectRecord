@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import CreateFloorMaterial from "./CreateFloorMaterial";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import ViewFloorMaterial from "./ViewFloorMaterial";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
 
 export default function FloorMaterialMaintenance(){
 
@@ -10,7 +13,7 @@ export default function FloorMaterialMaintenance(){
 
     const getMaterialData = () => {
 
-        axios.get('http://localhost:8080/lookup/floor-material')
+        LookupAPIs.GetFloorMaterial()
         .then((response) => {
             if(response.status === 200){
                 setMaterialData(response.data);
@@ -33,28 +36,43 @@ export default function FloorMaterialMaintenance(){
 
     if(loading){
         return(
-            <div>Loading Floor Materials...</div>
+            <div>Loading Envelope Materials...</div>
         )
     }
     else{
         return(
-            <div>
-                <h5>Floor Material:</h5>
-                <span onClick={() => setAddMat(!addMat)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Floor Material</strong>
+                        </Col>    
+                        <Col align='end'>
+                        <span onClick={() => setAddMat(!addMat)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-                {materialData.length === 0 ? 
-                    <div>No Floor Materials</div>
-                    :
-                    materialData.map((material) => {
-                        return(
-                            <div key={material.id}>{material.name}</div>
-                        )
-                    })
-                }
+                <Card.Body>
 
+                    {addMat && <CreateFloorMaterial handleAddNew={handleAddMaterial} />}
 
-                {addMat && <CreateFloorMaterial handleAddNew={handleAddMaterial} />}
-            </div>
+                    <Table>
+                        <tbody>
+                            {materialData.length === 0 ? 
+                                <div>No Floor Materials</div>
+                                :
+                                materialData.map((material) => {
+                                    return(
+                                        <ViewFloorMaterial key={material.id} material={material} getMaterialData={getMaterialData}/>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                    
+                </Card.Body>
+            </Card>
         )
     }
 

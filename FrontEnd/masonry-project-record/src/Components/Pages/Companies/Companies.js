@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Companies.css';
 import CreateCompany from './CreateCompany';
 import DisplayCompany from './DisplayCompany';
-import axios from 'axios';
 import DropDown from '../../DropDown/DropDown';
+import CompanyAPIs  from '../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs';
 
 export default function Companies(){
 
@@ -15,7 +15,7 @@ export default function Companies(){
 
     const getAllCompanies = () => {
 
-        axios.get('http://localhost:8080/company')
+        CompanyAPIs.GetAllCompanies()
         .then((response) => {
             setCompaniesData(response.data);
         }) 

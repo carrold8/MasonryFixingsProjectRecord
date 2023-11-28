@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import {Button, Col, Form, Row} from 'react-bootstrap';
+import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 
 export default function CreateUser({handleAddUser}){
 
@@ -15,7 +15,7 @@ export default function CreateUser({handleAddUser}){
             name: name
         }
 
-        axios.post('http://localhost:8080/maintenance/user', postJSON)
+        MaintenanceAPIs.PostUser(postJSON)
         .then((response) => {
             if(response.status === 200){
                 handleAddUser();
@@ -35,9 +35,12 @@ export default function CreateUser({handleAddUser}){
                     <Col>
                         <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                     </Col>
+                    <Col>
+                        <Button type="submit">Add</Button> 
+                    </Col>
                 </Form.Group>
 
-                <Button type="submit">Add</Button>
+                
             </Form>
         </div>
     )

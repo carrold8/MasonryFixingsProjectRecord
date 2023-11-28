@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import DropDown from "../../../../DropDown/DropDown";
+import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 
 export default function CreateTask({handleAddNew}){
 
@@ -17,7 +17,7 @@ export default function CreateTask({handleAddNew}){
             stage_id: parseInt(stageID)
         }
 
-        axios.post('http://localhost:8080/maintenance/task', postJSON)
+        MaintenanceAPIs.PostTask(postJSON)
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
@@ -38,8 +38,11 @@ export default function CreateTask({handleAddNew}){
                 <Col>
                     <DropDown.Stage required value={stageID} onChange={(e) => setStageID(e.target.value)} />
                 </Col>
+                <Col>
+                    <Button type='submit'>Save</Button>
+                </Col>
             </Form.Group>
-            <Button type='submit'>Save</Button>
+            
         </Form>
     )
 }

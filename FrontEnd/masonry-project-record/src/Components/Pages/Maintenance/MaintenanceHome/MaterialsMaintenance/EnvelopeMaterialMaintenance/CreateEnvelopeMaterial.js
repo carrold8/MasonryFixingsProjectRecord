@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
+import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 
 export default function CreateEnvelopeMaterial({handleAddNew}){
 
@@ -14,7 +14,7 @@ export default function CreateEnvelopeMaterial({handleAddNew}){
             name: name
         }
 
-        axios.post('http://localhost:8080/maintenance/envelope-material', postJSON)
+        MaintenanceAPIs.PostEnvelopeMaterial(postJSON)
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
@@ -32,8 +32,11 @@ export default function CreateEnvelopeMaterial({handleAddNew}){
                 <Col>
                     <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>
+                <Col>
+                    <Button type='submit'>Save</Button>
+                </Col>
             </Form.Group>
-            <Button type='submit'>Save</Button>
+            
         </Form>
     )
 }

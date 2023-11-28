@@ -30,8 +30,12 @@ function MaintenaceHome(){
                 <option value={5}>Tasks</option>
             </select>
 
+
+            <div style={{padding: '1rem'}}>
+                {MaintenanceArray[currentTab]}
+            </div>
             
-            {MaintenanceArray[currentTab]}
+            
 
         </div>
     )

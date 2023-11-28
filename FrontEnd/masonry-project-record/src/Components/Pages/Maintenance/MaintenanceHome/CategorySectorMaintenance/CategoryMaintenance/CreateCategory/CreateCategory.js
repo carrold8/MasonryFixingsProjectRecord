@@ -32,8 +32,11 @@ export default function CreateCategory({handleAddNew}){
                 <Col>
                     <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>
+                <Col>
+                    <Button type='submit'>Save</Button>
+                </Col>
             </Form.Group>
-            <Button type='submit'>Save</Button>
+            
         </Form>
     )
 }

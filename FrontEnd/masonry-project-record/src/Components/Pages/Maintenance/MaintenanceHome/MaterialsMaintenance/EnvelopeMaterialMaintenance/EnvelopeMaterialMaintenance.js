@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import CreateEnvelopeMaterial from "./CreateEnvelopeMaterial";
+import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { Card, Row, Col, Table } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
+import ViewEnvelopeMaterial from "./ViewEnvelopeMaterial";
 
 export default function EnvelopeMaterialMaintenance(){
 
@@ -10,7 +13,7 @@ export default function EnvelopeMaterialMaintenance(){
 
     const getMaterialData = () => {
 
-        axios.get('http://localhost:8080/lookup/envelope-material')
+        LookupAPIs.GetEnvelopeMaterial()
         .then((response) => {
             if(response.status === 200){
                 setMaterialData(response.data);
@@ -38,23 +41,38 @@ export default function EnvelopeMaterialMaintenance(){
     }
     else{
         return(
-            <div>
-                <h5>Envelope Material:</h5>
-                <span onClick={() => setAddMat(!addMat)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Envelope Material</strong>
+                        </Col>    
+                        <Col align='end'>
+                        <span onClick={() => setAddMat(!addMat)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-                {materialData.length === 0 ? 
-                    <div>No Envelope Materials</div>
-                    :
-                    materialData.map((material) => {
-                        return(
-                            <div key={material.id}>{material.name}</div>
-                        )
-                    })
-                }
+                <Card.Body>
 
+                    {addMat && <CreateEnvelopeMaterial handleAddNew={handleAddMaterial} />}
 
-                {addMat && <CreateEnvelopeMaterial handleAddNew={handleAddMaterial} />}
-            </div>
+                    <Table>
+                        <tbody>
+                            {materialData.length === 0 ? 
+                                <div>No Envelope Materials</div>
+                                :
+                                materialData.map((material) => {
+                                    return(
+                                        <ViewEnvelopeMaterial key={material.id} material={material} getMaterialData={getMaterialData}/>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                    
+                </Card.Body>
+            </Card>
         )
     }
 

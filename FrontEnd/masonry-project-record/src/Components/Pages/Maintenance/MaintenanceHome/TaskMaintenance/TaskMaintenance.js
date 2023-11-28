@@ -1,8 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DropDown from "../../../../DropDown/DropDown";
 import CreateTask from "./CreateTask";
-import TaskTypeMaintenance from "./TaskTypeMaintenance/TaskTypeMaintenance";
+import LookupAPIs from "../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import ViewTask from "./ViewTask";
+import { Card, Col, Row } from "react-bootstrap";
+import { MdAddCircle } from "react-icons/md";
 
 export default function TaskMaintenance(){
 
@@ -14,7 +16,7 @@ export default function TaskMaintenance(){
 
     const getTaskData = () => {
 
-        axios.get('http://localhost:8080/lookup/task')
+        LookupAPIs.GetTask()
         .then((response) => {
             if(response.status === 200){
                 setTaskData(response.data);
@@ -44,40 +46,39 @@ export default function TaskMaintenance(){
     }
     else{
         return(
-            <div>
-                <h3>Tasks</h3>
-                <span onClick={() => setAddNew(!addNew)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Task Maintenance</strong>
+                        </Col>
+                        <Col align='end'>
+                        <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
+
+                <Card.Body>
+                {addNew && <CreateTask handleAddNew={handleAddNew} />}
+                
                 <DropDown.Stage size='sm' value={stage} onChange={(e) => setStage(e.target.value)} />
 
                 {stage === '' ? 
-                
+
                 taskData.map((task) => {
                     return(
-                        <div key={task.id} style={{padding: '1rem', border: '2px solid black', margin: '0.5rem'}}>
-                            <span>{task.name}</span> 
-                            <span><DropDown.Stage size='sm' value={task.stage_id} disabled={true} /></span>
-                            <TaskTypeMaintenance taskID={task.id} />
-                        </div>
+                        <ViewTask key={task.id} task={task} getTaskData={getTaskData} />
                     )
                 })
                 :
                 taskData.filter((task) => {return task.stage_id === parseInt(stage)})
                 .map((filteredTask) => {
                     return(
-                        <div key={filteredTask.id} style={{padding: '1rem', border: '2px solid black', margin: '0.5rem'}}>
-                            <span>{filteredTask.name}</span> 
-                            <span><DropDown.Stage size='sm' value={filteredTask.stage_id} disabled={true} /></span>
-                            <TaskTypeMaintenance taskID={filteredTask.id} />
-                        </div>
+                        <ViewTask key={filteredTask.id} task={filteredTask} getTaskData={getTaskData} />
                     )
-                })
-
-                }
-
-                {addNew && <CreateTask handleAddNew={handleAddNew} />}
-            
-
-            </div>
+                })}
+                </Card.Body>
+            </Card>
         )
     }
 
