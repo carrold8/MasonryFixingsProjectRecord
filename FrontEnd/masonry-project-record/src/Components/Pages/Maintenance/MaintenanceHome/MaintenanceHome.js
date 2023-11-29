@@ -5,10 +5,20 @@ import CompanyTypeMaintenance from "./CompanyTypeMaintenance/CompanyTypeMaintena
 import MaterialsMaintenance from "./MaterialsMaintenance/MaterialsMaintenance";
 import EmployeeTypeMaintenance from "./EmployeeTypeMaintenance/EmployeeTypeMaintenance";
 import TaskMaintenance from "./TaskMaintenance/TaskMaintenance";
+import './MaintenanceHome.css';
 
 function MaintenaceHome(){
 
     const [currentTab, setCurrentTab] = useState(0);
+
+    const HeaderArray = [
+        "Users",
+        "Category",
+        "Company Type",
+        "Materials",
+        "Employee Types",
+        "Tasks"
+    ]
 
     const MaintenanceArray = [
         <UserMaintenance />,
@@ -21,17 +31,26 @@ function MaintenaceHome(){
 
     return(
         <div>
-            <select value={currentTab} onChange={(e) => setCurrentTab(e.target.value)}>
-                <option value={0}>Users</option>
-                <option value={1}>Category and Sector</option>
-                <option value={2}>Company Type</option>
-                <option value={3}>Materials</option>
-                <option value={4}>Employee Type</option>
-                <option value={5}>Tasks</option>
-            </select>
+            <div className="maintenance-selection-container">
+                <div className="body">
+                    {
+                        HeaderArray.map((item, index) =>{
+                            return(
+                                <div 
+                                    key={index} 
+                                    onClick={() => setCurrentTab(index)}
+                                    className={index === currentTab ? 'selected' : ''}
+                                >
+                                    <strong>{item}</strong>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </div>
 
 
-            <div style={{padding: '1rem'}}>
+            <div className="maintenance-container">
                 {MaintenanceArray[currentTab]}
             </div>
             

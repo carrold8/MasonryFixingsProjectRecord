@@ -1,5 +1,8 @@
 import React, {useState} from "react";
 import MaintenanceAPIs from "../../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
+import { AiFillEdit } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
 
 
 export default function ViewSector({sector, getSectorData}){
@@ -38,10 +41,10 @@ export default function ViewSector({sector, getSectorData}){
                     <input value={sectorName} onChange={(e) => setSectorName(e.target.value)}/>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}>Cancel</button>
+                    <span onClick={() => handleCancel()}><MdCancel/></span>
                 </td>
                 <td>
-                    <button onClick={() => editSector()}>Save</button>
+                    <span onClick={() => editSector()}><FaSave/></span>
                 </td>
             </tr>
         )
@@ -51,7 +54,7 @@ export default function ViewSector({sector, getSectorData}){
             <tr>
                 <td>{sector.name}</td>
                 <td>
-                    <button onClick={() => setEditing(true)}>Edit</button>
+                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
                 </td>
             </tr>
         )

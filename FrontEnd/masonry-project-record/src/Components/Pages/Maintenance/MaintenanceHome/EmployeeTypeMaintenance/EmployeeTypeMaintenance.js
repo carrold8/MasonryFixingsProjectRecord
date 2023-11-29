@@ -36,7 +36,7 @@ export default function EmployeeTypeMaintenance(){
             <Card.Header>
                 <Row>
                     <Col>
-                        Employee Type Maintenance
+                        <strong>Employee Type Maintenance</strong>
                     </Col>   
                     <Col align='end'>
                     <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>

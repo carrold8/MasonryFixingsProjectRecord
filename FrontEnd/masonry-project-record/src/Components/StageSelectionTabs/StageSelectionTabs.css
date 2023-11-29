@@ -1,0 +1,37 @@
+
+.stage-selection-container{
+    position: relative;
+    padding: 0.5rem;
+    border: 1px solid #e87822;
+    margin: 0.5rem;
+    background-color: #63666a33;
+}
+
+.stage-selection-container .body{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.stage-selection-container .body div{
+    flex-grow: 1;
+    padding: 0.25rem;
+    margin: 0.1rem;
+    background-color: #63666a;
+    text-align: center;
+    color: white;
+}
+
+.stage-selection-container .body div.selected{
+
+    background-color: #e87822;
+    color: black;
+    
+}
+.stage-selection-container .body div:hover{
+    cursor: pointer;
+    background-color: #e87822;
+    color: black;
+    opacity: 80%;
+
+}

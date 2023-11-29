@@ -65,6 +65,14 @@ router.get('/category',  function(request, response) {
         response.json(category);
     })
 });
+router.get('/category/:categoryID/sectors', function(request, response) {
+    Sector.findAll(
+      {where: {category_id: request.params.categoryID}}
+    )
+    .then(function(catSectors) {
+      response.json(catSectors);
+    })
+   });
 
 router.get('/sector',  function(request, response) {
     Sector.findAll()

@@ -22,8 +22,8 @@ export default function CreateProject(){
     const [engineerCompID, setEngineerCompID] = useState(0);
     const [engineerID, setEngineerID] = useState(0);
     // const [contactedEng, setContactedEngID] = useState(false);
-    const [categoryID, setCategoryID] = useState(0);
-    const [sectorID, setSectorID] = useState(0);
+    const [categoryID, setCategoryID] = useState('');
+    const [sectorID, setSectorID] = useState('');
     const [startDate, setStartDate] = useState('2023-10-21');
     const [endDate, setEndDate] = useState('2023-10-21');
     const [inductionReq, setInductReq] = useState(true);
@@ -153,12 +153,15 @@ export default function CreateProject(){
 
 
                 <div>Category</div>
-                <DropDown.Category required value={categoryID} onChange={(e) => setCategoryID(e.target.value)} />
+                <DropDown.Category required value={categoryID} onChange={(e) => {
+                        setCategoryID(e.target.value);
+                        setSectorID('');
+                    }} />
 
 
                 <div>Sector</div>
-                <DropDown.Sector required value={sectorID} onChange={(e) => setSectorID(e.target.value)} />
-
+                <DropDown.CategorySectors required categoryID={categoryID} disabled={categoryID === ''} value={sectorID} onChange={(e) => setSectorID(e.target.value)} />
+                
                 <div>Start Date</div>
                 <Form.Control required type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
 

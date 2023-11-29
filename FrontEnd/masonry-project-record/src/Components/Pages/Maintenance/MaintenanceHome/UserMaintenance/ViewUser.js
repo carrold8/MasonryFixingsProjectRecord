@@ -1,5 +1,8 @@
 import React, { useState }  from "react";
 import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
+import { AiFillEdit } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
 
 export default function ViewUser({user, getUserData}){
 
@@ -37,10 +40,10 @@ export default function ViewUser({user, getUserData}){
                     <input value={userName} onChange={(e) => setUserName(e.target.value)}/>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}>Cancel</button>
+                    <span onClick={() => handleCancel()}><MdCancel/></span>
                 </td>
                 <td>
-                    <button onClick={() => editUser()}>Save</button>
+                    <span onClick={() => editUser()}><FaSave/></span>
                 </td>
             </tr>
         )
@@ -49,7 +52,7 @@ export default function ViewUser({user, getUserData}){
         <tr>
             <td>{user.name}</td>
             <td>
-                <button onClick={() => setEditing(true)}>Edit</button>
+                <span onClick={() => setEditing(true)}><AiFillEdit/></span>
             </td>
         </tr>
     )

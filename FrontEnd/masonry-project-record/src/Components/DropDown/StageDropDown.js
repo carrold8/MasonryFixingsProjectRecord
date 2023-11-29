@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function StageDropDown(props){
 
@@ -8,7 +8,7 @@ export default function StageDropDown(props){
     const [loading, setLoading] = useState(true);
 
     const getStageData = () => {
-        axios.get('http://localhost:8080/lookup/stage')
+        LookupAPIs.GetStage()
         .then((response) => {
             setStageData(response.data)
             setLoading(false);

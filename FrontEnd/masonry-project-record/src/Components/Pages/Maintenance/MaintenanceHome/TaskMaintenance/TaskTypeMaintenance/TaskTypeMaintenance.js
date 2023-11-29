@@ -64,10 +64,6 @@ export default function TaskTypeMaintenance({taskID}){
                     {taskTypeData.filter((type) => {return type.task_id === parseInt(taskID)})
                     .map((filteredTaskType) => {
                         return(
-                            // <div key={filteredTask.id}>
-                            //     <span>{filteredTask.name}</span> 
-                            //     <span>{filteredTask.task_id}</span>
-                            // </div>
                             <ViewTaskType key={filteredTaskType.id} taskType={filteredTaskType} getTaskTypeData={getTaskTypeData}/>
                         )
                     })}

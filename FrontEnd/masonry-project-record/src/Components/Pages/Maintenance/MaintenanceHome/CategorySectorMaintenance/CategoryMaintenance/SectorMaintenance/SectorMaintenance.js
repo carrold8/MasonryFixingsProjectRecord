@@ -13,7 +13,7 @@ export default function SectorMaintenance({categoryID}){
 
     const getSectorData = (categoryID) => {
         
-        LookupAPIs.GetSector()
+        LookupAPIs.GetCategorySectors(categoryID)
         .then((response) => {
             if(response.status === 200){
                 setSectorData(response.data);
@@ -56,14 +56,13 @@ export default function SectorMaintenance({categoryID}){
                     {addNew && <CreateSector handleAddNew={handleAddNew} categoryID={categoryID} />}
 
 
-                    {sectorData.filter((data) => {return data.category_id === parseInt(categoryID)}).length === 0 ? 
+                    {sectorData.length === 0 ? 
                     <div>No Sectors</div>
                     :
 
                     <Table responsive>
                         <tbody>
-                            {sectorData.filter((data) => {return data.category_id === parseInt(categoryID)})
-                                .map((sector) => {
+                            {sectorData.map((sector) => {
                                     return(
                                         <ViewSector key={sector.id} sector={sector} getSectorData={getSectorData}/>
                                     )

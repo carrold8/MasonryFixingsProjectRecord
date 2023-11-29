@@ -1,5 +1,9 @@
 import React, {useState} from "react";
 import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
+import { AiFillEdit } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
+
 
 export default function ViewFrameMaterial({material, getMaterialData}){
 
@@ -31,14 +35,14 @@ export default function ViewFrameMaterial({material, getMaterialData}){
     if(editing){
         return(
             <tr>
-                <td>
+                <td width={'75%'}>
                     <input value={editedName} onChange={(e) => setEditedName(e.target.value)}/>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}>Cancel</button>
+                    <span onClick={() => handleCancel()}><MdCancel/></span>
                 </td>
                 <td>
-                    <button onClick={() => editMaterial()}>Save</button>
+                    <span onClick={() => editMaterial()}><FaSave/></span>
                 </td>
             </tr>
         )
@@ -46,9 +50,9 @@ export default function ViewFrameMaterial({material, getMaterialData}){
     else{
         return(
             <tr>
-                <td>{material.name}</td>
+                <td width={'75%'}>{material.name}</td>
                 <td>
-                    <button onClick={() => setEditing(true)}>Edit</button>
+                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
                 </td>
             </tr>
         )

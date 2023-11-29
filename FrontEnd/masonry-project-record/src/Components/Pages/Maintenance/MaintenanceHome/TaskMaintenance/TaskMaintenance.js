@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import DropDown from "../../../../DropDown/DropDown";
 import CreateTask from "./CreateTask";
 import LookupAPIs from "../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
 import ViewTask from "./ViewTask";
 import { Card, Col, Row } from "react-bootstrap";
 import { MdAddCircle } from "react-icons/md";
+import StageSelectionTabs from "../../../../StageSelectionTabs/StageSelectionTabs";
 
 export default function TaskMaintenance(){
 
@@ -60,8 +60,8 @@ export default function TaskMaintenance(){
 
                 <Card.Body>
                 {addNew && <CreateTask handleAddNew={handleAddNew} />}
-                
-                <DropDown.Stage size='sm' value={stage} onChange={(e) => setStage(e.target.value)} />
+               
+                <StageSelectionTabs value={''} setStageValue={setStage} />
 
                 {stage === '' ? 
 

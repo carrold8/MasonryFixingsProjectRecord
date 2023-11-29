@@ -49,6 +49,13 @@ const LookupAPIs = {
          })
          return response
     },
+    GetCategorySectors : (categoryID) => {
+        const response =  api.request({
+            url: 'lookup/category/' + categoryID + '/sectors',
+            methodL: 'GET'
+         })
+         return response
+    },
     GetSector : () => {
         const response =  api.request({
             url: 'lookup/sector',

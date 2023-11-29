@@ -16,6 +16,7 @@ import UsersDropDown from './UsersDropDown';
 import TaskDropDown from './TaskDropDown';
 import TaskTypeDropDown from './TaskTypeDropDown';
 import StageDropDown from './StageDropDown';
+import CategorySectorsDropDown from './CategorySectorsDropDown';
 
 export default function DropDown(props){
 
@@ -28,6 +29,7 @@ export default function DropDown(props){
 
 DropDown.AllCompanies = AllCompaniesDropDown;
 DropDown.Category = CategoryDropDown;
+DropDown.CategorySectors = CategorySectorsDropDown;
 DropDown.CompanyEmployees = CompanyEmployees;
 DropDown.CompanyType = CompanyTypeDropDown;
 DropDown.County = CountyDropDown;

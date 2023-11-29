@@ -1,5 +1,9 @@
 import React, { useState }  from "react";
 import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
+import { AiFillEdit } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
+
 
 export default function ViewCompanyType({companyType, getCompanyTypeData}){
 
@@ -37,10 +41,10 @@ export default function ViewCompanyType({companyType, getCompanyTypeData}){
                     <input value={companyTypeName} onChange={(e) => setCompanyTypeName(e.target.value)}/>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}>Cancel</button>
+                    <span onClick={() => handleCancel()}><MdCancel/></span>
                 </td>
                 <td>
-                    <button onClick={() => editCompanyType()}>Save</button>
+                    <span onClick={() => editCompanyType()}><FaSave/></span>
                 </td>
             </tr>
         )
@@ -49,7 +53,7 @@ export default function ViewCompanyType({companyType, getCompanyTypeData}){
         <tr>
             <td>{companyType.name}</td>
             <td>
-                <button onClick={() => setEditing(true)}>Edit</button>
+                <span onClick={() => setEditing(true)}><AiFillEdit/></span>
             </td>
         </tr>
     )
