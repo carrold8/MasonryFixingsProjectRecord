@@ -29,6 +29,58 @@ router.get('/',  function(request, response) {
       response.json(project);
     })
    });
+
+   router.get('/:projectID/title-info',  function(request, response) {
+    Project.findOne({ 
+        // include: {all: true, nested: true},
+        where: {id: request.params.projectID},
+        attributes: [
+                'name',
+                'cis_id',
+                'applicant',
+                'category_id',
+                'sector_id',
+                'building_description',
+                'footprint'
+        ]
+    })
+    .then(function(project) {
+      response.json(project);
+    })
+   });
+
+   router.get('/:projectID/materials',  function(request, response) {
+    Project.findOne({ 
+        // include: {all: true, nested: true},
+        where: {id: request.params.projectID},
+        attributes: [
+                'frame_material_id',
+                'floor_material_id',
+                'envelope_material_id',
+                'partitioning_material_id',
+                'roof_material_id'
+        ]
+    })
+    .then(function(project) {
+      response.json(project);
+    })
+   });
+   router.put('/:projectID/materials',  function(request, response) {
+    Project.update(
+        { 
+            frame_material_id: request.body.frame_material_id,
+            floor_material_id: request.body.floor_material_id,
+            envelope_material_id: request.body.envelope_material_id,
+            partitioning_material_id: request.body.partitioning_material_id,
+            roof_material_id: request.body.roof_material_id
+        },
+        {where: {id: request.params.projectID}
+    })
+    .then(function(project) {
+      response.json(project);
+    })
+   });
+
 router.post('/',  function(request, response) {
     Address.create({
         line1: request.body.address.line1,
@@ -195,6 +247,6 @@ router.put('/:projectID/contacts',  function(request, response) {
     .then(function(project) {
         response.json(project);
     })
-});
+    });
 
    module.exports = router;

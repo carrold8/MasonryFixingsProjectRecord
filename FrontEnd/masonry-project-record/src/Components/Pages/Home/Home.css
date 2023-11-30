@@ -1,0 +1,32 @@
+
+.home-banner{
+    border: 1px solid #e87722;
+    margin: 1rem;
+    padding: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.home-banner .item{
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid black;
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    background-color: #63666a;
+}
+
+.home-banner .item:hover{
+    color: white;
+    cursor: pointer;
+    background-color: #e87722;
+}
+
+.my-active-projects-container{
+    border: 1px solid #e87722;
+    margin: 1rem;
+    padding: 0.75rem;
+    max-height: 60vh;
+    overflow-y: auto;
+}

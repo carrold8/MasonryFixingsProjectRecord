@@ -1,48 +1,45 @@
-import React, { useEffect, useState } from "react";
-import DisplayProjectTasks from "../../../DisplayProjectTasks/DisplayProjectTasks";
+import React from "react";
+import './ViewProject.css';
 import ViewProjectInfo from "./ViewProjectInfo/ViewProjectInfo";
-import axios from "axios";
-import { useParams } from 'react-router-dom';
-import ViewProjectContacts from "./ViewProjectContacts/ViewProjectContacts";
-import ViewProjectInduction from "./ViewProjectInduction/ViewProjectInduction";
-import ViewProjectAnchorTraining from "./ViewProjectAnchorTraining/ViewProjectAnchorTraining";
 import ViewProjectMaterials from "./ViewProjectMaterials/ViewProjectMaterials";
+import { useParams } from 'react-router-dom';
 
 export default function ViewProject(){
 
     const params = useParams();
 
-    const [loading, setLoading] = useState(true);
-    const [projectInfo, setProjectInfo] = useState();
+    // const [loading, setLoading] = useState(true);
+    // const [projectInfo, setProjectInfo] = useState();
     
-    const getProjectInfo = (projectID) => {
-        axios.get('http://localhost:8080/project/' + projectID )
-        .then((project) => {
-            setProjectInfo(project.data);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
+    // const getProjectInfo = (projectID) => {
+    //     axios.get('http://localhost:8080/project/' + projectID )
+    //     .then((project) => {
+    //         setProjectInfo(project.data);
+    //         setLoading(false);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
-    useEffect(() => {
-        getProjectInfo(params.ProjectID);
-    }, [params.ProjectID])
+    // useEffect(() => {
+    //     getProjectInfo(params.ProjectID);
+    // }, [params.ProjectID])
 
-    if(loading){
-        return(
-            <div>Loading</div>
-        )
-    }
-    else{
+    // if(loading){
+    //     return(
+    //         <div>Loading</div>
+    //     )
+    // }
+    // else{
     
         return(
-            <div>
+            <div className="project-page">
 
-                <ViewProjectInfo projectInfo={projectInfo}/>
+                <ViewProjectInfo projectID={params.ProjectID}/>
 
-                <div style={{width: '33%'}}>
+                <ViewProjectMaterials projectID={params.ProjectID} />
+                {/* <div>
                 <ViewProjectMaterials projectInfo={projectInfo} />
                 </div>
                 <ViewProjectContacts projectInfo={projectInfo}/>
@@ -55,9 +52,9 @@ export default function ViewProject(){
                 <DisplayProjectTasks projectID={projectInfo.id} />
 
                 <h3>Calendar</h3>
-                <div>Calendar based off times of the tasks</div>
+                <div>Calendar based off times of the tasks</div> */}
             </div>
         )
-    }
+    // }
 
 }

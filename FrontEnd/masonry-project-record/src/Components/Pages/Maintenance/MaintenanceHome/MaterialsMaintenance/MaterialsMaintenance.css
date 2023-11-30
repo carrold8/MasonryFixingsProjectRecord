@@ -1,0 +1,24 @@
+
+.material-maintenance-container{
+    margin: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid #777777;
+    box-shadow: 1px 1px 5px #777777;
+}
+
+
+.material-maintenance-container .body{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.material-maintenance-container .materials{
+    max-height: 0vh;
+    overflow: hidden;
+    transition: 0.25s ease-out;
+}
+
+.material-maintenance-container .materials.active{
+    max-height: 50vh;
+    transition: 0.25s ease-in;
+}

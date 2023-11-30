@@ -1,9 +1,6 @@
 import React from "react";
-import { Row, Col} from 'react-bootstrap';
-import MaintenanceCard from "./HomeCards/MaintenanceCard/MaintenanceCard";
-import ProjectsCard from "./HomeCards/ProjectsCard/ProjectsCard";
 import { useNavigate } from "react-router-dom";
-import DisplayProjectTasks from "../DisplayProjectTasks/DisplayProjectTasks";
+import './Home.css';
 
 
 function Home(){
@@ -11,20 +8,17 @@ function Home(){
     const navigate = useNavigate();
 
     return(
-        <div style={{paddingTop: '2%', height: '100%', marginLeft: '2%', marginRight: '2%'}}>
+        <div>
             
+            <div className="home-banner">
+                <h5 className="item" onClick={() => navigate('project')}>Projects</h5>
+                <h5 className="item" onClick={() => navigate('companies')}>Companies</h5>
+                <h5 className="item" onClick={() => navigate('maintenance')}>Maintenance</h5>
+            </div>
 
-            <Row>
-                <Col sm={4} align={'center'}>
-                    <ProjectsCard/>
-                </Col>
-                <Col sm={4} align={'center'}>
-                    <MaintenanceCard/>
-                </Col>
-                <Col sm={4} align={'center'}>
-                    <div onClick={() => navigate('companies')}>Companies</div>
-                </Col>
-            </Row>
+            <div className="my-active-projects-container">
+                My active projects
+            </div>
 
         </div>
     );

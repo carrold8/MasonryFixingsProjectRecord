@@ -51,7 +51,7 @@ export default function ViewCategory({category, getCategoryData}){
                 </div>
                 :
                 <div className="body">
-                    <h2>{category.name}</h2>
+                    <h4>{category.name}</h4>
                     <span onClick={() => setEditing(!editing)}><AiFillEdit/></span>
                     <span onClick={() => setShowSectors(!showSectors)}>
                         {showSectors ? <FaChevronUp/> : <FaChevronDown/>}

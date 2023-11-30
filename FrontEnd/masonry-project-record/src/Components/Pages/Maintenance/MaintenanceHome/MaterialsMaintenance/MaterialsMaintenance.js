@@ -5,6 +5,7 @@ import EnvelopeMaterialMaintenance from "./EnvelopeMaterialMaintenance/EnvelopeM
 import PartitioningMaterialMaintenance from "./PartitioningMaterialMaintencance/PartitioningMaterialMaintencance";
 import RoofMaterialMaintenance from "./RoofMaterialMaintenance/RoofMaterialMaintenance";
 import { Card } from "react-bootstrap";
+import './MaterialsMaintenance.css';
 
 
 export default function MaterialsMaintenance(){

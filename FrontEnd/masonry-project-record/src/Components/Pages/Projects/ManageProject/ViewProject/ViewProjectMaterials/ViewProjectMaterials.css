@@ -1,26 +1,35 @@
-.view-project-info-materials-container{
-    margin: 1rem;
+.view-project-materials-container{
+    margin: 0.5rem 0rem 0.5rem 0rem;
     padding: 0.5rem;
-    border-top: 2px solid blue; 
+    /* border-top: 2px solid blue;  */
     box-shadow: 0px 0px 7px #777777;
+    background-color: white;
 }
 
 
-.view-project-info-materials{
+.view-project-materials{
     max-height: 0;
     overflow: hidden;
     transition: 0.25s ease-in;
+    display: flex;
+    flex-wrap: wrap;
+}
+.view-project-materials .material{
+    margin: 1rem;
+    padding: 0.5rem;
+    flex-grow: 1;
+    border-top: 1px solid blue; 
 }
 
 
-.view-project-info-materials.active{
+.view-project-materials.active{
     max-height: 100vh;
     display: flex;
     flex-wrap: wrap;
     transition: 0.25s ease-in;
 }
 
-.view-project-info-materials.active .material{
+.view-project-materials.active .material{
     margin: 1rem;
     padding: 0.5rem;
     flex-grow: 1;

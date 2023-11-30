@@ -1,8 +1,7 @@
 
 .header-row{
-    /* padding: 30px; */
     margin-left: 0;
-    height: 7vh;
+    /* height: 7vh; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +11,5 @@
     overflow: hidden;
 }
 
-.header-title{
-    padding: 20px;
-}
+
 

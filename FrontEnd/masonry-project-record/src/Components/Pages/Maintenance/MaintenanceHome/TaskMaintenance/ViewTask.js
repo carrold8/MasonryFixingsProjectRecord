@@ -52,7 +52,7 @@ export default function ViewTask({task, getTaskData}){
                 </div>
                 :
                 <div className="body">
-                    <h2>{task.name}</h2>
+                    <h4>{task.name}</h4>
                     <span>Stage: {task.stage_id}</span>
                     <span onClick={() => setEditing(!editing)}><AiFillEdit/></span>
                     <span onClick={() => setShowTaskTypes(!showTaskTypes)}>
