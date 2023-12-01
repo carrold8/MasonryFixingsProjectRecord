@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import CreateEmployee from "./CreateEmployee";
 import axios from 'axios';
 import { FiChevronDown, FiChevronUp} from 'react-icons/fi';
-import SingleEmployee from "./SingleEmployee";
+import ViewEmployee from "./ViewEmployee";
 
 function DisplayEmployees({CompanyID}){
 
@@ -76,7 +76,7 @@ function DisplayEmployees({CompanyID}){
                     {employeeData.map((employee) => {
                     
                             return (
-                                <SingleEmployee key={employee.id} employeeData={employee} getEmployee={getCompanyEmployees} />      
+                                <ViewEmployee key={employee.id} employeeData={employee} getEmployee={getCompanyEmployees} />      
                             )
                     })}
                 </div>

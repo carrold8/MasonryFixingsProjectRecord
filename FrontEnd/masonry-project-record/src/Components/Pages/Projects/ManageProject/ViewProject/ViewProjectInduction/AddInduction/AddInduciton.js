@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import DropDown from "../../../../../../DropDown/DropDown";
+import ProjectAPIs from "../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 
 export default function AddInduction({projectID, handleAddNew}){
 
@@ -17,15 +17,19 @@ export default function AddInduction({projectID, handleAddNew}){
             date: date,
         }
 
-        axios.post('http://localhost:8080/project/'+ projectID +'/inductions', postJSON)
-        .then((response) => {
-            if(response.status ===200){
-                handleAddNew();
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        if(userID !== '' && date !== ''){
+            ProjectAPIs.PostProjectInduction(projectID, postJSON)
+            .then((response) => {
+                if(response.status ===200){
+                    handleAddNew();
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+        
     }
 
     return(

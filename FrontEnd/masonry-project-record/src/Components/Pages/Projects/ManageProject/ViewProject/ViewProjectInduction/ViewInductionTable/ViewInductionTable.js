@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
-import {Table} from 'react-bootstrap'  
+import {Card, Table, Row, Col} from 'react-bootstrap'  
 import AddInduction from "../AddInduction/AddInduciton";
+import ProjectAPIs from "../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
+import ViewInduction from "./ViewInduction";
+import { MdAddCircle } from "react-icons/md";
 
 export default function ViewInductionTable({projectID}){
 
@@ -11,7 +13,7 @@ export default function ViewInductionTable({projectID}){
     const [addIndcution, setAddIndcution] = useState(false);
     
     const getInductions = (projectID) => {
-        axios.get('http://localhost:8080/project/' + projectID + '/inductions')
+        ProjectAPIs.GetProjectInductionList(projectID)
         .then((inductions) => {
             setInductionInfo(inductions.data);
             setLoading(false);
@@ -31,7 +33,7 @@ export default function ViewInductionTable({projectID}){
     }
 
 
-    const ColumnHeaderData = ['Name', 'Date']
+    const ColumnHeaderData = ['Name', 'Date', 'Edit'];
 
     const thData = () => {
         return ColumnHeaderData.map((header, index) => {
@@ -41,41 +43,48 @@ export default function ViewInductionTable({projectID}){
         })
     }
 
-    const tdData = () => {
-
-        return inductionInfo.map((inductee, index) => {
-            return(
-                <tr key={index}>
-                    <td>{inductee.user.name}</td>
-                    <td>{inductee.date}</td>
-                </tr>
-            )
-        })
-    }
 
     if(loading){
         return(<div>Loading...</div>)
     }
     else{
         return(
-            <div>
-                <span onClick={() => setAddIndcution(!addIndcution)}>Add</span>
-                <Table striped hover>
-                    <thead>
-                    <tr>{thData()}</tr>
-                    </thead>
-                    <tbody>
-                        {
-                            inductionInfo.length === 0 ?
-                            <tr><td>No inductions</td></tr>
-                            :
-                            <>{tdData()}</>
-                        }
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Project Induction List</strong>
+                        </Col>    
+                        <Col align='end'>
+                        <span onClick={() => setAddIndcution(!addIndcution)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
+                <Card.Body>
+                    <Table striped hover responsive>
+                        <thead>
+                        <tr>{thData()}</tr>
+                        </thead>
+                        <tbody>
+                            {addIndcution && <AddInduction projectID={projectID} handleAddNew={handleAddNew} />}
+                            {
+                                inductionInfo.length === 0 ?
+                                <tr><td>No inductions</td></tr>
+                                :
+                                inductionInfo.map((induction) => {
+                                    return(
+                                        <ViewInduction key={induction.id} induction={induction} getInductionData={getInductions}/>
+                                    )
+                                })
+                                    
+                            }
 
-                        {addIndcution && <AddInduction projectID={projectID} handleAddNew={handleAddNew} />}
-                    </tbody>
-                </Table>
-            </div>
+                            
+                        </tbody>
+                    </Table>
+                </Card.Body>
+                
+            </Card>
         )
             
     }

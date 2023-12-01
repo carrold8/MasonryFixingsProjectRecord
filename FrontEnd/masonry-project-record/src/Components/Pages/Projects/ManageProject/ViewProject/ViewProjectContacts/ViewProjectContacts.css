@@ -1,8 +1,35 @@
 
 .view-project-contacts-container{
-    margin: 1rem;
-    padding: 0.5rem;
-    border-top: 2px solid blue; 
+    margin: 0.5rem 0rem 0.5rem 0rem;
+    padding: 1rem;
     box-shadow: 0px 0px 7px #777777;
+    background-color: white;
+}
+.view-project-contacts-container strong{
+    text-decoration: underline;
+}
+
+.view-project-contacts-container .title{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.view-project-contacts-container .show-contacts{
+    max-height: 0vh;
+    overflow: hidden;
+    transition: 0.25s ease-out;
+}
+.view-project-contacts-container .show-contacts.active{
+    max-height: 70vh;
+    overflow: auto;
+    transition: 0.25s ease-in;
+
+}
+
+.view-smaller-contacts{
+    display: flex;
+    flex-wrap: wrap;
+}
+.view-smaller-contacts .smaller-contact{
     flex-grow: 1;
 }

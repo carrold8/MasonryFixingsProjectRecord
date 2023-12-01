@@ -1,20 +1,44 @@
 .view-project-materials-container{
     margin: 0.5rem 0rem 0.5rem 0rem;
-    padding: 0.5rem;
+    padding: 1rem;
     /* border-top: 2px solid blue;  */
     box-shadow: 0px 0px 7px #777777;
     background-color: white;
 }
+.view-project-materials-container .title{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.view-project-materials-container button{
+    padding: 0.4rem;
+    border: 1px solid #e87722;
+    background-color: #e87722;
+    color: white;
+    margin: 0.4rem;
+    border-radius: 0.5rem;
+}
+
+.view-project-materials-container button:active{
+    background-color: #e8772299;
+}
+/* .view-project-materials-container button:hover{
+    background-color:blue;
+} */
 
 
 .view-project-materials{
     max-height: 0;
     overflow: hidden;
     transition: 0.25s ease-in;
+}
+
+.view-project-materials .body{
     display: flex;
     flex-wrap: wrap;
 }
-.view-project-materials .material{
+
+.view-project-materials .body .material{
     margin: 1rem;
     padding: 0.5rem;
     flex-grow: 1;
@@ -24,12 +48,15 @@
 
 .view-project-materials.active{
     max-height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
     transition: 0.25s ease-in;
 }
 
-.view-project-materials.active .material{
+.view-project-materials.active .body{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.view-project-materials.active .body .material{
     margin: 1rem;
     padding: 0.5rem;
     flex-grow: 1;

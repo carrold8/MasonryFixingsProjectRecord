@@ -1,35 +1,73 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
+import ProjectAPIs from "../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
+import { useParams } from "react-router-dom";
+import { AiFillEdit } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
+import { Form } from "react-bootstrap";
+import DropDown from "../../../../../../DropDown/DropDown";
 
-export default function ViewProjectArchitect({projectInfo}){
+export default function ViewProjectArchitect(){
+    
+    const params = useParams();
 
     const [loading, setLoading] = useState(true);
+    const [editing, setEditing] = useState(false);
     const [architectData, setArchitectData] = useState();
-    const [architectEmployees, setArchitectEmployees] = useState([]);
 
-    const getArchitectData = (architectID) => {
-        axios.get('http://localhost:8080/company/' + architectID )
-        .then((company) => {
-            setArchitectData(company.data);
+    const [architectCompanyID, setArchitectCompanyID] = useState();
+    const [architectID, setArchitectID] = useState();
 
-            axios.get('http://localhost:8080/company/' + architectID + '/employees')
-            .then((employees) => {
-                setArchitectEmployees(employees.data);
+    const getArchitectData = (projectID) => {
+        ProjectAPIs.GetProjectArchitect(projectID)
+        .then((response) => {
+            if(response.status === 200){
+                setArchitectData(response.data);
+                setArchitectCompanyID(response.data.company.id);
+                setArchitectID(response.data.engineer_id);
+                // setPhone(response.data.phone);
                 setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-            
+            }
         })
         .catch((err) => {
             console.log(err)
         })
     }
 
+    const editProjectArchitect = (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+        const putJSON = {
+            architect_company_id: parseInt(architectCompanyID),
+            architect_id: parseInt(architectID)
+            // phone: phone
+        }
+        ProjectAPIs.PutProjectArchitect(params.ProjectID, putJSON)
+        .then((response) => {
+            if(response.status === 200){
+                getArchitectData(params.ProjectID);
+                setEditing(false);
+            }
+        })
+
+
+    }
+
+    const handleCancel = () => {
+        setArchitectID(architectData.architect_id)
+        setArchitectCompanyID(architectData.company.id);
+        setEditing(false);
+    }
+
+    const handleChangeCompany = (e) => {
+        setArchitectCompanyID(e.target.value);
+        setArchitectID('');
+    }
+
     useEffect(() => {
-        getArchitectData(projectInfo.architect_company_id);
-    }, [projectInfo.architect_company_id])
+        getArchitectData(params.ProjectID);
+    }, [params.ProjectID])
     
     if(loading){
         return(
@@ -39,21 +77,46 @@ export default function ViewProjectArchitect({projectInfo}){
     else {
         return(
             <div className="view-project-contractor-container">
-                <h5>Architect: {architectData.name}</h5>
-
+                <Form onSubmit={editProjectArchitect}>
+                    <div className="title">
+                        <h5><strong>Architecture</strong></h5>
+                        <div align='end'>
+                            {editing ? 
+                                <>
+                                    <button type="button" onClick={() => handleCancel()}><MdCancel/></button>
+                                    <button type={"submit"} ><FaSave/></button>
+                                </>
+                                :
+                                <button type="button" onClick={() => setEditing(true)}><AiFillEdit/></button>
+                            }
+                        </div>
+                    </div>
+                {editing?
+                    <DropDown.AllCompanies value={architectCompanyID} onChange={handleChangeCompany} />
+                    : 
+                    <h5>{architectData.company.name}</h5>
+                }
+                
                 <div className="employees">
                     <div className="employee">
-                    {architectEmployees.filter((employee) => employee.id === projectInfo.architect_id)
-                        .map((employee) => {
-                            return(
-                                <div key={employee.id}>
-                                    <span>{employee.first_name} {employee.last_name}</span>
-                                    <span>Phone: {employee.phone}</span>
-                                </div>
-                            )
-                        })}
+                        <DropDown.CompanyEmployees 
+                            companyID={architectCompanyID} 
+                            value={architectID}
+                            onChange={(e) => setArchitectID(e.target.value)}
+                            disabled={!editing}
+                            required
+                            size='sm'
+                        />
+                        {/* <div>
+                            {editing ?
+                            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)} />
+                            :  
+                            phone}
+                        </div> */}
                     </div>
                 </div>
+
+                </Form>
             </div>
         )
     }

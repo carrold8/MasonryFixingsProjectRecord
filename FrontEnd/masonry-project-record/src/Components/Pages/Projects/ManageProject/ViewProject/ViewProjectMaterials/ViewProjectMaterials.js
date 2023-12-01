@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import './ViewProjectMaterials.css';
 import DropDown from "../../../../../DropDown/DropDown";
 import ProjectAPIs from "../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
-import { FaSave } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import { Form } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
-export default function ViewProjectMaterials({projectID}){
+export default function ViewProjectMaterials(){
+
+    const params = useParams();
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
@@ -55,10 +58,10 @@ export default function ViewProjectMaterials({projectID}){
             roof_material_id: roofMat
         }
 
-        ProjectAPIs.PutProjectMaterials(projectID, putJSON)
+        ProjectAPIs.PutProjectMaterials(params.ProjectID, putJSON)
         .then((response) => {
             if(response.status === 200){
-                getProjectMaterials(projectID);
+                getProjectMaterials(params.ProjectID);
             }
         })
         .catch((err) => {
@@ -76,8 +79,8 @@ export default function ViewProjectMaterials({projectID}){
     }
 
     useEffect(() => {
-        getProjectMaterials(projectID);
-    }, [projectID]);
+        getProjectMaterials(params.ProjectID);
+    }, [params.ProjectID]);
 
     if(loading){
         return(
@@ -87,79 +90,89 @@ export default function ViewProjectMaterials({projectID}){
     else{
         return(
             <div className="view-project-materials-container">
-                <div align='end'>
-                        {editing ? 
-                            <>
-                                <span onClick={() => handleCancel()}><MdCancel/></span>
-                                <button type={"submit"} ><FaSave/></button>
-                            </>
-                            :
-                            <span onClick={() => setEditing(true)}><AiFillEdit/></span>
-                        }
-                    </div>
-                <div>
+                
+                <div className="title">
                     <h3>Materials </h3>
-                    <span onClick={() => setShowMaterials(!showMaterials)}>chevron</span>
+                    <span align='center' onClick={() => setShowMaterials(!showMaterials)}>
+                    {showMaterials ? <FaChevronUp/> : <FaChevronDown/>}
+                    </span>
                 </div>
                 <Form onSubmit={handleEdit}>
                 <div className={showMaterials ? "view-project-materials active" : "view-project-materials"}>
-                {/* <div> */}
+               
                     
-                    
-                    <div className="material">
-                        <strong>Frame:</strong> 
-                        <span>
-                            <DropDown.FrameMaterial 
-                                value={frameMat} 
-                                onChange={(e) => setFrameMat(e.target.value)} 
-                                disabled={!editing} 
-                                required
-                            />
-                        </span>
-                    </div>
-                    <div className="material">
-                        <strong>Floor: </strong>
-                        <span>
-                            <DropDown.FloorMaterial 
-                                value={floorMat} 
-                                onChange={(e) => setFloorMat(e.target.value)} 
-                                disabled={!editing} 
-                                required
-                            />
-                        </span>
-                    </div>
-                    <div className="material">
-                        <strong>Envelope: </strong>
-                        <span>
-                            <DropDown.EnvelopeMaterial 
-                                value={envelopeMat} 
-                                onChange={(e) => setEnvMat(e.target.value)} 
-                                disabled={!editing} 
-                                required
-                            />
-                        </span>
-                    </div>
-                    <div className="material">
-                        <strong> Roof: </strong>
-                        <span>
-                            <DropDown.RoofMaterial 
-                                value={roofMat} 
-                                onChange={(e) => setRoofMat(e.target.value)} 
-                                disabled={!editing} 
-                                required
-                            />
-                        </span>
-                    </div>
-                    <div className="material">
-                        <strong>Partitioning: </strong>
-                        <span>
-                            <DropDown.PartitioningMaterial 
-                                value={partitioningMat} 
-                                onChange={(e) => setPartitionMat(e.target.value)} 
-                                disabled={!editing} 
-                                required
-                            />
-                        </span>
+                <div align='end'>
+                    {editing ? 
+                        <>
+                            <button type="button" onClick={() => handleCancel()}><MdCancel/></button>
+                            <button type={"submit"} ><FaSave/></button>
+                        </>
+                        :
+                        <button type="button" onClick={() => setEditing(true)}><AiFillEdit/></button>
+                    }
+                </div>
+
+                    <div className="body">
+                        <div className="material">
+                            <strong>Frame:</strong> 
+                            <span>
+                                <DropDown.FrameMaterial 
+                                    value={frameMat} 
+                                    onChange={(e) => setFrameMat(e.target.value)} 
+                                    disabled={!editing} 
+                                    required
+                                    size='sm'
+                                />
+                            </span>
+                        </div>
+                        <div className="material">
+                            <strong>Floor: </strong>
+                            <span>
+                                <DropDown.FloorMaterial 
+                                    value={floorMat} 
+                                    onChange={(e) => setFloorMat(e.target.value)} 
+                                    disabled={!editing} 
+                                    required
+                                    size='sm'
+                                />
+                            </span>
+                        </div>
+                        <div className="material">
+                            <strong>Envelope: </strong>
+                            <span>
+                                <DropDown.EnvelopeMaterial 
+                                    value={envelopeMat} 
+                                    onChange={(e) => setEnvMat(e.target.value)} 
+                                    disabled={!editing} 
+                                    required
+                                    size='sm'
+                                />
+                            </span>
+                        </div>
+                        <div className="material">
+                            <strong> Roof: </strong>
+                            <span>
+                                <DropDown.RoofMaterial 
+                                    value={roofMat} 
+                                    onChange={(e) => setRoofMat(e.target.value)} 
+                                    disabled={!editing} 
+                                    required
+                                    size='sm'
+                                />
+                            </span>
+                        </div>
+                        <div className="material">
+                            <strong>Partitioning: </strong>
+                            <span>
+                                <DropDown.PartitioningMaterial 
+                                    value={partitioningMat} 
+                                    onChange={(e) => setPartitionMat(e.target.value)} 
+                                    disabled={!editing} 
+                                    required
+                                    size='sm'
+                                />
+                            </span>
+                        </div>
                     </div>
                     
                 </div>

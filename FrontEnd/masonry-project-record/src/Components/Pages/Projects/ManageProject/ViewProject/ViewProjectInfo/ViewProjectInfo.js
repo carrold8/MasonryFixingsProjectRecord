@@ -6,8 +6,11 @@ import { FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import ProjectAPIs from "../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
+import { useParams } from "react-router-dom";
 
-export default function ViewProjectInfo({projectID}){
+export default function ViewProjectInfo(){
+
+    const params = useParams();
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
@@ -22,21 +25,6 @@ export default function ViewProjectInfo({projectID}){
     const [desc, setDesc] = useState();
     const [footprint, setFootprint] = useState();
     
-
-    // const handleLoaded = (projectTitleData) => {
-    //     setProjTitleData(projectTitleData);
-    //     setTitle(projectTitleData.name);
-    //     setCisID(projectTitleData.cis_id);
-    //     setApplicant(projectTitleData.applicant);
-    //     setCatID(projectTitleData.cate);
-    //     setSectorID(projectTitleData.sector_id);
-    //     setDesc(projectTitleData.building_description);
-    //     setFootprint(projectTitleData.footprint);
-        
-    //     setLoading(false);
-    //     setEditing(false);
-    // }
-
     const getProjectTitleInfo = (id) => {
 
         ProjectAPIs.GetProjectTitleInfo(id)
@@ -79,6 +67,9 @@ export default function ViewProjectInfo({projectID}){
                     getProjectTitleInfo(projID);
                 }
             })
+            .catch((err) => {
+                console.log(err)
+            })
         }
         
     }
@@ -92,8 +83,8 @@ export default function ViewProjectInfo({projectID}){
     }
 
     useEffect(() => {
-        getProjectTitleInfo(projectID)
-    }, [projectID])
+        getProjectTitleInfo(params.ProjectID)
+    }, [params.ProjectID])
 
     if(loading){
         return(
@@ -107,7 +98,7 @@ export default function ViewProjectInfo({projectID}){
                     {editing ? 
                         <>
                             <span onClick={() => handleCancel()}><MdCancel/></span>
-                            <span onClick={() => handleEdit(projectID)}><FaSave/></span>
+                            <span onClick={() => handleEdit(params.ProjectID)}><FaSave/></span>
                         </>
                         :
                         <span onClick={() => setEditing(true)}><AiFillEdit/></span>
@@ -115,7 +106,7 @@ export default function ViewProjectInfo({projectID}){
                 </div>
                 
                 {editing ? 
-                    <Form.Control value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <Form.Control size='sm' value={title} onChange={(e) => setTitle(e.target.value)} />
                     :
                     <h1>{title}</h1>
                 }
@@ -126,7 +117,7 @@ export default function ViewProjectInfo({projectID}){
                     <strong>CIS ID</strong> 
                     <div>
                         {editing ? 
-                            <Form.Control value={cisID} onChange={(e) => setCisID(e.target.value)}/>
+                            <Form.Control size='sm' value={cisID} onChange={(e) => setCisID(e.target.value)}/>
                             :
                             cisID
                         }   
@@ -136,7 +127,7 @@ export default function ViewProjectInfo({projectID}){
                     <strong>Applicant</strong> 
                     <div>
                         {editing ? 
-                            <Form.Control value={applicant} onChange={(e) => setApplicant(e.target.value)}/>
+                            <Form.Control size='sm' value={applicant} onChange={(e) => setApplicant(e.target.value)}/>
                             :
                             applicant
                         }   
@@ -152,6 +143,7 @@ export default function ViewProjectInfo({projectID}){
                                 setSectorID('');
                             }} 
                             disabled={!editing}
+                            size='sm'
                         />
                     </div>
                 </div>
@@ -163,6 +155,7 @@ export default function ViewProjectInfo({projectID}){
                             value={sectorID}
                             onChange={(e) => setSectorID(e.target.value)} 
                             disabled={!editing}
+                            size='sm'
                         />
                     </div>
                 </div>
@@ -172,7 +165,7 @@ export default function ViewProjectInfo({projectID}){
                     <strong>Building Description</strong>
                     <div>
                         {editing ? 
-                            <Form.Control value={desc} onChange={(e) => setDesc(e.target.value)} />
+                            <Form.Control size='sm' value={desc} onChange={(e) => setDesc(e.target.value)} />
                             :
                             desc
                         }
@@ -183,7 +176,7 @@ export default function ViewProjectInfo({projectID}){
                     <strong>Footprint</strong> 
                     <div>
                         {editing ? 
-                            <Form.Control value={footprint} onChange={(e) => setFootprint(e.target.value)} />
+                            <Form.Control size='sm' value={footprint} onChange={(e) => setFootprint(e.target.value)} />
                             :
                             footprint
                         }

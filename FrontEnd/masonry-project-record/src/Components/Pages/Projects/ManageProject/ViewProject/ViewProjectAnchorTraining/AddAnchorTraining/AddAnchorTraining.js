@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import DropDown from '../../../../../../DropDown/DropDown';
-import axios from 'axios';
+import ProjectAPIs from '../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
 
 
 export default function AddAnchorTraining({projectID, handleAddNew}){
@@ -20,15 +20,19 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
             note: note
         }
 
-        axios.post('http://localhost:8080/project/'+ projectID +'/anchor-training', postJSON)
-        .then((response) => {
-            if(response.status ===200){
-                handleAddNew(projectID);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        if(userID !== '' && date !== ''){
+            ProjectAPIs.PostProjectAnchorTraining(projectID, postJSON)
+            .then((response) => {
+                if(response.status ===200){
+                    handleAddNew(projectID);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
+        
     }
 
     return(

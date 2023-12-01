@@ -2,54 +2,34 @@ import React from "react";
 import './ViewProject.css';
 import ViewProjectInfo from "./ViewProjectInfo/ViewProjectInfo";
 import ViewProjectMaterials from "./ViewProjectMaterials/ViewProjectMaterials";
-import { useParams } from 'react-router-dom';
+import ViewProjectContacts from "./ViewProjectContacts/ViewProjectContacts";
+import ViewProjectInduction from "./ViewProjectInduction/ViewProjectInduction";
+import ViewProjectAnchorTraining from "./ViewProjectAnchorTraining/ViewProjectAnchorTraining";
+import DisplayProjectTasks from "../../../DisplayProjectTasks/DisplayProjectTasks";
+
+import { useParams } from "react-router-dom";
 
 export default function ViewProject(){
-
+    
     const params = useParams();
 
-    // const [loading, setLoading] = useState(true);
-    // const [projectInfo, setProjectInfo] = useState();
-    
-    // const getProjectInfo = (projectID) => {
-    //     axios.get('http://localhost:8080/project/' + projectID )
-    //     .then((project) => {
-    //         setProjectInfo(project.data);
-    //         setLoading(false);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     getProjectInfo(params.ProjectID);
-    // }, [params.ProjectID])
-
-    // if(loading){
-    //     return(
-    //         <div>Loading</div>
-    //     )
-    // }
-    // else{
-    
         return(
             <div className="project-page">
 
-                <ViewProjectInfo projectID={params.ProjectID}/>
+                <ViewProjectInfo />
 
-                <ViewProjectMaterials projectID={params.ProjectID} />
-                {/* <div>
-                <ViewProjectMaterials projectInfo={projectInfo} />
-                </div>
-                <ViewProjectContacts projectInfo={projectInfo}/>
+                <ViewProjectMaterials />
 
-                <ViewProjectInduction projectInfo={projectInfo} />
+                <ViewProjectContacts/>
 
-                <ViewProjectAnchorTraining projectInfo={projectInfo} />
+                <ViewProjectInduction/>
 
-                <h3>Tasks</h3>
-                <DisplayProjectTasks projectID={projectInfo.id} />
+                <ViewProjectAnchorTraining/>
+
+                <DisplayProjectTasks projectID={params.ProjectID} />
+                {/* 
+                
+
 
                 <h3>Calendar</h3>
                 <div>Calendar based off times of the tasks</div> */}

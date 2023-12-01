@@ -6,7 +6,7 @@ const CompanyAPIs = {
     GetAllCompanies: () => { 
          const response =  api.request({
             url: 'company',
-            method: 'GET'
+            methodL: 'GET'
          })
          return response
     }
