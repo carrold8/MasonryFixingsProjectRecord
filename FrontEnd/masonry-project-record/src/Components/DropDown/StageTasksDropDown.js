@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
-export default function TaskTypeDropDown(props){
+export default function StageTasksDropDown(props){
 
-    const [taskTypeData, setTaskTypeData] = useState([]);
+    const [taskData, setTaskData] = useState([]);
     
-    const getTaskTypeData = (taskID) => {
-        LookupAPIs.GetTaskType(taskID)
-        .then((taskTypes) => {
-            setTaskTypeData(taskTypes.data)
+    const getTaskData = (stageID) => {
+        LookupAPIs.GetStageTasks(stageID)
+        .then((tasks) => {
+            setTaskData(tasks.data)
         })
         .catch((err) => {
             console.log(err);
@@ -17,10 +17,10 @@ export default function TaskTypeDropDown(props){
     }
 
     useEffect(() => {
-        if(props.taskID !== ''){
-            getTaskTypeData(props.taskID)
+        if(props.stageID !== ''){
+            getTaskData(props.stageID)
         }
-    }, [props.taskID]);
+    }, [props.stageID]);
 
     return(
         <Form.Select
@@ -32,10 +32,10 @@ export default function TaskTypeDropDown(props){
             required={props.required}
             disabled={props.disabled}
         >
-            <option value={''}>Task Type</option>
-            {taskTypeData.map((taskType) => {
+            <option value={''}>Task</option>
+            {taskData.map((task) => {
                 return(
-                    <option key={taskType.id} value={taskType.id}>{taskType.name}</option>
+                    <option key={task.id} value={task.id}>{task.name}</option>
                 )
             })}
         </Form.Select>

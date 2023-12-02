@@ -59,6 +59,13 @@ router.get('/task',  function(request, response) {
     })
 });
 
+router.get('/task/:taskID/task-type',  function(request, response) {
+    TaskType.findAll({where: {task_id: request.params.taskID}})
+    .then(function(taskType) {
+        response.json(taskType);
+    })
+});
+
 router.get('/category',  function(request, response) {
     Category.findAll()
     .then(function(category) {
@@ -128,6 +135,12 @@ router.get('/stage',  function(request, response) {
     Stage.findAll()
     .then(function(stages) {
         response.json(stages);
+    })
+});
+router.get('/stage/:stageID/tasks',  function(request, response) {
+    Task.findAll({where: {stage_id: request.params.stageID}})
+    .then(function(tasks) {
+        response.json(tasks);
     })
 });
 

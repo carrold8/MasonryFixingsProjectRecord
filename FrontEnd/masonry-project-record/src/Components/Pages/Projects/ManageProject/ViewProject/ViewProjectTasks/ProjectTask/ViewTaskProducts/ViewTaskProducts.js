@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import TaskProduct from "../TaskProduct/TaskProduct";
+import TaskProduct from "./TaskProduct/TaskProduct";
 import axios from "axios";
 
-export default function DisplayTaskProducts({taskID}){
+export default function ViewTaskProducts({taskID}){
 
 
     //use taskID to get all the ProjectTaskProducts associated with it
@@ -12,7 +12,6 @@ export default function DisplayTaskProducts({taskID}){
         axios.get('http://localhost:8080/project-task/'+taskID+'/products')
         .then((products) => {
             setTaskProducts(products.data);
-            console.log(products.data);
         })
     }
 

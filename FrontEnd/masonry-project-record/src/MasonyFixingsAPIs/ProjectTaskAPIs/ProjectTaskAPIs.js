@@ -25,6 +25,7 @@ const ProjectTaskAPIs = {
             url: 'project-task/' + projectTaskID + '/products',
             method: 'GET',
         })
+        return response;
     },
 
     PostProjectTaskProduct: (projectTaskID, newProducts) => {

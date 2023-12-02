@@ -61,7 +61,7 @@ export default function TaskMaintenance(){
                 <Card.Body>
                 {addNew && <CreateTask handleAddNew={handleAddNew} />}
                
-                <StageSelectionTabs value={''} setStageValue={setStage} />
+                <StageSelectionTabs value={stage} setStageValue={setStage} />
 
                 {stage === '' ? 
 

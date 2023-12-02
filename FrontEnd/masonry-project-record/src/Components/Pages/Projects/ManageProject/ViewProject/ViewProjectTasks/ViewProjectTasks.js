@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import ProjectTask from './ProjectTask/ProjectTask'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import ProjectTask from './ProjectTask/ProjectTask';
 import AddProjectTask from './AddProjectTask';
+import ProjectAPIs from '../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
+import { useParams } from 'react-router-dom';
+import './ViewProjectTasks.css';
+import StageSelectionTabs from '../../../../../StageSelectionTabs/StageSelectionTabs';
 
-export default function DisplayProjectTasks({projectID}){
+export default function ViewProjectTasks(){
 
-    const [stageID, setStageID] = useState(0);
+    const params = useParams();
+
+    const [stageID, setStageID] = useState('');
     const [addNew, setAddNew] = useState(false);
-
-    //use projectId to make a call to get all tasks associated with the project.
-
 
     const [projectTasks, setProjectTasks] = useState([]);
 
     const getProjectTasks = (projectID) => {
 
-        axios.get('http://localhost:8080/project/' + projectID +'/tasks')
+        ProjectAPIs.GetProjectTasks(projectID)
         .then((projectTasks) => {
             setProjectTasks(projectTasks.data);
         })
@@ -26,29 +28,22 @@ export default function DisplayProjectTasks({projectID}){
 
     const handleAddNew = () => {
         setAddNew(false);
-        getProjectTasks(projectID);
+        getProjectTasks(params.ProjectID);
     }
 
 
     useEffect(() => {
-        getProjectTasks(projectID);
-    }, [projectID]);
+        getProjectTasks(params.ProjectID);
+    }, [params.ProjectID]);
 
     return(
-        <div>
-            <select value={stageID} onChange={(e) => {
-                setStageID(e.target.value)
-            }}>
-                <option value={0}>Stage</option>
-                <option value={1}>Stage 1</option>
-                <option value={2}>Stage 2</option>
-                <option value={3}>Stage 3</option>
-                <option value={4}>Stage 4</option>
-            </select>
+        <div className='project-tasks-container'>
+            <h3>Tasks</h3>
+            <StageSelectionTabs value={stageID} setStageValue={setStageID} />
 
             <span onClick={() => setAddNew(!addNew)}>Add</span>
 
-
+            <div className='project-tasks'>
             {stageID > 0 ? 
             
             projectTasks.filter((task) => parseInt(task.task.stage_id) === parseInt(stageID))
@@ -66,8 +61,9 @@ export default function DisplayProjectTasks({projectID}){
                     )
                 })
         }
+        </div>
 
-        {addNew && <AddProjectTask projectID={projectID} handleAddNew={handleAddNew} />}
+        {addNew && <AddProjectTask handleAddNew={handleAddNew} />}
 
 
 

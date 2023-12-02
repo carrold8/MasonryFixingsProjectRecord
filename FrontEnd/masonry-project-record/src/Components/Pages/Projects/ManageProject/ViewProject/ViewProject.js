@@ -5,7 +5,7 @@ import ViewProjectMaterials from "./ViewProjectMaterials/ViewProjectMaterials";
 import ViewProjectContacts from "./ViewProjectContacts/ViewProjectContacts";
 import ViewProjectInduction from "./ViewProjectInduction/ViewProjectInduction";
 import ViewProjectAnchorTraining from "./ViewProjectAnchorTraining/ViewProjectAnchorTraining";
-import DisplayProjectTasks from "../../../DisplayProjectTasks/DisplayProjectTasks";
+import ViewProjectTasks from "./ViewProjectTasks/ViewProjectTasks";
 
 import { useParams } from "react-router-dom";
 
@@ -18,6 +18,8 @@ export default function ViewProject(){
 
                 <ViewProjectInfo />
 
+                <ViewProjectTasks projectID={params.ProjectID} />
+
                 <ViewProjectMaterials />
 
                 <ViewProjectContacts/>
@@ -26,7 +28,7 @@ export default function ViewProject(){
 
                 <ViewProjectAnchorTraining/>
 
-                <DisplayProjectTasks projectID={params.ProjectID} />
+                
                 {/* 
                 
 

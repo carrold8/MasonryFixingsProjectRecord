@@ -12,9 +12,9 @@ export default function TaskTypeMaintenance({taskID}){
     const [loading, setLoading] = useState(true);
     const [addNew, setAddNew] = useState(false);
 
-    const getTaskTypeData = () => {
+    const getTaskTypeData = (taskID) => {
 
-        LookupAPIs.GetTaskType()
+        LookupAPIs.GetTaskType(taskID)
         .then((response) => {
             if(response.status === 200){
                 setTaskTypeData(response.data);
@@ -33,8 +33,8 @@ export default function TaskTypeMaintenance({taskID}){
 
 
     useEffect(() => {
-        getTaskTypeData();
-    }, [])
+        getTaskTypeData(taskID);
+    }, [taskID])
 
 
     if(loading){
@@ -61,8 +61,7 @@ export default function TaskTypeMaintenance({taskID}){
             
                 <Table>
                     <tbody>
-                    {taskTypeData.filter((type) => {return type.task_id === parseInt(taskID)})
-                    .map((filteredTaskType) => {
+                    {taskTypeData.map((filteredTaskType) => {
                         return(
                             <ViewTaskType key={filteredTaskType.id} taskType={filteredTaskType} getTaskTypeData={getTaskTypeData}/>
                         )

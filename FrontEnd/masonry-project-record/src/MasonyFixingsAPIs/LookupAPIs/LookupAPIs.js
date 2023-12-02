@@ -5,7 +5,7 @@ const LookupAPIs = {
     GetCounties : () => {
         const response =  api.request({
             url: 'lookup/county',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -13,7 +13,7 @@ const LookupAPIs = {
     GetCountries : () => {
         const response =  api.request({
             url: 'lookup/country',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -21,7 +21,7 @@ const LookupAPIs = {
     GetEmployeeType : () => {
         const response =  api.request({
             url: 'lookup/employee-type',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -29,37 +29,46 @@ const LookupAPIs = {
     GetCompanyType : () => {
         const response =  api.request({
             url: 'lookup/company-type',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
 
-    GetTaskType : () => {
+    // GetTaskType : () => {
+    //     const response =  api.request({
+    //         url: 'lookup/task-type',
+    //         methodL: 'GET'
+    //      })
+    //      return response
+    // },
+
+    GetTaskType : (taskID) => {
         const response =  api.request({
-            url: 'lookup/task-type',
-            methodL: 'GET'
+            url: 'lookup/task/'+ taskID +'/task-type',
+            method: 'GET'
          })
          return response
     },
+    
 
     GetCategory : () => {
         const response =  api.request({
             url: 'lookup/category',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
     GetCategorySectors : (categoryID) => {
         const response =  api.request({
             url: 'lookup/category/' + categoryID + '/sectors',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
     GetSector : () => {
         const response =  api.request({
             url: 'lookup/sector',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -67,7 +76,7 @@ const LookupAPIs = {
     GetFrameMaterial : () => {
         const response =  api.request({
             url: 'lookup/frame-material',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -75,7 +84,7 @@ const LookupAPIs = {
     GetFloorMaterial : () => {
         const response =  api.request({
             url: 'lookup/floor-material',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -83,14 +92,14 @@ const LookupAPIs = {
     GetEnvelopeMaterial : () => {
         const response =  api.request({
             url: 'lookup/envelope-material',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
     GetRoofMaterial : () => {
         const response =  api.request({
             url: 'lookup/roof-material',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -98,7 +107,7 @@ const LookupAPIs = {
     GetPartitioningMaterial : () => {
         const response =  api.request({
             url: 'lookup/partitioning-material',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -106,7 +115,7 @@ const LookupAPIs = {
     GetTask : () => {
         const response =  api.request({
             url: 'lookup/task',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },
@@ -114,7 +123,14 @@ const LookupAPIs = {
     GetStage : () => {
         const response =  api.request({
             url: 'lookup/stage',
-            methodL: 'GET'
+            method: 'GET'
+         })
+         return response
+    },
+    GetStageTasks : (stageID) => {
+        const response =  api.request({
+            url: 'lookup/stage/' + stageID + '/tasks',
+            method: 'GET'
          })
          return response
     },
@@ -122,7 +138,7 @@ const LookupAPIs = {
     GetUsers : () => {
         const response =  api.request({
             url: 'lookup/users',
-            methodL: 'GET'
+            method: 'GET'
          })
          return response
     },

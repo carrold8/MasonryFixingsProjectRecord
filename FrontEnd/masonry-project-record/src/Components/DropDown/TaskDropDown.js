@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function TaskDropDown(props){
 
     const [taskData, setTaskData] = useState([]);
     
     const getTaskData = () => {
-        axios.get('http://localhost:8080/lookup/task')
+        LookupAPIs.GetTask()
         .then((tasks) => {
             setTaskData(tasks.data)
         })
@@ -28,6 +28,7 @@ export default function TaskDropDown(props){
             onChange={props.onChange}
             size={props.size}
             required={props.required}
+            disabled={props.disabled}
         >
             <option value={''}>Task</option>
             {taskData.map((task) => {

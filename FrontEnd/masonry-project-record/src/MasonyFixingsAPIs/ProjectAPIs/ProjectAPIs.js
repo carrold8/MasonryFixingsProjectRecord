@@ -149,5 +149,28 @@ const ProjectAPIs = {
         return response;
     },
 
+    GetProjectTasks: (projectID) => {
+        const response = api.request({
+            url: 'project/' + projectID + '/tasks',
+            method: 'GET'
+        })
+        return response;
+    },
+    PostProjectTask: (projectID, postJSON) => {
+        const response = api.request({
+            url: 'project/'+projectID+'/task',
+            method: 'POST',
+            data: postJSON
+        })
+        return response;
+    },
+    PutProjectTask: (projectID, projectTaskID, putJSON) => {
+        const response = api.request({
+            url: 'project/' + projectID + '/task/' +  projectTaskID,
+            method: 'PUT',
+            data: putJSON
+        })
+        return response;
+    },
 } 
 export default ProjectAPIs;

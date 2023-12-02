@@ -277,6 +277,22 @@ router.get('/:projectID/tasks',  function(request, response) {
         response.json(projectTasks);
     })
 });
+router.put('/:projectID/task/:projectTaskID',  function(request, response) {
+    ProjectTask.update(
+        { 
+            task_id: request.body.task_id,
+            company_id: request.body.company_id,
+            task_type_id: request.body.task_type_id,
+            approx_val: request.body.approx_val,
+            start_date: request.body.start_date,
+            end_date: request.body.end_date
+        },
+        {where: {id: request.params.projectTaskID}
+    })
+    .then(function(projectTask) {
+        response.json(projectTask);
+    })
+});
 
 router.post('/:projectID/task',  function(request, response) {
     ProjectTask.create({ 

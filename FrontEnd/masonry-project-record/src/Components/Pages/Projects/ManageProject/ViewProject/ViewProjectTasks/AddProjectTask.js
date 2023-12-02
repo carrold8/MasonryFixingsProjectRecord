@@ -1,11 +1,14 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import DropDown from "../../DropDown/DropDown";
+import DropDown from "../../../../../DropDown/DropDown";
+import ProjectAPIs from "../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
+import { useParams } from "react-router-dom";
 
-export default function AddProjectTask({projectID, handleAddNew}){
+export default function AddProjectTask({handleAddNew}){
 
+    const params = useParams();
 
+    const [stageID, setStageID] = useState('');
     const [taskID, setTaskID] = useState('');
     const [companyID, setCompanyID] = useState('');
     const [taskTypeID, setTaskTypeID] = useState('');
@@ -13,6 +16,16 @@ export default function AddProjectTask({projectID, handleAddNew}){
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
+
+    const handleChangeStage = (e) => {
+        setStageID(e.target.value);
+        setTaskID('');
+        setTaskTypeID('');
+    }
+    const handleChangeTask = (e) => {
+        setTaskID(e.target.value);
+        setTaskTypeID('');
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,7 +40,7 @@ export default function AddProjectTask({projectID, handleAddNew}){
             end_date: endDate
         }
 
-        axios.post('http://localhost:8080/project/'+projectID+'/task', postJSON)
+        ProjectAPIs.PostProjectTask(params.ProjectID, postJSON)
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
@@ -41,9 +54,15 @@ export default function AddProjectTask({projectID, handleAddNew}){
     return(
         <Form onSubmit={handleSubmit}>
             <Form.Group as={Row}>
+                <Form.Label column sm={3}>Stage:</Form.Label>
+                <Col>
+                    <DropDown.Stage required value={stageID} onChange={handleChangeStage} />
+                </Col>
+            </Form.Group>
+            <Form.Group as={Row}>
                 <Form.Label column sm={3}>Task:</Form.Label>
                 <Col>
-                    <DropDown.Task required value={taskID} onChange={(e) => setTaskID(e.target.value)} />
+                    <DropDown.StageTasks stageID={stageID} disabled={stageID===''} required value={taskID} onChange={handleChangeTask} />
                 </Col>
             </Form.Group>
 
@@ -57,7 +76,7 @@ export default function AddProjectTask({projectID, handleAddNew}){
             <Form.Group as={Row}>
                 <Form.Label column sm={3}>Task Type:</Form.Label>
                 <Col>
-                    <DropDown.TaskType required value={taskTypeID} onChange={(e) => setTaskTypeID(e.target.value)} />
+                    <DropDown.TaskType taskID={taskID} disabled={taskID===''} required value={taskTypeID} onChange={(e) => setTaskTypeID(e.target.value)} />
                 </Col>
             </Form.Group>
 
