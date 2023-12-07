@@ -11,7 +11,7 @@ var AnchorTraining = database.define('anchor_training', {
         autoIncrement: true,
     },
     project_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     user_id: {

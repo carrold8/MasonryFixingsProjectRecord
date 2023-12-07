@@ -11,7 +11,7 @@ var InductionRegister = database.define('induction_register', {
         autoIncrement: true,
     },
     project_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     user_id: {
