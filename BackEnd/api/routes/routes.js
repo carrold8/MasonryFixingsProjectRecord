@@ -32,7 +32,7 @@ const { Project } = require('../models/project.model');
 module.exports = function(app) {
 
   var corsOptions = {
-    origin: 'http://172.31.29.218'
+    origin: 'http://localhost:3000'
 }
   app.use(cors(corsOptions));
 
