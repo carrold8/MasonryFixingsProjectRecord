@@ -66,7 +66,7 @@ export default function ViewEmployees({CompanyID}){
                             </tr>
                         </thead>
                         <tbody>
-                            {showAdd && <CreateEmployee comapnyID={CompanyID} handleAddNew={handleAddNew}/>}
+                            {showAdd && <CreateEmployee companyID={CompanyID} handleAddNew={handleAddNew}/>}
                             {employeeData.map((employee) => {
                                 
                                 return (

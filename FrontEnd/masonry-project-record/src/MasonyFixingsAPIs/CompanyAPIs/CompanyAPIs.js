@@ -65,7 +65,7 @@ const CompanyAPIs = {
     PostCompanyEmployee: (companyID, postJSON) => {
         const response = api.request({
             url: 'company/' + companyID + '/employee',
-            method: 'PUT',
+            method: 'POST',
             data: postJSON
         })
         return response;
