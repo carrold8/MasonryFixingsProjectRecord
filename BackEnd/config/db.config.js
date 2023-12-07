@@ -13,7 +13,7 @@ module.exports = {
         }
     },
     configCloud: {
-        HOST: 'masonry-project-db.cemcbovfho20.eu-west-1.rds.amazonaws.com',
+        HOST: 'masonry-project-database.cemcbovfho20.eu-west-1.rds.amazonaws.com',
         USER: 'root',
         PASSWORD: 'YourRootPassword',
         DB: 'masonry_project_db',
