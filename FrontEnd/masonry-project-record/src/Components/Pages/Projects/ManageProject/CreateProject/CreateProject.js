@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, Row, Col, Card } from "react-bootstrap";
 import DropDown from "../../../../DropDown/DropDown";
 import './CreateProject.css';
+import ProjectAPIs from "../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 
 export default function CreateProject(){
 
@@ -102,10 +103,8 @@ export default function CreateProject(){
 
         }
 
-        axios.post(
-            'http://localhost:8080/project',
-            PostJSON
-        )
+        
+        ProjectAPIs.PostProject(PostJSON)
         .then((newProject) => {
     
             if(newProject.status === 200){

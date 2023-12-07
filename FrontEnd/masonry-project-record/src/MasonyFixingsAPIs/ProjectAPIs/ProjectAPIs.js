@@ -10,6 +10,15 @@ const ProjectAPIs = {
         return response;
     },
 
+    PostProject: (postJSON) => {
+        const response = api.request({
+            url: 'project',
+            method: 'POST',
+            data: postJSON
+        })
+        return response;
+    },
+    
     GetProjectTitleInfo: (projectID) => {
         const response = api.request({
             url: 'project/' + projectID + '/title-info',
