@@ -53,10 +53,9 @@
 
 const express = require('express');
 const app = express();
-const cors = require('cors');
 const port = process.env.PORT || 8080;
-const database = require('./config/database');
-const sequelize = require('sequelize');
+
+const path = require('path');
 
 
 require('./api/routes/routes')(app);
@@ -130,3 +129,19 @@ app.use(function (error, request, response, next) {
 app.listen(port, function() {
  console.log('Node app is running at localhost:' + port);
 });
+
+
+const _dirname = path.dirname("");
+const buildPath = path.join(_dirname, "../FrontEnd/masonry-project-record/build");
+
+app.use(express.static(buildPath))
+app.get("/*", function(req, res){
+    res.sendFile(
+        path.join(__dirname, "../FrontEnd/masonry-project-record/index.html"),
+        function(err){
+            if(err){
+                res.status(500).send(err);
+            }
+        }
+    );
+})
