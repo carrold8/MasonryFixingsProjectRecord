@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import { Form } from "react-bootstrap";
+import CompanyAPIs from "../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
 
 export default function AllCompaniesDropDown(props){
 
     const [companyData, setCompanyData] = useState([]);
     
     const getCompanyData = () => {
-        axios.get('http://localhost:8080/company')
+        CompanyAPIs.GetAllCompanies()
         .then((companies) => {
             setCompanyData(companies.data)
         })

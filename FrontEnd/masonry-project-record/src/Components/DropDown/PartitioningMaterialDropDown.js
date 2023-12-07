@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function PartitioningMatrialsDropDown(props){
 
     const [partitioningeMaterialData, setPartitioningMaterialData] = useState([]);
     
     const getPartitioningMaterialData = () => {
-        axios.get('http://localhost:8080/lookup/partitioning-material')
+        LookupAPIs.GetPartitioningMaterial()
         .then((partitioningMaterial) => {
             setPartitioningMaterialData(partitioningMaterial.data)
         })

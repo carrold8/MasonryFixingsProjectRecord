@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function CategoryDropDown(props){
 
     const [categoryData, setCategoryData] = useState([]);
     
     const getCategoryData = () => {
-        axios.get('http://localhost:8080/lookup/category')
+        LookupAPIs.GetCategory()
         .then((categories) => {
             setCategoryData(categories.data)
         })

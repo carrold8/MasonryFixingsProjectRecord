@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import LookupAPIs from "../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
 
 export default function UsersDropDown(props){
 
     const [userData, setUserData] = useState([]);
 
     const getUserData = () => {
-        axios.get('http://localhost:8080/lookup/users')
+        LookupAPIs.GetUsers()
         .then((response) => {
             if(response.status === 200){
                 setUserData(response.data);

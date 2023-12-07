@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function EmployeeTypeDropDown(props){
 
     const [employeeTypeData, setEmployeeTypeData] = useState([]);
     
     const getEmployeeTypeData = () => {
-        axios.get('http://localhost:8080/lookup/employee-type')
+        LookupAPIs.GetEmployeeType()
         .then((employeeTypes) => {
             setEmployeeTypeData(employeeTypes.data)
         })

@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function FrameMatrialsDropDown(props){
 
     const [frameMaterialData, setFrameMaterialData] = useState([]);
     
     const getFrameMaterialData = () => {
-        axios.get('http://localhost:8080/lookup/frame-material')
+        LookupAPIs.GetFrameMaterial()
         .then((frameMaterial) => {
             setFrameMaterialData(frameMaterial.data)
         })

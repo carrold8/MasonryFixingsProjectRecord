@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function EnvelopeMatrialsDropDown(props){
 
     const [envelopeMaterialData, setEnvelopeMaterialData] = useState([]);
     
     const getEnvelopeMaterialData = () => {
-        axios.get('http://localhost:8080/lookup/envelope-material')
+        LookupAPIs.GetEnvelopeMaterial()
         .then((envelopeMaterial) => {
             setEnvelopeMaterialData(envelopeMaterial.data)
         })

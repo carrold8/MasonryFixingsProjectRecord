@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import { Form } from 'react-bootstrap';
+import CompanyAPIs from '../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs';
 
 export default function CompanyEmployees(props){
     const [employeeData, setEmployeeData] = useState([]);
     
     const getEmployeeData = (companyID) => {
-        axios.get('http://localhost:8080/company/' + companyID + '/employees')
+        CompanyAPIs.GetCompanyEmployees(companyID)
         .then((employees) => {
             setEmployeeData(employees.data)
         })

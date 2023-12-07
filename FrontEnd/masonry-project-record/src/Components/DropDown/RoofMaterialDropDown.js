@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function RoofMatrialsDropDown(props){
 
     const [roofMaterialData, setRoofMaterialData] = useState([]);
     
     const getRoofMaterialData = () => {
-        axios.get('http://localhost:8080/lookup/roof-material')
+        LookupAPIs.GetRoofMaterial()
         .then((roofMaterial) => {
             setRoofMaterialData(roofMaterial.data)
         })

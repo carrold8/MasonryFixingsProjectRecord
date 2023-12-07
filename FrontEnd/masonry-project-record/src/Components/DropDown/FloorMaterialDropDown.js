@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function FloorMatrialsDropDown(props){
 
     const [floorMaterialData, setFloorMaterialData] = useState([]);
     
     const getFloorMaterialData = () => {
-        axios.get('http://localhost:8080/lookup/floor-material')
+        LookupAPIs.GetFloorMaterial()
         .then((floorMaterial) => {
             setFloorMaterialData(floorMaterial.data)
         })
