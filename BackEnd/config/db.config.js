@@ -12,11 +12,18 @@ module.exports = {
             idle: 10000
         }
     },
-    configB: {
-        host: 'localhost',
-        user: 'root',
-        password: 'YourRootPassword',
-        database: 'masonry_project_db'
+    configCloud: {
+        HOST: 'masonry-project-db.cemcbovfho20.eu-west-1.rds.amazonaws.com',
+        USER: 'root',
+        PASSWORD: 'YourRootPassword',
+        DB: 'masonry_project_db',
+        dialect: 'mysql',
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }
     },
     listPerPage: 10
     
