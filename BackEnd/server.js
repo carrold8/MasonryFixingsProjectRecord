@@ -53,7 +53,8 @@
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 8080;
+// const port = process.env.PORT || 8080;
+const port = process.env.PORT || 'ec2-3-254-137-159.eu-west-1.compute.amazonaws.com';
 
 const path = require('path');
 
