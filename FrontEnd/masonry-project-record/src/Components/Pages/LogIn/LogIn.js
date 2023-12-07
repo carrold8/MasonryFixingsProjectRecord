@@ -14,8 +14,11 @@ function LogIn() {
         e.preventDefault();
         e.stopPropagation();
 
-        localStorage.setItem("user", "Logged In");
-        navigate('/');
+        if(userName === 'SalesRep' && password === 'RedshankClose15!'){
+            localStorage.setItem("user", "Logged In");
+            navigate('/');
+        }
+        
     }
 
 

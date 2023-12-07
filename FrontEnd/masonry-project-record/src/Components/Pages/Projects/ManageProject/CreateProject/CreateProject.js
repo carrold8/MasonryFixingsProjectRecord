@@ -108,7 +108,6 @@ export default function CreateProject(){
         .then((newProject) => {
     
             if(newProject.status === 200){
-            console.log('ID: ',newProject.data.id);
             navigate('/project/' + newProject.data.id)
             }
         })
@@ -157,7 +156,7 @@ export default function CreateProject(){
                                 <Form.Control size='sm' required value={applicant} onChange={(e) => setApplicant(e.target.value)} />
                             </Col>
                             <Col>
-                                <strong>Footprint</strong>
+                                <strong>Footprint {'('}m<sup>2</sup>{')'}</strong>
                                 <Form.Control size='sm' required type="number" value={footprint} onChange={(e) => setFootprint(e.target.value)} />
                             </Col>
                         </Row>
