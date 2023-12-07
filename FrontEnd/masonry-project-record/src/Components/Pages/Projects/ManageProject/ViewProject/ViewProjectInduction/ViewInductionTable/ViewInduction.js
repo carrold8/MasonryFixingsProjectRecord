@@ -22,16 +22,18 @@ export default function ViewInduction({induction, getInductionData}){
             user_id: userID,
             date: date
         }
-        ProjectAPIs.PutProjectInductionList(params.ProjectID, induction.id, putJSON)
-        .then((response) => {
-            if(response.status === 200){
-                getInductionData(params.ProjectID);
-                setEditing(false);
-            }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        if(userID !== '' && date !== ''){
+            ProjectAPIs.PutProjectInductionList(params.ProjectID, induction.id, putJSON)
+            .then((response) => {
+                if(response.status === 200){
+                    getInductionData(params.ProjectID);
+                    setEditing(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
     }
 
     const handleCancel = () => {

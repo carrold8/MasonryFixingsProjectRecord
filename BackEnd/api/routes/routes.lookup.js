@@ -14,6 +14,7 @@ const { PartitioningMaterial } = require('../models/partitioningmaterial.model')
 const { Task } = require('../models/task.model');
 const { User } = require('../models/user.model');
 const { Stage } = require('../models/stage.model');
+const { Product } = require('../models/product.model');
 const router = express.Router();
 
 
@@ -141,6 +142,13 @@ router.get('/stage/:stageID/tasks',  function(request, response) {
     Task.findAll({where: {stage_id: request.params.stageID}})
     .then(function(tasks) {
         response.json(tasks);
+    })
+});
+
+router.get('/products',  function(request, response) {
+    Product.findAll()
+    .then(function(products) {
+        response.json(products);
     })
 });
 

@@ -41,3 +41,37 @@
 .maintenance-container{
     padding: 1rem;
 }
+
+.maintenance-container button{
+    padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+    border: 1px solid #e87722;
+    background-color: #e87722;
+    color: white;
+    margin: 0.2rem;
+    border-radius: 0.2rem;
+}
+
+.maintenance-container button:hover{
+    background-color: #e87722aa;
+}
+.maintenance-container button:hover:active{
+    background-color: #e87722cc;
+}
+.maintenance-container button:focus{
+    background-color: #e87722cc;
+    box-shadow: 1px 1px 4px 2px #e87722cc;
+    border: #e87722cc
+}
+
+.maintenance-container button:disabled{
+    background-color: #e8772266;
+    border-color: #e8772266;
+}
+.maintenance-container button:disabled:hover{
+    background-color: #e8772266;
+    border-color: #e8772266;
+}
+.maintenance-container button:disabled:hover:active{
+    background-color: #e8772266;
+    border-color: #e8772266;
+}

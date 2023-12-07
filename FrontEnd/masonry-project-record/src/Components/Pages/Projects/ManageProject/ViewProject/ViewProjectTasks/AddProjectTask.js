@@ -15,6 +15,7 @@ export default function AddProjectTask({handleAddNew}){
     const [approxVal, setApproxVal] = useState(0);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [userID, setUserID] = useState('');
 
 
     const handleChangeStage = (e) => {
@@ -37,7 +38,8 @@ export default function AddProjectTask({handleAddNew}){
             task_type_id: taskTypeID,
             approx_val: approxVal,
             start_date: startDate,
-            end_date: endDate
+            end_date: endDate,
+            user_id: userID
         }
 
         ProjectAPIs.PostProjectTask(params.ProjectID, postJSON)
@@ -52,57 +54,76 @@ export default function AddProjectTask({handleAddNew}){
     }
 
     return(
+        <div className="add-new">
         <Form onSubmit={handleSubmit}>
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>Stage:</Form.Label>
-                <Col>
-                    <DropDown.Stage required value={stageID} onChange={handleChangeStage} />
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>Task:</Form.Label>
-                <Col>
-                    <DropDown.StageTasks stageID={stageID} disabled={stageID===''} required value={taskID} onChange={handleChangeTask} />
-                </Col>
-            </Form.Group>
 
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>Company:</Form.Label>
+            <Row>
                 <Col>
-                    <DropDown.AllCompanies  required value={companyID} onChange={(e) => setCompanyID(e.target.value)} />
-                </Col>
-            </Form.Group>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}>Stage:</Form.Label>
+                        <Col >
+                            <DropDown.Stage size='sm' required value={stageID} onChange={handleChangeStage} />
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}>Task:</Form.Label>
+                        <Col>
+                            <DropDown.StageTasks size='sm' stageID={stageID} disabled={stageID===''} required value={taskID} onChange={handleChangeTask} />
+                        </Col>
+                    </Form.Group>
 
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>Task Type:</Form.Label>
-                <Col>
-                    <DropDown.TaskType taskID={taskID} disabled={taskID===''} required value={taskTypeID} onChange={(e) => setTaskTypeID(e.target.value)} />
-                </Col>
-            </Form.Group>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}>Company:</Form.Label>
+                        <Col>
+                            <DropDown.AllCompanies size='sm'  required value={companyID} onChange={(e) => setCompanyID(e.target.value)} />
+                        </Col>
+                    </Form.Group>
 
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>Approx Value:</Form.Label>
-                <Col>
-                    <Form.Control required type="number" value={approxVal} onChange={(e) => setApproxVal(e.target.value)} />
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}>Task Type:</Form.Label>
+                        <Col>
+                            <DropDown.TaskType size='sm' taskID={taskID} disabled={taskID===''} required value={taskTypeID} onChange={(e) => setTaskTypeID(e.target.value)} />
+                        </Col>
+                    </Form.Group>
                 </Col>
-            </Form.Group>
 
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>Start Date:</Form.Label>
                 <Col>
-                    <Form.Control type="date" required value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                </Col>
-            </Form.Group>
+                    <Form.Group as={Row}>
+                    <Form.Label column sm={3}>Approx Value:</Form.Label>
+                        <Col>
+                            <Form.Control size='sm' required type="number" value={approxVal} onChange={(e) => setApproxVal(e.target.value)} />
+                        </Col>
+                    </Form.Group>
 
-            <Form.Group as={Row}>
-                <Form.Label column sm={3}>End Date:</Form.Label>
-                <Col>
-                    <Form.Control type='date' required value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}>Start Date:</Form.Label>
+                        <Col>
+                            <Form.Control size='sm' type="date" required value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row}>
+                        <Form.Label size='sm' column sm={3}>End Date:</Form.Label>
+                        <Col>
+                            <Form.Control size='sm' type='date' required value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}>Sales Rep:</Form.Label>
+                        <Col>
+                            <DropDown.Users size='sm' required value={userID} onChange={(e) => setUserID(e.target.value)} />
+                        </Col>
+                    </Form.Group>
                 </Col>
-            </Form.Group>
+            </Row>
+            
+
+            
 
             <Button type="submit">Add</Button>
         </Form>
+        </div>
     )
 
 

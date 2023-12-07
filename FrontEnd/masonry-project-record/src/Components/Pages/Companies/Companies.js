@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Companies.css';
 import CreateCompany from './CreateCompany';
-import DisplayCompany from './DisplayCompany';
-import DropDown from '../../DropDown/DropDown';
+import ViewCompany from './ViewCompany/ViewCompany';
+// import DropDown from '../../DropDown/DropDown';-
 import CompanyAPIs  from '../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs';
 
 export default function Companies(){
 
-    const [companyTypeID, setCompanyTypeID] = useState('');
     const [addNew, setAddNew] = useState(false);
        
     const [CompaniesData, setCompaniesData] =  useState([])
-
 
     const getAllCompanies = () => {
 
@@ -22,7 +20,15 @@ export default function Companies(){
         .catch((err) => {
             console.log(err);
         })
+    }
 
+    const handleAddNew = () => {
+        getAllCompanies();
+        setAddNew(false);
+    }
+
+    const handleCancel = () => {
+        setAddNew(false);
     }
 
     useEffect(() => {
@@ -30,43 +36,26 @@ export default function Companies(){
     }, [])
     
     return(
-        <div>
-            <div>{CompaniesData.length} companies</div>
-            <div onClick={() => setAddNew(!addNew)}>Create new company</div>
+        <div className='company-display'>
 
+            <h1>Companies</h1>
+            <hr/>
+
+            {addNew ?
+                <div>
+                    <CreateCompany handleCancel={handleCancel} handleAddNew={handleAddNew} /> 
+                </div>
+            :
+            
             <div>
-                <DropDown.CompanyType value={companyTypeID} onChange={(e) => setCompanyTypeID(e.target.value)} /> 
+                <button onClick={() => setAddNew(true)}>Add New</button>
+                {CompaniesData.map((company) => {
+                    return(
+                        <ViewCompany key={company.id} companyID={company.id}/>
+                    )
+                })}
             </div>
-
-            {addNew && 
-                <div>
-                    <CreateCompany setCompanyData={setCompaniesData} CompanyData={CompaniesData} /> 
-                </div>
             }
-            {companyTypeID === '' ?
-
-                <div className='company-display'>
-                    {CompaniesData.map((company) => {
-                        return(
-                            <DisplayCompany key={company.id} CompanyData={company} getCompany={getAllCompanies}/>
-                        )
-                    })}
-                </div>
-                :
-                <div>
-                    {CompaniesData.map((company) => {
-                        return(
-                            <div key={company.id}>
-                                {
-                                parseInt(company.company_type.id) === parseInt(companyTypeID) && 
-                                    <DisplayCompany key={company.id} CompanyData={company} />
-                                }    
-                            </div>
-                        )
-                    })}
-                </div>
-            }
-
         </div>
     )
 }

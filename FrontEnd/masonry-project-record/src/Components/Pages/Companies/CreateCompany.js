@@ -1,13 +1,13 @@
-import axios from "axios";
 import React, { useState } from "react";
 import DropDown from "../../DropDown/DropDown";
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
+import CompanyAPIs from "../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
 
-export default function CreateCompany({CompanyData, setCompanyData}){
+export default function CreateCompany({handleCancel, handleAddNew}){
 
 
     const [name, setName] = useState('');
-    const [companyTypeID, setComanyTypeID] = useState(0);
+    // const [companyTypeID, setComanyTypeID] = useState(1);
 
     const [phone, setPhone] = useState('');
     const [line1, setLine1] = useState('');
@@ -15,8 +15,6 @@ export default function CreateCompany({CompanyData, setCompanyData}){
     const [city, setCity] = useState('');
     const [countyID, setCountyID] = useState(0);
     const [countryID, setCountryID] = useState(0);
-
-
 
 
     const AddNewCompany = (e) => {
@@ -39,15 +37,15 @@ export default function CreateCompany({CompanyData, setCompanyData}){
 
         const postJSON = {
             name: name,
-            company_type_id: companyTypeID,
+            company_type_id: 1,
             head_office: headOffice
         }
 
-        axios.post('http://localhost:8080/company', postJSON)
+        CompanyAPIs.PostCompany(postJSON)
         .then((response) => {
             console.log(response);
             if(response.status === 200){
-                console.log('success');
+                handleAddNew();
             }
         })
         .catch((err) => {
@@ -60,35 +58,74 @@ export default function CreateCompany({CompanyData, setCompanyData}){
 
     return(
         <form onSubmit={AddNewCompany}>
-            <label>Name:</label>
-            <input onChange={(e) => setName(e.target.value)} required value={name} />
-
-            <label>Type:</label>
-            <DropDown.CompanyType value={companyTypeID} onChange={(e) => setComanyTypeID(e.target.value)} />
-
-            <label>Head Office:</label>
-            <div>Phone:</div>
-            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <Row>
+                <Col>
+                    <button type="button" onClick={() => handleCancel()}>Cancel</button>
+                </Col>
+                <Col align='end'>
+                    <button type="submit">Create</button>
+                </Col>
+            </Row>
             
-            <h4>Address</h4>
-                <hr/>
-                <div>Line 1</div>
-                <Form.Control required value={line1} onChange={(e) => setLine1(e.target.value)} />
+            <h4>
+            <Form.Group as={Row}>
+                <Form.Label column sm={3}>Name</Form.Label>
+                <Col>
+                    <Form.Control size='sm' onChange={(e) => setName(e.target.value)} required value={name} />
+                </Col>
+            </Form.Group>
+            </h4>
+            
 
-                <div>Line 2</div>
-                <Form.Control required value={line2} onChange={(e) => setLine2(e.target.value)} />
+            <h4>Head Office:</h4>
 
-                <div>City</div>
-                <Form.Control required value={city} onChange={(e) => setCity(e.target.value)} />
+            <Form.Group as={Row}>
+                <Form.Label column sm={3}>Phone</Form.Label>
+                <Col>
+                    <Form.Control size='sm' value={phone} onChange={(e) => setPhone(e.target.value)} />
+                </Col>
+            </Form.Group>
+        
+            
+            
+            <h5>Address</h5>
+                <Form.Group as={Row}>
+                    <Form.Label column sm={3}>Line 1</Form.Label>
+                    <Col>
+                        <Form.Control size='sm' required value={line1} onChange={(e) => setLine1(e.target.value)} />
+                    </Col>
+                </Form.Group>
 
-                <div>County</div>
-                <DropDown.County required value={countyID} onChange={(e) => setCountyID(e.target.value)} />
+                <Form.Group as={Row}>
+                    <Form.Label column sm={3}>Line 2</Form.Label>
+                    <Col>
+                        <Form.Control required value={line2} onChange={(e) => setLine2(e.target.value)} />
+                    </Col>
+                </Form.Group>
 
-                <div>County</div>
-                <DropDown.Country required value={countryID} onChange={(e) => setCountryID(e.target.value)} />
+                <Form.Group as={Row}>
+                    <Form.Label column sm={3}>City</Form.Label>
+                    <Col>
+                        <Form.Control size='sm' required value={city} onChange={(e) => setCity(e.target.value)} />
+                    </Col>
+                </Form.Group>
 
+                <Form.Group as={Row}>
+                    <Form.Label column sm={3}>County</Form.Label>
+                    <Col>
+                        <DropDown.County size='sm' required value={countyID} onChange={(e) => setCountyID(e.target.value)} />
+                    </Col>
+                </Form.Group>
 
-            <button type="submit">Create</button>
+                <Form.Group as={Row}>
+                    <Form.Label column sm={3}>Country</Form.Label>
+                    <Col>
+                        <DropDown.Country size='sm' required value={countryID} onChange={(e) => setCountryID(e.target.value)} />
+                    </Col>
+                </Form.Group>
+    
+
+            
         </form>
     )
 

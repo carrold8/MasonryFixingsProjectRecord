@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
+import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 
 export default function CountyDropDown(props){
 
     const [countyData, setCountyData] = useState([]);
     
     const getCountyData = () => {
-        axios.get('http://localhost:8080/lookup/county')
+        LookupAPIs.GetCounties()
         .then((counties) => {
             setCountyData(counties.data)
         })
@@ -28,7 +28,7 @@ export default function CountyDropDown(props){
             onChange={props.onChange}
             size={props.size}
             required={props.required}
-            
+            disabled={props.disabled}
         >
             <option value={''}>County</option>
             {countyData.map((county) => {

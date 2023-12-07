@@ -18,15 +18,7 @@ export default function PageRoutes(){
 
             {/* Projects */}
             <Route exact path="/project/*" element={<ProjectsRoutes/>} />
-              {/* <Route index element={<ProjectsHome/>} />
-              <Route path=':ProjectID'>
-                <Route index element={<ViewProject/>} />
-              </Route>
-              <Route path='create'>
-                <Route index element={<CreateProject/>} />
-              </Route>
-            </Route> */}
-
+              
             <Route exact path='/maintenance' element={<Maintenance />}>
               <Route index element={<MaintenaceHome/>}/>
             </Route>

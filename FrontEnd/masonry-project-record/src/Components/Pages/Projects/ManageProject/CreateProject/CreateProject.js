@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Row, Col, Card } from "react-bootstrap";
 import DropDown from "../../../../DropDown/DropDown";
+import './CreateProject.css';
 
 export default function CreateProject(){
+
 
     const [name, setName] = useState('');
     const [cisID, setCisID] = useState('');
@@ -24,12 +26,12 @@ export default function CreateProject(){
     // const [contactedEng, setContactedEngID] = useState(false);
     const [categoryID, setCategoryID] = useState('');
     const [sectorID, setSectorID] = useState('');
-    const [startDate, setStartDate] = useState('2023-10-21');
-    const [endDate, setEndDate] = useState('2023-10-21');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [inductionReq, setInductReq] = useState(true);
     const [inductionProvided, setInductProv] = useState('');
     const [buildDesc, setBuildDesc] = useState('');
-    const [footprint, setFootprint] = useState(0);
+    const [footprint, setFootprint] = useState('');
     const [frameMatID, setFrameMatID] = useState(0);
     const [floorMatID, setFloorMatID] = useState(0);
     const [envelopeMatID, setEnvelopeMatID] = useState(0);
@@ -42,6 +44,15 @@ export default function CreateProject(){
     const [storemanID, setStoremanID] = useState(0);
 
     // console.log(endDate);
+    const [pageIndex, setPageIndex] = useState(0);
+
+    const handleNextPage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if(pageIndex < 5){
+            setPageIndex(pageIndex+1);
+        }
+    }
 
 
     const navigate = useNavigate()
@@ -109,110 +120,266 @@ export default function CreateProject(){
 
 
     return(
-        <div>
-            <Form onSubmit={handleSubmit}>
-                <div>Name:</div>
-                <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
-                <div>CIS ID:</div>
-                <Form.Control required value={cisID} onChange={(e) => setCisID(e.target.value)} />
+        <div className="create-project">
 
-                <h4>Address</h4>
-                <hr/>
-                <div>Line 1</div>
-                <Form.Control required value={line1} onChange={(e) => setLine1(e.target.value)} />
+            <div>
+                <Button onClick={() => navigate('/project')}>Back to Projects</Button>
+            </div>
+            <div align='center'>
+                <span>{pageIndex + 1} / 6</span>
+            </div>
+            
 
-                <div>Line 2</div>
-                <Form.Control required value={line2} onChange={(e) => setLine2(e.target.value)} />
-
-                <div>City</div>
-                <Form.Control required value={city} onChange={(e) => setCity(e.target.value)} />
-
-                <div>County</div>
-                <DropDown.County required value={countyID} onChange={(e) => setCountyID(e.target.value)} />
-
-                <div>County</div>
-                <DropDown.Country required value={countryID} onChange={(e) => setCountryID(e.target.value)} />
-
-                <hr/>
-
-                <div>Applicant</div>
-                <Form.Control required value={applicant} onChange={(e) => setApplicant(e.target.value)} />
-
-                <div>Architect Company</div>
-                <DropDown.AllCompanies required value={architectCompID} onChange={(e) => setArchitectCompId(e.target.value)} />
-
-                <div>Architect</div>
-                <DropDown.CompanyEmployees required companyID={architectCompID} disabled={architectCompID === 0} value={architectID} onChange={(e) => setArchitectID(e.target.value)} />
-
-
-                <div>Engineering Company</div>
-                <DropDown.AllCompanies required value={engineerCompID} onChange={(e) => setEngineerCompID(e.target.value)} />
-
-                <div>Engineer</div>
-                <DropDown.CompanyEmployees required companyID={engineerCompID} disabled={engineerCompID === 0} value={engineerID} onChange={(e) => setEngineerID(e.target.value)} />
-
-
-                <div>Category</div>
-                <DropDown.Category required value={categoryID} onChange={(e) => {
-                        setCategoryID(e.target.value);
-                        setSectorID('');
-                    }} />
-
-
-                <div>Sector</div>
-                <DropDown.CategorySectors required categoryID={categoryID} disabled={categoryID === ''} value={sectorID} onChange={(e) => setSectorID(e.target.value)} />
+                {pageIndex === 0 &&
                 
-                <div>Start Date</div>
-                <Form.Control required type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                <Card>
+                    <Card.Header>
+                    Basic Information
+                    </Card.Header>
+                    <Form onSubmit={handleNextPage}>
+                    <Card.Body>
+                        <Row>
+                            <Col sm={8}>
+                                <strong>Title</strong>
+                                <Form.Control size='sm' required value={name} onChange={(e) => setName(e.target.value)} />
+                            </Col>
+                            <Col>
+                                <strong>CIS ID</strong>
+                                <Form.Control size='sm' required value={cisID} onChange={(e) => setCisID(e.target.value)} />
+                            </Col>
+                        </Row>
+                        
+                        <strong>Building Description:</strong>
+                        <Form.Control size='sm' as="textarea" rows={2}  value={buildDesc} onChange={(e) => setBuildDesc(e.target.value)}/>
 
-                <div>End Date</div>
-                <Form.Control required type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        <Row>
+                            <Col>
+                                <strong>Applicant</strong>
+                                <Form.Control size='sm' required value={applicant} onChange={(e) => setApplicant(e.target.value)} />
+                            </Col>
+                            <Col>
+                                <strong>Footprint</strong>
+                                <Form.Control size='sm' required type="number" value={footprint} onChange={(e) => setFootprint(e.target.value)} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            <strong>Category</strong>
+                                <DropDown.Category size='sm' required value={categoryID} onChange={(e) => {
+                                        setCategoryID(e.target.value);
+                                        setSectorID('');
+                                    }} />
+                            </Col>
+                            <Col>
+                                <strong>Sector</strong>
+                                <DropDown.CategorySectors 
+                                    size='sm'
+                                    required 
+                                    categoryID={categoryID} 
+                                    disabled={categoryID === ''} 
+                                    value={sectorID} 
+                                    onChange={(e) => setSectorID(e.target.value)} 
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <strong>Start Date</strong>
+                                <Form.Control size='sm' required type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                            </Col>
+                            <Col>
+                                <strong>End Date</strong>
+                                <Form.Control size='sm' required type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col><button disabled>Back</button></Col>
+                            <Col align='end'><button type='submit'>Next</button></Col>
+                        </Row>
+                    </Card.Body>
+                    </Form>
 
-                <div>Induction Required: <input type="checkbox" checked={inductionReq} onChange={(e) => setInductReq(!inductionReq)} /></div>
-                <div>Induction Provided on:</div>
-                <Form.Control as="textarea" rows={2}  value={inductionProvided} onChange={(e) => setInductProv(e.target.value)}/>
+                </Card>
+                }
+                
+                {pageIndex === 1 &&
+                <Card>
+                    <Card.Header>Address</Card.Header>
+                    <Form onSubmit={handleNextPage}>
+                    
+                    <Card.Body>
+                    <strong>Line 1</strong>
+                    <Form.Control size='sm' required value={line1} onChange={(e) => setLine1(e.target.value)} />
 
-                <div>Building Description:</div>
-                <Form.Control as="textarea" rows={2}  value={buildDesc} onChange={(e) => setBuildDesc(e.target.value)}/>
+                    <strong>Line 2</strong>
+                    <Form.Control size='sm' value={line2} onChange={(e) => setLine2(e.target.value)} />
 
-                <div>Footprint</div>
-                <Form.Control required type="number" value={footprint} onChange={(e) => setFootprint(e.target.value)} />
+                    <strong>City</strong>
+                    <Form.Control size='sm' required value={city} onChange={(e) => setCity(e.target.value)} />
+
+                    <strong>County</strong>
+                    <DropDown.County size='sm' required value={countyID} onChange={(e) => setCountyID(e.target.value)} />
+
+                    <strong>County</strong>
+                    <DropDown.Country size='sm' required value={countryID} onChange={(e) => setCountryID(e.target.value)} />
+
+                  
+                    <Row>
+                        <Col>
+                            <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
+                        </Col>
+                        <Col align='end'>
+                            <button type='submit'>Next</button>
+                        </Col>
+                    </Row>
+                        
+                        
+                    </Card.Body>
+                    </Form>
+                </Card>
+                }
+
+                {pageIndex === 2 &&
+                <Card>
+                    
+                    <Card.Header>Materials</Card.Header>
+                    <Form onSubmit={handleNextPage}>
+                    <Card.Body>
+
+                        
+                    <strong>Frame Material</strong>
+                    <DropDown.FrameMaterial size='sm' required value={frameMatID} onChange={(e) => setFrameMatID(e.target.value)} />
+
+                    <strong>Floor Material</strong>
+                    <DropDown.FloorMaterial size='sm' required value={floorMatID} onChange={(e) => setFloorMatID(e.target.value)} />
+
+                    <strong>Envelope Material</strong>
+                    <DropDown.EnvelopeMaterial size='sm' required value={envelopeMatID} onChange={(e) => setEnvelopeMatID(e.target.value)} />
+
+                    <strong>Roof Material</strong>
+                    <DropDown.RoofMaterial size='sm' required value={roofMatID} onChange={(e) => setRoofMatID(e.target.value)} />
+
+                    <strong>Partitioning Material</strong>
+                    <DropDown.PartitioningMaterial size='sm' required value={partitioningMatID} onChange={(e) => setPartitioningMatID(e.target.value)} />
+                    
+                    
+                    <Row>
+                        <Col>
+                            <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
+                        </Col>
+                        <Col align='end'>
+                            <button type='submit'>Next</button>
+                        </Col>
+                    </Row>
+                    
+                    </Card.Body>
+                    </Form>
+                </Card>
+                }   
+
+                
+
+                
+                {pageIndex === 3 &&
+                <Card>
+                    <Form onSubmit={handleNextPage}>
+                        <Card.Header>Induction</Card.Header>
+                        <Card.Body>
+                            <strong>Required: <input type="checkbox" checked={inductionReq} onChange={(e) => setInductReq(!inductionReq)} /></strong>
+                            <div>
+                            <strong>Induction Provided on:</strong>
+                            <Form.Control size='sm' as="textarea" rows={2}  value={inductionProvided} onChange={(e) => setInductProv(e.target.value)}/>
+                            </div>
+                            <Row>
+                                <Col>
+                                    <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
+                                </Col>
+                                <Col align='end'>
+                                    <button type='submit'>Next</button>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                    </Form>
+                </Card>
+                }
+                
+                
+                
+                
+
+                { pageIndex === 4 &&
+                <Card>
+                    <Card.Header>Main Contractor</Card.Header>
+                    <Form onSubmit={handleNextPage}>
+                        <Card.Body>
+                        <strong>Company</strong>
+                        <DropDown.AllCompanies size='sm' required value={mainContractorID} onChange={(e) => setMainContractorID(e.target.value)} />
+
+                        <strong>Account Contact</strong>
+                        <DropDown.CompanyEmployees size='sm' required companyID={mainContractorID} disabled={mainContractorID === 0} value={accountContactID} onChange={(e) => setAccountContactID(e.target.value)} />
+
+                        <strong>Foreman</strong>
+                        <DropDown.CompanyEmployees size='sm' required companyID={mainContractorID} disabled={mainContractorID === 0} value={foremanID} onChange={(e) => setForemanID(e.target.value)} />
+
+                        <strong>Safety Officer</strong>
+                        <DropDown.CompanyEmployees size='sm' required companyID={mainContractorID} disabled={mainContractorID === 0} value={safetyOffID} onChange={(e) => setSafeOffID(e.target.value)} />
+
+                        <strong>Storeman</strong>
+                        <DropDown.CompanyEmployees size='sm' required companyID={mainContractorID} disabled={mainContractorID === 0} value={storemanID} onChange={(e) => setStoremanID(e.target.value)} />
+                    
+                    <Row>
+                        <Col>
+                            <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
+                        </Col>
+                        <Col align='end'>
+                            <button type='submit'>Next</button>
+                        </Col>
+                    </Row>
+                    
+                    
+                        </Card.Body>
+                    </Form>
+                </Card>
+                }
+
+                {pageIndex === 5 &&
+                <Card>
+                    <Card.Header>Contacts</Card.Header>
+                    <Form onSubmit={handleSubmit}>
+                        <Card.Body>
+                            <strong>Architect Company</strong>
+                            <DropDown.AllCompanies size='sm' required value={architectCompID} onChange={(e) => setArchitectCompId(e.target.value)} />
+
+                            <strong>Architect</strong>
+                            <DropDown.CompanyEmployees size='sm' required companyID={architectCompID} disabled={architectCompID === 0} value={architectID} onChange={(e) => setArchitectID(e.target.value)} />
 
 
-                <div>Frame Material</div>
-                <DropDown.FrameMaterial required value={frameMatID} onChange={(e) => setFrameMatID(e.target.value)} />
+                            <strong>Engineering Company</strong>
+                            <DropDown.AllCompanies size='sm' required value={engineerCompID} onChange={(e) => setEngineerCompID(e.target.value)} />
 
-                <div>Floor Material</div>
-                <DropDown.FloorMaterial required value={floorMatID} onChange={(e) => setFloorMatID(e.target.value)} />
+                            <strong>Engineer</strong>
+                            <DropDown.CompanyEmployees size='sm' required companyID={engineerCompID} disabled={engineerCompID === 0} value={engineerID} onChange={(e) => setEngineerID(e.target.value)} />
+                            
+                            <Row>
+                                <Col>
+                                    <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
+                                </Col>
+                                <Col align='end'>
+                                <button type='submit'>Finish</button>
+                                </Col>
+                            </Row>
+                            
 
-                <div>Envelope Material</div>
-                <DropDown.EnvelopeMaterial required value={envelopeMatID} onChange={(e) => setEnvelopeMatID(e.target.value)} />
+                        </Card.Body>
+                    
+                    </Form>
+                    </Card>
+                }
 
-                <div>Roof Material</div>
-                <DropDown.RoofMaterial required value={roofMatID} onChange={(e) => setRoofMatID(e.target.value)} />
+             
+            
 
-                <div>Partitioning Material</div>
-                <DropDown.PartitioningMaterial required value={partitioningMatID} onChange={(e) => setPartitioningMatID(e.target.value)} />
-
-
-                <h4>Main Contractor</h4>
-                <DropDown.AllCompanies required value={mainContractorID} onChange={(e) => setMainContractorID(e.target.value)} />
-
-                <div>Account Contact</div>
-                <DropDown.CompanyEmployees required companyID={mainContractorID} disabled={mainContractorID === 0} value={accountContactID} onChange={(e) => setAccountContactID(e.target.value)} />
-
-                <div>Foreman</div>
-                <DropDown.CompanyEmployees required companyID={mainContractorID} disabled={mainContractorID === 0} value={foremanID} onChange={(e) => setForemanID(e.target.value)} />
-
-                <div>Safety Officer</div>
-                <DropDown.CompanyEmployees required companyID={mainContractorID} disabled={mainContractorID === 0} value={safetyOffID} onChange={(e) => setSafeOffID(e.target.value)} />
-
-                <div>Storeman</div>
-                <DropDown.CompanyEmployees required companyID={mainContractorID} disabled={mainContractorID === 0} value={storemanID} onChange={(e) => setStoremanID(e.target.value)} />
-
-
-                <Button type="submit" size="sm">Submit</Button>
-            </Form>
+            
         </div>
     )
 

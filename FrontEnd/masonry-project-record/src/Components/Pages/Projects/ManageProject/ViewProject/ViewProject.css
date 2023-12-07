@@ -3,3 +3,19 @@
     background-color: #63666a33;
     padding: 1rem;
 }
+.project-page button{
+    /* padding: 0.4rem; */
+    border: 1px solid #e87722;
+    background-color: #e87722;
+    color: white;
+    margin: 0.2rem;
+    border-radius: 0.2rem;
+}
+
+.project-page button:active{
+    background-color: #e8772299;
+}
+.project-page button:disabled{
+    background-color: #e8772266;
+    border-color: #e8772266;
+}

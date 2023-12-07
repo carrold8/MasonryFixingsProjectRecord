@@ -11,6 +11,7 @@ const { PartitioningMaterial } = require('../models/partitioningmaterial.model')
 const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Sector } = require('../models/sector.model');
+const { Product } = require('../models/product.model');
 const router = express.Router();
 
 
@@ -236,6 +237,25 @@ router.post('/company-type', function(request, response) {
   })
  });
 
+ router.post('/product', function(request, response) {
+  Product.create({
+      name: request.body.name,
+      price: request.body.price
+  })
+  .then(function(product) {
+    response.json(product);
+  })
+ });
+ router.put('/product/:productID', function(request, response) {
+  Product.update({
+      name: request.body.name,
+      price: request.body.price
+  },
+  {where: {id: request.params.productID}})
+  .then(function(product) {
+    response.json(product);
+  })
+ });
  
 
 

@@ -2,6 +2,14 @@ import { api } from "../ApiConfig"
 
 const ProjectAPIs = {
 
+    GetAllProjects: () => {
+        const response = api.request({
+            url: 'project',
+            method: 'GET'
+        })
+        return response;
+    },
+
     GetProjectTitleInfo: (projectID) => {
         const response = api.request({
             url: 'project/' + projectID + '/title-info',

@@ -97,11 +97,12 @@ export default function ViewProjectInfo(){
                 <div align='end'>
                     {editing ? 
                         <>
-                            <span onClick={() => handleCancel()}><MdCancel/></span>
-                            <span onClick={() => handleEdit(params.ProjectID)}><FaSave/></span>
+                            <button onClick={() => handleEdit(params.ProjectID)}><FaSave/></button>
+                            <button onClick={() => handleCancel()}><MdCancel/></button>
+                            
                         </>
                         :
-                        <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                        <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                     }
                 </div>
                 
@@ -111,6 +112,16 @@ export default function ViewProjectInfo(){
                     <h1>{title}</h1>
                 }
                 
+                <div>
+                    <strong>Building Description</strong>
+                    <div>
+                        {editing ? 
+                            <Form.Control size='sm' value={desc} onChange={(e) => setDesc(e.target.value)} />
+                            :
+                            desc
+                        }
+                    </div>
+                </div>
 
                 <div className="view-project-info-details">
                 <div className="detail">
@@ -161,16 +172,7 @@ export default function ViewProjectInfo(){
                 </div>
                 
 
-                <div className="detail">
-                    <strong>Building Description</strong>
-                    <div>
-                        {editing ? 
-                            <Form.Control size='sm' value={desc} onChange={(e) => setDesc(e.target.value)} />
-                            :
-                            desc
-                        }
-                    </div>
-                </div>
+                
 
                 <div className="detail">
                     <strong>Footprint</strong> 

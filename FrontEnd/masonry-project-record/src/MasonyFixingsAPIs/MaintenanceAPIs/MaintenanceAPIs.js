@@ -211,6 +211,23 @@ const MaintenanceAPIs = {
         return response
     },
 
+    PostProduct: (postJSON) => { 
+      const response =  api.request({
+         url: 'maintenance/product',
+         method: 'POST',
+         data: postJSON
+      })
+      return response
+   },
+   PutProduct: (productID, putJSON) => { 
+      const response =  api.request({
+              url: 'maintenance/product/' + productID,
+              method: 'PUT',
+              data: putJSON
+          })
+      return response
+  },
+
 
 }
 export default MaintenanceAPIs;

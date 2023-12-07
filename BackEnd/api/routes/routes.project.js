@@ -285,7 +285,8 @@ router.put('/:projectID/task/:projectTaskID',  function(request, response) {
             task_type_id: request.body.task_type_id,
             approx_val: request.body.approx_val,
             start_date: request.body.start_date,
-            end_date: request.body.end_date
+            end_date: request.body.end_date,
+            user_id: request.body.user_id
         },
         {where: {id: request.params.projectTaskID}
     })
@@ -302,7 +303,8 @@ router.post('/:projectID/task',  function(request, response) {
         task_type_id: request.body.task_type_id,
         approx_val: request.body.approx_val,
         start_date: request.body.start_date,
-        end_date: request.body.end_date
+        end_date: request.body.end_date,
+        user_id: request.body.user_id
     })
     .then(function(projectTask) {
         response.json(projectTask);
@@ -313,7 +315,6 @@ router.post('/:projectID/task/product',  function(request, response) {
     ProjectTaskProduct.create({ 
         project_task_id: request.body.project_task_id,
         product_id: request.body.product_id,
-        user_id: request.body.user_id,
         quantity: request.body.quantity
     })
     .then(function(projectTaskProduct) {

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import UserMaintenance from "./UserMaintenance/UserMaintenance";
 import CategorySectorMaintenance from "./CategorySectorMaintenance/CategorySectorMaintenance";
-import CompanyTypeMaintenance from "./CompanyTypeMaintenance/CompanyTypeMaintenance";
+// import CompanyTypeMaintenance from "./CompanyTypeMaintenance/CompanyTypeMaintenance";
 import MaterialsMaintenance from "./MaterialsMaintenance/MaterialsMaintenance";
-import EmployeeTypeMaintenance from "./EmployeeTypeMaintenance/EmployeeTypeMaintenance";
+// import EmployeeTypeMaintenance from "./EmployeeTypeMaintenance/EmployeeTypeMaintenance";
 import TaskMaintenance from "./TaskMaintenance/TaskMaintenance";
 import './MaintenanceHome.css';
+import ProductMaintenance from "./ProductMaintenance/ProductMaintenance";
 
 function MaintenaceHome(){
 
@@ -14,19 +15,21 @@ function MaintenaceHome(){
     const HeaderArray = [
         "Users",
         "Category",
-        "Company Type",
+        // "Company Type",
         "Materials",
-        "Employee Types",
-        "Tasks"
+        // "Employee Types",
+        "Tasks",
+        "Products"
     ]
 
     const MaintenanceArray = [
         <UserMaintenance />,
         <CategorySectorMaintenance/>,
-        <CompanyTypeMaintenance/>,
+        // <CompanyTypeMaintenance/>,
         <MaterialsMaintenance/>,
-        <EmployeeTypeMaintenance/>,
-        <TaskMaintenance/>
+        // <EmployeeTypeMaintenance/>,
+        <TaskMaintenance/>,
+        <ProductMaintenance/>
     ] 
 
     return(

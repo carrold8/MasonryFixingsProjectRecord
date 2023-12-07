@@ -14,6 +14,7 @@ const Company = require('../models/company.model').Company;
 
 const countyRouter = require('./routes.county');
 const companyRouter = require('./routes.company');
+const addressRouter = require('./routes.address');
 const projectRouter = require('./routes.project');
 const employeeRouter = require('./routes.employee');
 const projectTaskRouter = require('./routes.projecttask');
@@ -41,6 +42,7 @@ module.exports = function(app) {
 
     app.use('/county', countyRouter);
     app.use('/company', companyRouter);
+    app.use('/address', addressRouter);
     app.use('/employee', employeeRouter);
     app.use('/project', projectRouter);
     app.use('/project-task', projectTaskRouter);

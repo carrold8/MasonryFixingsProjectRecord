@@ -5,6 +5,8 @@ import ProjectAPIs from '../../../../../../MasonyFixingsAPIs/ProjectAPIs/Project
 import { useParams } from 'react-router-dom';
 import './ViewProjectTasks.css';
 import StageSelectionTabs from '../../../../../StageSelectionTabs/StageSelectionTabs';
+import { Card, Row, Col } from 'react-bootstrap';
+import { MdAddCircle } from 'react-icons/md';
 
 export default function ViewProjectTasks(){
 
@@ -41,29 +43,50 @@ export default function ViewProjectTasks(){
             <h3>Tasks</h3>
             <StageSelectionTabs value={stageID} setStageValue={setStageID} />
 
-            <span onClick={() => setAddNew(!addNew)}>Add</span>
+            <Card>
+                <Card.Header>
+                    <Row>
+                        <Col>
+                            <strong>Project Tasks</strong>
+                        </Col>    
+                        <Col align='end'>
+                            <span onClick={() => setAddNew(!addNew)}><MdAddCircle/></span>
+                        </Col>
+                    </Row>
+                </Card.Header>
 
-            <div className='project-tasks'>
-            {stageID > 0 ? 
-            
-            projectTasks.filter((task) => parseInt(task.task.stage_id) === parseInt(stageID))
-            .map((task) => {
-                    return(
-                        <ProjectTask key={task.id} projectTaskID={task.id}/>
-                    )
-                }
-                
-            )
+                <Card.Body>
+                {addNew ? 
+                <div className='project-tasks'>
+                    <AddProjectTask handleAddNew={handleAddNew} />
+                </div>
                 :
-                projectTasks.map((task) => {
-                    return(
-                        <ProjectTask key={task.id} projectTaskID={task.id}/>
-                    )
-                })
-        }
-        </div>
+                <div className='project-tasks'>
+                        {stageID > 0 ? 
+                        
+                        projectTasks.filter((task) => parseInt(task.task.stage_id) === parseInt(stageID))
+                        .map((task) => {
+                                return(
+                                    <ProjectTask key={task.id} projectTaskID={task.id} getProjectTasks={getProjectTasks}/>
+                                )
+                            }
+                            
+                        )
+                            :
+                            projectTasks.map((task) => {
+                                return(
+                                    <ProjectTask key={task.id} projectTaskID={task.id} getProjectTasks={getProjectTasks}/>
+                                )
+                            })
+                    }
+                </div>
+                }       
 
-        {addNew && <AddProjectTask handleAddNew={handleAddNew} />}
+                </Card.Body>
+            </Card>
+            
+
+        {/* {addNew && <AddProjectTask handleAddNew={handleAddNew} />} */}
 
 
 

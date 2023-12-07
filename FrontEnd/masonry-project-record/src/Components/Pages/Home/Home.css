@@ -23,6 +23,10 @@
     background-color: #e87722;
 }
 
+.home-banner .item .icon{
+    margin: 0.25rem;
+}
+
 .my-active-projects-container{
     border: 1px solid #e87722;
     margin: 1rem;

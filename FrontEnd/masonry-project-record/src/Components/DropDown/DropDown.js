@@ -18,6 +18,7 @@ import TaskTypeDropDown from './TaskTypeDropDown';
 import StageDropDown from './StageDropDown';
 import CategorySectorsDropDown from './CategorySectorsDropDown';
 import StageTasksDropDown from './StageTasksDropDown';
+import ProductDropDown from './ProductDropDown';
 
 export default function DropDown(props){
 
@@ -41,6 +42,7 @@ DropDown.FloorMaterial = FloorMaterialDropDown
 DropDown.FrameMaterial = FrameMaterialDropDown;
 DropDown.RoofMaterial = RoofMatrialsDropDown;
 DropDown.PartitioningMaterial = PartitioningMatrialsDropDown;
+DropDown.Products = ProductDropDown;
 DropDown.Sector = SectorDropDown;
 DropDown.Stage = StageDropDown;
 DropDown.StageTasks = StageTasksDropDown;

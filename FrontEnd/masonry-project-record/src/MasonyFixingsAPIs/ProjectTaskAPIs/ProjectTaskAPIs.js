@@ -20,9 +20,17 @@ const ProjectTaskAPIs = {
     },
 
 
-    GetProjectTaskProducts: (projectTaskID) => {
+    GetProjectTaskProductList: (projectTaskID) => {
         const response = api.request({
-            url: 'project-task/' + projectTaskID + '/products',
+            url: 'project-task/' + projectTaskID + '/product-list',
+            method: 'GET',
+        })
+        return response;
+    },
+
+    GetProjectTaskProduct: (projectTaskID, projectTaskProductID) => {
+        const response = api.request({
+            url: '/project-task/' + projectTaskID +'/products/' + projectTaskProductID,
             method: 'GET',
         })
         return response;
@@ -36,6 +44,15 @@ const ProjectTaskAPIs = {
         })
         return response;
     },
+
+    PutProjectTaskProduct: (projectTaskID, projectTaskProductID, putJSON) => {
+        const response = api.request({
+            url: '/project-task/' + projectTaskID +'/products/' + projectTaskProductID,
+            method: 'PUT',
+            data: putJSON
+        })
+        return response;
+    }
 
 
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {Card, Row, Col, Button, Table} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import { MsnryBlue } from "../../../../Constants/Constants";
-import axios from "axios";
+import { MdAddCircle } from "react-icons/md";
+import ProjectAPIs from "../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 
 function ProjectsTable({projectsData}){
 
@@ -13,7 +13,8 @@ function ProjectsTable({projectsData}){
     const headerColumns = ["CIS ID", "Title"];
 
     const getProjectList = () => {
-        axios.get('http://localhost:8080/project')
+       
+        ProjectAPIs.GetAllProjects()
         .then((projects) => {
             setProjectList(projects.data)
         })
@@ -58,16 +59,19 @@ function ProjectsTable({projectsData}){
     
     return(
         
-        <Card style={{width: '75%'}}>
-            <Card.Header style={{color: "white", backgroundColor: MsnryBlue, fontWeight: "bold"}}>
+        <Card >
+            <Card.Header>
                 <Row>
                     <Col sm={10}>
                         Projects
                     </Col>
+                    <Col align='end'>
+                        <span onClick={() => navigate('create')}><MdAddCircle/></span>
+                    </Col>
                 </Row>
             </Card.Header>
-            <Card.Body style={{maxHeight: '300px', overflow: "auto"}}>
-                <Table size="sm" striped bordered hover >
+            <Card.Body>
+                <Table size="sm" striped bordered hover responsive>
                     <thead>
                         <tr>
                             {thData()}

@@ -6,8 +6,13 @@
 }
 
 .project-tasks{
-    height: 50vh;
+    height: 55vh;
     margin: 0.25rem 0rem 0.25rem 0rem;
-    overflow: auto;
-    border: 1px solid #777777;
+    overflow-y: auto;
+    background-color: #77777733;
+    /* overflow-x: hidden; */
+    /* border: 1px solid #777777; */
+}
+.project-tasks .add-new{
+    width: 99%;
 }

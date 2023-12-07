@@ -143,5 +143,13 @@ const LookupAPIs = {
          return response
     },
 
+    GetProducts: () => {
+        const response = api.request({
+            url: 'lookup/products',
+            method: 'GET'
+        })
+        return response;
+    }
+
 }
 export default LookupAPIs;

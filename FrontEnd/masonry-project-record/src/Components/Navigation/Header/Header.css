@@ -1,15 +1,46 @@
 
 .header-row{
     margin-left: 0;
-    /* height: 7vh; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: sticky;
     top: 0;
     width: 100%;
-    border-bottom: 3px solid #777777;
-    overflow: hidden;
+    display: flex;
+    background-color: #e8e8e8;
+    height: 3rem;
+    z-index: 5;
+    /* color: #e87722; */
 }
 
+.header-row .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 2;
+    color: #e87722;
+    height: 100%;
+}
 
+.header-row .nav-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #63666a;
+    height: 100%;
+}
+.header-row .nav-item:hover{
+    flex: 1;
+    color: #e87722;
+    cursor: pointer;
+}
+
+.header-row .nav-item h5{
+    margin: 0.25rem;
+}
+
+@media screen and (max-width: 480px) {
+    .header-row strong{
+        display: none
+    };
+}
 

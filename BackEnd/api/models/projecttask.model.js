@@ -4,6 +4,7 @@ const { Project } = require('./project.model');
 const { Task } = require('./task.model');
 const { Company } = require('./company.model');
 const { TaskType } = require('./tasktype.model');
+const { User } = require('./user.model');
 
 
 
@@ -41,6 +42,10 @@ end_date: {
     type: DataTypes.DATE, 
     allowNull: false 
 },
+user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+},
 
 }, {freezeTableName: true, timestamps: false});
 
@@ -48,5 +53,6 @@ ProjectTask.belongsTo(Project, {foreignKey: 'project_id'});
 ProjectTask.belongsTo(Task, {foreignKey: 'task_id'});
 ProjectTask.belongsTo(Company, {foreignKey: 'company_id'});
 ProjectTask.belongsTo(TaskType, {foreignKey: 'task_type_id'});
+ProjectTask.belongsTo(User, {foreignKey: 'user_id'});
 
 module.exports.ProjectTask = ProjectTask;

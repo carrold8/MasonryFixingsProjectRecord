@@ -4,11 +4,14 @@ import ViewTaskProducts from './ViewTaskProducts/ViewTaskProducts';
 import ProjectTaskAPIs from '../../../../../../../MasonyFixingsAPIs/ProjectTaskAPIs/ProjectTaskAPIs';
 import { AiFillEdit } from 'react-icons/ai';
 import DropDown from '../../../../../../DropDown/DropDown';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import ProjectAPIs from '../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
 import { useParams } from 'react-router-dom';
+import { MdCancel, MdShoppingCart } from 'react-icons/md';
+import { FaSave } from 'react-icons/fa';
+import {format} from 'date-fns'
 
-export default function ProjectTask({projectTaskID}){
+export default function ProjectTask({projectTaskID, getProjectTasks}){
 
     const params = useParams();
     
@@ -23,6 +26,7 @@ export default function ProjectTask({projectTaskID}){
     const [approxVal, setApproxVal] = useState();
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
+    const [userID, setUserID] = useState();
 
     // Use taskID to make an API call to get the ProjectTask
 
@@ -36,8 +40,9 @@ export default function ProjectTask({projectTaskID}){
                 setCompanyID(response.data.company.id);
                 setTaskTypeID(response.data.task_type.id);
                 setApproxVal(response.data.approx_val);
-                setStartDate(response.data.start_date);
-                setEndDate(response.data.end_date);
+                setStartDate(format(new Date(response.data.start_date), 'yyyy-MM-dd'));
+                setEndDate(format(new Date(response.data.end_date), 'yyyy-MM-dd'));
+                setUserID(response.data.user_id);
                 setLoading(false);
             }
         })
@@ -56,13 +61,14 @@ export default function ProjectTask({projectTaskID}){
             task_type_id: taskTypeID,
             approx_val: approxVal,
             start_date: startDate,
-            end_date: endDate
+            end_date: endDate,
+            user_id: userID
         }
 
         ProjectAPIs.PutProjectTask(params.ProjectID, projectTaskID, putJSON)
         .then((response) => {
             if(response.status === 200){
-                getProjectTaskInfo(projectTaskID)
+                getProjectTasks(params.ProjectID)
                 setEditing(false);
             }
         })
@@ -74,6 +80,16 @@ export default function ProjectTask({projectTaskID}){
         setTaskTypeID('');
     }
 
+    const handleCancel = () => {
+        setTaskID(projectTaskInfo.task.id);
+        setCompanyID(projectTaskInfo.company.id);
+        setTaskTypeID(projectTaskInfo.task_type.id);
+        setApproxVal(projectTaskInfo.approx_val);
+        setStartDate(format(new Date(projectTaskInfo.start_date), 'yyyy-MM-dd'));
+        setEndDate(format(new Date(projectTaskInfo.end_date), 'yyyy-MM-dd'));
+        setUserID(projectTaskInfo.user_id);
+        setEditing(false);
+    }
 
     useEffect(()  => {
         getProjectTaskInfo(projectTaskID);
@@ -89,59 +105,120 @@ export default function ProjectTask({projectTaskID}){
     else{
         return(
             <div className='project-task-container'>
-                <div className='project-task-line'  >
-                    <span onClick={() => setEditing(!editing)}><AiFillEdit/></span>
-                    <span onClick={() => setShowProducts(!showProducts)}>Products</span>
 
-                    {editing ? 
+                <Form onSubmit={editProjectTask}>
+                <div className='project-task-body'>
+                    
+                    <div>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={3}><strong>Task:</strong></Form.Label>
+                            <Col sm={9}>
+                                <DropDown.Task disabled={!editing} size='sm' required value={taskID} onChange={handleChangeTask} />
+                            </Col>
+                        </Form.Group>
+                        <Row>
+                            <Col>
+                                
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}><strong>Task Type:</strong></Form.Label>
+                                    <Col>
+                                        <DropDown.TaskType 
+                                            size='sm'
+                                            taskID={taskID} 
+                                            disabled={!editing}
+                                            value={taskTypeID}
+                                            onChange={(e) => setTaskTypeID(e.target.value)}
+                                            required
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}><strong>Approx Val:</strong></Form.Label>
+                                    <Col>
+                                        <Form.Control
+                                            type='number'
+                                            value={approxVal}
+                                            onChange={(e) => setApproxVal(e.target.value)}
+                                            size='sm'
+                                            required
+                                            disabled={!editing}
+                                        />
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}><strong>Rep:</strong></Form.Label>
+                                    <Col>
+                                        <DropDown.Users 
+                                            size='sm'
+                                            value={userID} 
+                                            onChange={(e) => setUserID(e.target.value)}
+                                            required
+                                            disabled={!editing}
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}><strong>Company:</strong></Form.Label>
+                                    <Col>
+                                        <DropDown.AllCompanies disabled={!editing} size='sm' required value={companyID} onChange={(e) => setCompanyID(e.target.value)} />
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}><strong>Start Date:</strong></Form.Label>
+                                    <Col>
+                                        <Form.Control 
+                                            size='sm'
+                                            type='date' 
+                                            value={startDate} 
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                            required 
+                                            disabled={!editing}
+                                        />
+                                        </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}><strong>End Date:</strong></Form.Label>
+                                    <Col>
+                                        <Form.Control 
+                                            size='sm'
+                                            type='date' 
+                                            value={endDate} 
+                                            onChange={(e) => setEndDate(e.target.value)}
+                                            required 
+                                            disabled={!editing}
+                                        />
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </div>
 
-                        <Form onSubmit={editProjectTask}>
-                            <div>
-                                <DropDown.Task required value={taskID} onChange={handleChangeTask} />
-                            </div>
-                            <div>
-                                <DropDown.AllCompanies required value={companyID} onChange={(e) => setCompanyID(e.target.value)} />
-                            </div>
-                            <div>
-                                <DropDown.TaskType 
-                                    taskID={taskID} 
-                                    disabled={taskID ===''}
-                                    onChange={(e) => setTaskTypeID(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <Form.Control 
-                                    type='date' 
-                                    value={startDate} 
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                    required 
-                                />
-                            </div>
-                            <div>
-                                <Form.Control 
-                                    type='date' 
-                                    value={endDate} 
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                    required 
-                                />
-                            </div>
-
-                            <Button type={'submit'}>Save</Button>
-                        </Form>
-                        :
-                        <>
-                            <div>{projectTaskInfo.task.name}</div>
-                            <div>{projectTaskInfo.company.name}</div>
-                            <div>{projectTaskInfo.task_type.name}</div>
-                            <div>{projectTaskInfo.approx_val}</div>
-                        </>
-                    }
+                    <div align='end'>
+                        <div>
+                            <button disabled={!editing} type={'submit'}><FaSave/></button>   
+                            {editing ? 
+                            
+                            <button type='button' onClick={() => handleCancel()}><MdCancel/></button>    
+                            :
+                            <button type='button' onClick={() => setEditing(true)}><AiFillEdit/></button>
+                            }
+                        </div>
+                        
+                        <div><button type='button' onClick={() => setShowProducts(!showProducts)}><MdShoppingCart/></button></div>
+                    </div>
                     
                 </div>
+                </Form>
+                
+                
+                
 
                 {showProducts &&
-                    <ViewTaskProducts taskID={projectTaskID} />
+                    <ViewTaskProducts projectTaskID={projectTaskID} />
                 }
 
             </div>

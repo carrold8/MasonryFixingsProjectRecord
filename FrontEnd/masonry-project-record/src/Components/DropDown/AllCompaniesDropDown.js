@@ -28,6 +28,7 @@ export default function AllCompaniesDropDown(props){
             onChange={props.onChange}
             size={props.size}
             required={props.required}
+            disabled={props.disabled}
         >
             <option value={''}>Company</option>
             {companyData.map((company) => {
