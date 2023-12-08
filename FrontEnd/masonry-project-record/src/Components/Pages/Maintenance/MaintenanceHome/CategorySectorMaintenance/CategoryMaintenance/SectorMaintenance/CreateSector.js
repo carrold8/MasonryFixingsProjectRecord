@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
+import MaintenanceAPIs from "../../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 
 export default function CreateSector({handleAddNew, categoryID}){
 
@@ -15,7 +15,7 @@ export default function CreateSector({handleAddNew, categoryID}){
             category_id: categoryID 
         }
 
-        axios.post('http://localhost:8080/maintenance/sector', postJSON)
+        MaintenanceAPIs.PostSector(postJSON)
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();

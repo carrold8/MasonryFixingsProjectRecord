@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {Form, Row, Col, Button} from 'react-bootstrap';
+import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 
 export default function CreateCompanyType({handleAddNew}){
 
@@ -14,7 +14,7 @@ export default function CreateCompanyType({handleAddNew}){
             name: name
         }
 
-        axios.post('http://localhost:8080/maintenance/company-type', postJSON)
+        MaintenanceAPIs.PostCompanyType(postJSON)
         .then((response) => {
             if(response.status){
                 handleAddNew();
