@@ -40,14 +40,14 @@ module.exports = function(app) {
     app.use(bodyParser.json());
 
 
-    app.use('/county', countyRouter);
-    app.use('/company', companyRouter);
-    app.use('/address', addressRouter);
-    app.use('/employee', employeeRouter);
-    app.use('/project', projectRouter);
-    app.use('/project-task', projectTaskRouter);
-    app.use('/lookup', lookupRouter);
-    app.use('/maintenance', maintenanceRouter);
+    app.use('/api/county', countyRouter);
+    app.use('/api/company', companyRouter);
+    app.use('/api/address', addressRouter);
+    app.use('/api/employee', employeeRouter);
+    app.use('/api/project', projectRouter);
+    app.use('/api/project-task', projectTaskRouter);
+    app.use('/api/lookup', lookupRouter);
+    app.use('/api/maintenance', maintenanceRouter);
 
    
     //  app.get('/company', function(request, response) {
@@ -178,7 +178,7 @@ module.exports = function(app) {
     //   })
     //  });
 
-     app.get('/address', function(request, response) {
+     app.get('/api/address', function(request, response) {
         Address.findAll({
             attributes: { exclude: ['county_id', 'country_id'] },
             include: [
@@ -192,7 +192,7 @@ module.exports = function(app) {
        });
 
 
-       app.get('/headOffice', function(request, response) {
+       app.get('/api/headOffice', function(request, response) {
         HeadOffice.findAll({
             attributes: { exclude: ['address_id'] },
             include: [
@@ -204,7 +204,7 @@ module.exports = function(app) {
         })
        });
 
-       app.get('/employee', function(request, response) {
+       app.get('/api/employee', function(request, response) {
         Employee.findAll({
             // attributes: { exclude: ['employee_type_id'] },
             // include: [
@@ -229,7 +229,7 @@ module.exports = function(app) {
 
 
 
-    app.get('/user', function(request, response) {
+    app.get('/api/user', function(request, response) {
       User.findAll({
           include: {all: true, nested: true},
       })
@@ -239,7 +239,7 @@ module.exports = function(app) {
      });
 
 
-     app.get('/product', function(request, response) {
+     app.get('/api/product', function(request, response) {
       Product.findAll({
           include: {all: true, nested: true},
       })
@@ -248,7 +248,7 @@ module.exports = function(app) {
       })
      });
 
-     app.get('/project', function(request, response) {
+     app.get('/api/project', function(request, response) {
       Project.findAll({
           include: {all: true, nested: true},
       })
@@ -266,7 +266,7 @@ module.exports = function(app) {
     //   })
     //  });
 
-     app.get('/project-task-product', function(request, response) {
+     app.get('/api/project-task-product', function(request, response) {
       ProjectTaskProduct.findAll({
           include: {all: true, nested: true},
       })
@@ -275,7 +275,7 @@ module.exports = function(app) {
       })
      });
 
-     app.get('/stage', function(request, response) {
+     app.get('/api/stage', function(request, response) {
       Stage.findAll({
           include: {all: true, nested: true},
       })
@@ -284,7 +284,7 @@ module.exports = function(app) {
       })
      });
 
-     app.get('/task', function(request, response) {
+     app.get('/api/task', function(request, response) {
       Task.findAll({
           include: {all: true, nested: true},
       })
@@ -293,7 +293,7 @@ module.exports = function(app) {
       })
      });
 
-     app.get('/task-type', function(request, response) {
+     app.get('/api/task-type', function(request, response) {
       TaskType.findAll({
           include: {all: true, nested: true},
       })
