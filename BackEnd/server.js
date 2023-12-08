@@ -137,7 +137,13 @@ const buildPath = path.join(_dirname, "../FrontEnd/masonry-project-record/build"
 app.use(express.static(buildPath))
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../FrontEnd/masonry-project-record/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../FrontEnd/masonry-project-record/build', 'index.html'),
+    function(err){
+            if(err){
+                res.status(500).send(err);
+            }
+        }
+    );
   });
 // app.get("/*", function(req, res){
 //     res.sendFile(
