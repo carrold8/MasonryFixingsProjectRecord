@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 
 export default function RoleDropDown(props){
     
-    const roleData = ['Admin', 'Manager', 'Sales']; 
+    const roleData = ['Admin', 'Management', 'Sales']; 
 
     
 
