@@ -44,7 +44,7 @@ router.put('/user/:userID', function(request, response) {
 
   User.findAll({where: {username: request.body.username }})
   .then(function(username) {
-    if(username.length > 1 && username[0].id !== request.params.userID){
+    if(username.length >= 1 && username[0].id !== request.params.userID){
       response.sendStatus(409);
     }
     else{
