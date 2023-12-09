@@ -52,6 +52,7 @@ export default function ViewUser({user, getUserData}){
         setEmail(user.email);
         setRole(user.role);
         setUserName(user.username);
+        setInvalidUserName(false);
     }
 
     if(editing){
