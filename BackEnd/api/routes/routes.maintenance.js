@@ -13,6 +13,7 @@ const { TaskType } = require('../models/tasktype.model');
 const { Sector } = require('../models/sector.model');
 const { Product } = require('../models/product.model');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 
 
@@ -24,9 +25,17 @@ router.post('/user', function(request, response) {
       response.json(user);
     })
 });
-router.put('/user/:userID', function(request, response) {
+router.put('/user/:userID', async function(request, response) {
+
+  const hashedPassword = await bcrypt.hash(request.body.password, 10);
+  console.log('Here :');
+  console.log(hashedPassword);
   User.update({
-      name: request.body.name
+      name: request.body.name,
+      last_name: request.body.last_name,
+      password: hashedPassword,
+      email: request.body.email,
+      role: request.body.role
   },
   {where: {id: request.params.userID}})
   .then(function(user) {
