@@ -47,9 +47,9 @@ export default function ViewUser({user, getUserData}){
     const handleCancel = () => {
         setEditing(false);
         setFirstName(user.first_name);
-        setFirstName(user.last_name);
-        setFirstName(user.email);
-        setFirstName(user.role);
+        setLastName(user.last_name);
+        setEmail(user.email);
+        setRole(user.role);
         setUserName(user.username);
     }
 
