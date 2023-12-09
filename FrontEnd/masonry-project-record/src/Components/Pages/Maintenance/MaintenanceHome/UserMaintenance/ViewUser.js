@@ -33,6 +33,7 @@ export default function ViewUser({user, getUserData}){
         .then((response) => {
             if(response.status === 200){
                 getUserData();
+                setInvalidUserName(false);
                 setEditing(false);
             }
         })
