@@ -6,6 +6,7 @@ import DropDown from '../../../../../DropDown/DropDown';
 import { MdCancel } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import { AiFillEdit } from 'react-icons/ai';
+import {format} from 'date-fns';
 
 export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
 
@@ -13,7 +14,7 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
 
     const [editing, setEditing] = useState(false);
     const [userID, setUserID] = useState(parseInt(anchorTraining.user.id));
-    const [date, setDate] = useState(anchorTraining.date);
+    const [date, setDate] = useState(format(new Date(anchorTraining.date), 'yyyy-MM-dd'));
     const [note, setNote] = useState(anchorTraining.note);
 
 
@@ -68,9 +69,9 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
     else{
         return(
             <tr>
-                <td>{anchorTraining.user.name}</td>
+                <td>{anchorTraining.user.first_name} {anchorTraining.user.last_name}</td>
                 <td>
-                    {anchorTraining.date}
+                    {format( new Date(anchorTraining.date), 'yyyy-MM-dd')}
                 </td>
                 <td>
                     {anchorTraining.note}

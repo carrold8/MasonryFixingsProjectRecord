@@ -17,25 +17,58 @@ const bcrypt = require('bcrypt');
 
 
 
-router.post('/user', function(request, response) {
-    User.create({
-        name: request.body.name
-    })
+router.post('/user', async function(request, response) {
+    const hashedPassword = await bcrypt.hash(request.body.password, 10);
+    User.findAll({where: {username: request.body.username }})
+  .then(function(username) {
+    if(username.length !== 0){
+      response.sendStatus(409);
+    }
+    else{
+      User.create({
+        first_name: request.body.first_name,
+        last_name: request.body.last_name,
+        password: hashedPassword,
+        email: request.body.email,
+        role: request.body.role,
+        username: request.body.username
+      })
+      .then(function(user) {
+        response.json(user);
+      })
+    }
+  })
+    
+});
+router.put('/user/:userID', function(request, response) {
+
+  User.findAll({where: {username: request.body.username }})
+  .then(function(username) {
+    if(username.length >= 1){
+      response.sendStatus(409);
+    }
+    else{
+      User.update({
+        first_name: request.body.first_name,
+        last_name: request.body.last_name,
+        email: request.body.email,
+        role: request.body.role,
+        username: request.body.username
+    },
+    {where: {id: request.params.userID}})
     .then(function(user) {
       response.json(user);
     })
+    }
+  })
+ 
 });
-router.put('/user/:userID', async function(request, response) {
+
+router.put('/user/:userID/password', async function(request, response) {
 
   const hashedPassword = await bcrypt.hash(request.body.password, 10);
-  console.log('Here :');
-  console.log(hashedPassword);
   User.update({
-      name: request.body.name,
-      last_name: request.body.last_name,
       password: hashedPassword,
-      email: request.body.email,
-      role: request.body.role
   },
   {where: {id: request.params.userID}})
   .then(function(user) {

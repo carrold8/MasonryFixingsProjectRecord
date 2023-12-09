@@ -6,6 +6,7 @@ import DropDown from '../../../../../../DropDown/DropDown';
 import { MdCancel } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import { AiFillEdit } from 'react-icons/ai';
+import {format} from 'date-fns';
 
 export default function ViewInduction({induction, getInductionData}){
 
@@ -13,7 +14,8 @@ export default function ViewInduction({induction, getInductionData}){
 
     const [editing, setEditing] = useState(false);
     const [userID, setUserID] = useState(parseInt(induction.user.id));
-    const [date, setDate] = useState(induction.date);
+    const [date, setDate] = useState(format(new Date(induction.date), 'yyyy-MM-dd'));
+
 
 
     const editInduction = () => {
@@ -64,9 +66,9 @@ export default function ViewInduction({induction, getInductionData}){
     else{
         return(
             <tr>
-                <td>{induction.user.name}</td>
+                <td>{induction.user.first_name} {induction.user.last_name}</td>
                 <td>
-                    {induction.date}
+                    {format(new Date(induction.date), 'yyyy-MM-dd')}
                 </td>
                 <td>
                     <span onClick={() => setEditing(true)}><AiFillEdit/></span>

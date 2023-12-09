@@ -361,7 +361,7 @@ router.put('/:projectID/induction-list/:inductionID',  function(request, respons
 router.get('/:projectID/induction-list',  function(request, response) {
     InductionRegister.findAll({ 
         where: {project_id: request.params.projectID},
-        include: [{model: User, attributes: ['id', 'name']}],
+        include: [{model: User, attributes: ['id', 'first_name', 'last_name']}],
         attributes: ['id', 'date']
     })
     .then(function(inductions) {
@@ -382,7 +382,7 @@ router.post('/:projectID/inductions',  function(request, response) {
 router.get('/:projectID/anchor-training',  function(request, response) {
     AnchorTraining.findAll({ 
         where: {project_id: request.params.projectID},
-        include: [{model: User, attributes: ['id', 'name']}],
+        include: [{model: User, attributes: ['id', 'first_name', 'last_name']}],
         attributes: ['id', 'date', 'note']
     })
     .then(function(anchorTraining) {

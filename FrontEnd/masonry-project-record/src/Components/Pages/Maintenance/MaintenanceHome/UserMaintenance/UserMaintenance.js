@@ -12,6 +12,13 @@ export default function UserMaintenance(){
     const [loading, setLoading] = useState(true);
     const [addUser, setAddUser] = useState(false);
 
+    const ColumnHeaders = ['First', 'Last', 'Username', 'Email', 'Role'];
+
+    const thData = () => {
+        return ColumnHeaders.map((header, index) => {
+            return(<th key={index}>{header}</th>)
+        })
+    }
 
     const getUserData = () => {
 
@@ -67,7 +74,7 @@ export default function UserMaintenance(){
                     <Table striped hover responsive>
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                {thData()}
                             </tr>
                         </thead>
                         <tbody>

@@ -12,6 +12,7 @@ const cors = require('cors');
 const Address = require('../models/address.model').Address;
 const Company = require('../models/company.model').Company;
 
+const authenticateRouter = require('./routes.authenticate');
 const countyRouter = require('./routes.county');
 const companyRouter = require('./routes.company');
 const addressRouter = require('./routes.address');
@@ -39,7 +40,7 @@ module.exports = function(app) {
 
     app.use(bodyParser.json());
 
-
+    app.use('/api/authenticate', authenticateRouter);
     app.use('/api/county', countyRouter);
     app.use('/api/company', companyRouter);
     app.use('/api/address', addressRouter);

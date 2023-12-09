@@ -10,6 +10,7 @@ import SectorDropDown from './SectorDropDown';
 import FloorMaterialDropDown from './FloorMaterialDropDown';
 import FrameMaterialDropDown from './FrameMaterialDropDown';
 import EnvelopeMatrialsDropDown from './EnvelopeMaterialDropDown';
+import RoleDropDown from './RoleDropDown';
 import RoofMatrialsDropDown from './RoofMaterialDropDown';
 import PartitioningMatrialsDropDown from './PartitioningMaterialDropDown';
 import UsersDropDown from './UsersDropDown';
@@ -40,6 +41,7 @@ DropDown.EmployeeType = EmployeeTypeDropDown;
 DropDown.EnvelopeMaterial = EnvelopeMatrialsDropDown;
 DropDown.FloorMaterial = FloorMaterialDropDown
 DropDown.FrameMaterial = FrameMaterialDropDown;
+DropDown.Role = RoleDropDown;
 DropDown.RoofMaterial = RoofMatrialsDropDown;
 DropDown.PartitioningMaterial = PartitioningMatrialsDropDown;
 DropDown.Products = ProductDropDown;
