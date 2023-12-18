@@ -24,7 +24,7 @@ export default function ViewProjectArchitect(){
             if(response.status === 200){
                 setArchitectData(response.data);
                 setArchitectCompanyID(response.data.company.id);
-                setArchitectID(response.data.engineer_id);
+                setArchitectID(response.data.architect_id);
                 // setPhone(response.data.phone);
                 setLoading(false);
             }
