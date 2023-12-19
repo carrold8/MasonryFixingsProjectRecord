@@ -20,6 +20,11 @@
     height: 100%;
 }
 
+.header-row .logo img{
+    height: 95%;
+    margin: 0rem 0.6rem 0rem 0.6rem
+}
+
 .header-row .nav-item{
     display: flex;
     align-items: center;

@@ -1,9 +1,9 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom'
 import './Header.css';
-import { GiScrew } from "react-icons/gi";
 import { TiGroup } from "react-icons/ti";
 import { MdHome, MdConstruction, MdSettings } from "react-icons/md";
+import Logo from '../../../Resources/Images/MF_IconOrange.png';
 
 function Header(){
     
@@ -12,7 +12,8 @@ function Header(){
     return(
         <div className={"header-row"}>
             <div className='logo'>
-                <h4> <GiScrew/> <strong>Masonry Fixings</strong></h4>
+                <img  src={Logo} alt='Logo' />
+                <h4> <strong>Masonry Fixings</strong></h4>
             </div>
             <div onClick={() => navigate('/')} className='nav-item'>
                 <h5><MdHome/></h5> <strong>Home</strong>
