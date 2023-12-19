@@ -28,18 +28,34 @@ const DB_IDLE = process.env.DB_IDLE
 //         }
 //     })
 
-const sequelize = new Sequelize(dbConfig.configCloud.DB, dbConfig.configCloud.USER,
-    dbConfig.configCloud.PASSWORD, {
-        host: dbConfig.configCloud.HOST,
-        dialect: dbConfig.configCloud.dialect,
+// const sequelize = new Sequelize(dbConfig.configCloud.DB, dbConfig.configCloud.USER,
+//     dbConfig.configCloud.PASSWORD, {
+//         host: dbConfig.configCloud.HOST,
+//         dialect: dbConfig.configCloud.dialect,
+//         operationsAliases: false,
+//         pool: {
+//         max: dbConfig.configCloud.pool.max,
+//         min: dbConfig.configCloud.pool.min,
+//         acquire: dbConfig.configCloud.pool.acquire,
+//         idle: dbConfig.configCloud.pool.idle
+//         }
+//         })
+
+
+
+const sequelize = new Sequelize(dbConfig.configSimple.DB, dbConfig.configSimple.USER,
+    dbConfig.configSimple.PASSWORD, {
+        host: dbConfig.configSimple.HOST,
+        dialect: dbConfig.configSimple.dialect,
         operationsAliases: false,
         pool: {
-        max: dbConfig.configCloud.pool.max,
-        min: dbConfig.configCloud.pool.min,
-        acquire: dbConfig.configCloud.pool.acquire,
-        idle: dbConfig.configCloud.pool.idle
+        max: dbConfig.configSimple.pool.max,
+        min: dbConfig.configSimple.pool.min,
+        acquire: dbConfig.configSimple.pool.acquire,
+        idle: dbConfig.configSimple.pool.idle
         }
         })
+
 
 // const sequelize = new Sequelize(
 //     DB_DATABASE, 
