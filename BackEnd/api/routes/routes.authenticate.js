@@ -17,6 +17,13 @@ router.post('/', async function(request, response) {
             const hashedPassword = loginUser.password;
 
             if(await bcrypt.compare(password, hashedPassword)){
+                
+                request.session.user = {
+                    id: loginUser.id,
+                    first_name: loginUser.first_name,
+                    last_name: loginUser.last_name,
+                    role: loginUser.role,
+                };
                 response.send(user + ' is logged in');
             }
             else{

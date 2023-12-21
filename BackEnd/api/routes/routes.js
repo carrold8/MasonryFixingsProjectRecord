@@ -8,6 +8,7 @@ const { HeadOffice } = require('../models/headoffice.model');
 const County = require('../models/county.model').County;
 bodyParser = require('body-parser');
 const cors = require('cors');
+const session = require('express-session');
 
 const Address = require('../models/address.model').Address;
 const Company = require('../models/company.model').Company;
@@ -38,6 +39,33 @@ module.exports = function(app) {
   app.use(cors(corsOptions));
 
 
+  app.use(
+    session({
+        secret: 'mysecretkey',
+        credentials: true,
+        name: 'sessionid',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 2, // 2 hours
+            sameSite: 'lax',
+            secure: false
+        }
+    })
+)
+
+  // app.use(session({
+  //   secret: 'BigSecret',
+  //   resave: true,
+  //   cookie: {
+  //     maxAge: 10 * 60 * 60 * 1000, //2 mins
+  //     secure: false,
+  //     sameSite: 'none',
+  //   },
+  //   saveUninitialized: true
+  // }));
+
     app.use(bodyParser.json());
 
     app.use('/api/authenticate', authenticateRouter);
@@ -51,6 +79,20 @@ module.exports = function(app) {
     app.use('/api/maintenance', maintenanceRouter);
 
    
+     app.get('/api/testing-me', function(request, response) {
+      console.log('got to here');
+      County.findAll()
+      .then(function(address) {
+        if(request.session.user){
+          console.log('User found');
+        }
+        else{
+          console.log('no user found');
+        }
+        response.json(address);
+      })
+     });
+
     //  app.get('/company', function(request, response) {
     //   Company.findAll({
     //       include: {all: true, nested: true},
