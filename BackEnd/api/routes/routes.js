@@ -10,7 +10,8 @@ bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 
-
+const redis = require('redis');
+const connectRedis = require('connect-redis');
 
 const Address = require('../models/address.model').Address;
 const Company = require('../models/company.model').Company;
@@ -33,10 +34,12 @@ const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Project } = require('../models/project.model');
 
-const RedisStore = require("connect-redis").default
-const redis = require('redis');
+const RedisStore = connectRedis(session)
 
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+  host: 'localhost',
+  port: 6379
+})
 
 module.exports = function(app) {
 
@@ -46,7 +49,12 @@ module.exports = function(app) {
   app.use(cors(corsOptions));
 
 
-  redisClient.connect().catch(console.error)
+  redisClient.on('error', function (err) {
+    console.log('Could not establish a connection with redis. ' + err);
+  });
+  redisClient.on('connect', function (err) {
+      console.log('Connected to redis successfully');
+  });
   
 
   const redisStore = new RedisStore({
@@ -57,7 +65,7 @@ module.exports = function(app) {
   app.use(
     session({
         secret: 'mysecretkey',
-        store: redisStore,
+        store: new RedisStore({ client: redisClient }),
         credentials: true,
         name: 'sessionid',
         resave: false,
