@@ -9,8 +9,7 @@ const County = require('../models/county.model').County;
 bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-const redis = require("redis");
-const RedisStore = require("connect-redis").default
+
 
 
 const Address = require('../models/address.model').Address;
@@ -34,6 +33,11 @@ const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Project } = require('../models/project.model');
 
+const RedisStore = require("connect-redis").default
+const redis = require('redis');
+
+const redisClient = redis.createClient();
+
 module.exports = function(app) {
 
   var corsOptions = {
@@ -41,7 +45,7 @@ module.exports = function(app) {
 }
   app.use(cors(corsOptions));
 
-  const redisClient = redis.createClient();
+
   redisClient.connect().catch(console.error)
   
 
