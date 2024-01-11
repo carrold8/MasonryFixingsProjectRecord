@@ -9,6 +9,9 @@ const County = require('../models/county.model').County;
 bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const redis = require("redis");
+const redisStore = require("connect-redis")(session);
+const client = redis.createClient();
 
 const Address = require('../models/address.model').Address;
 const Company = require('../models/company.model').Company;
@@ -38,10 +41,15 @@ module.exports = function(app) {
 }
   app.use(cors(corsOptions));
 
+  const redisStore = new redisStore({
+    client: client,
+    prefix: "myapp:",
+  })
 
   app.use(
     session({
         secret: 'mysecretkey',
+        store: redisStore,
         credentials: true,
         name: 'sessionid',
         resave: false,
