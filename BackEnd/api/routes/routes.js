@@ -11,7 +11,8 @@ const cors = require('cors');
 const session = require('express-session');
 
 const redis = require('redis');
-const connectRedis = require('connect-redis');
+// const connectRedis = require('connect-redis');
+const RedisStore = require("connect-redis").default
 
 const Address = require('../models/address.model').Address;
 const Company = require('../models/company.model').Company;
@@ -34,12 +35,7 @@ const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Project } = require('../models/project.model');
 
-const RedisStore = connectRedis(session)
 
-const redisClient = redis.createClient({
-  host: 'localhost',
-  port: 6379
-})
 
 module.exports = function(app) {
 
@@ -47,6 +43,12 @@ module.exports = function(app) {
     origin: '*'
 }
   app.use(cors(corsOptions));
+
+
+  // const redisStore = new RedisStore(session)
+
+  const redisClient = redis.createClient();
+  redisClient.connect().catch(console.error);
 
 
   redisClient.on('error', function (err) {
@@ -57,6 +59,8 @@ module.exports = function(app) {
   });
   
 
+  // const redisStore = new RedisStore(session)
+
   const redisStore = new RedisStore({
     client: redisClient,
     prefix: "myapp:",
@@ -65,7 +69,7 @@ module.exports = function(app) {
   app.use(
     session({
         secret: 'mysecretkey',
-        store: new RedisStore({ client: redisClient }),
+        store: redisStore,
         credentials: true,
         name: 'sessionid',
         resave: false,
