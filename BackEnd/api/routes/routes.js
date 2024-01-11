@@ -45,11 +45,10 @@ module.exports = function(app) {
   app.use(cors(corsOptions));
 
 
-  // const redisStore = new RedisStore(session)
+  //--------------- REDIS CLIENT CONFIGURATION ---------------------
 
   const redisClient = redis.createClient();
   redisClient.connect().catch(console.error);
-
 
   redisClient.on('error', function (err) {
     console.log('Could not establish a connection with redis. ' + err);
@@ -58,13 +57,12 @@ module.exports = function(app) {
       console.log('Connected to redis successfully');
   });
   
-
-  // const redisStore = new RedisStore(session)
-
   const redisStore = new RedisStore({
     client: redisClient,
     prefix: "myapp:",
   })
+
+  //----------------------------------------------------------
 
   app.use(
     session({
@@ -82,17 +80,6 @@ module.exports = function(app) {
         }
     })
 )
-
-  // app.use(session({
-  //   secret: 'BigSecret',
-  //   resave: true,
-  //   cookie: {
-  //     maxAge: 10 * 60 * 60 * 1000, //2 mins
-  //     secure: false,
-  //     sameSite: 'none',
-  //   },
-  //   saveUninitialized: true
-  // }));
 
     app.use(bodyParser.json());
 
