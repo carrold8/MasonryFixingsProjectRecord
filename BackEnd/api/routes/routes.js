@@ -35,7 +35,7 @@ const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Project } = require('../models/project.model');
 
-
+const simpleAuth = require('./routes.sessionauth');
 
 module.exports = function(app) {
 
@@ -83,8 +83,26 @@ module.exports = function(app) {
 
     app.use(bodyParser.json());
 
+
+    // app.get('/api/testing-me', function(request, response) {
+    //   console.log('got to here');
+    //   County.findAll()
+    //   .then(function(address) {
+    //     if(request.session.user){
+    //       console.log('User found');
+    //       next();
+    //     }
+    //     else{
+    //       console.log('no user found');
+    //       next();
+    //     }
+    //     // response.json(address);
+    //   })
+    //  });
+
+
     app.use('/api/authenticate', authenticateRouter);
-    app.use('/api/county', countyRouter);
+    app.use('/api/county', simpleAuth, countyRouter);
     app.use('/api/company', companyRouter);
     app.use('/api/address', addressRouter);
     app.use('/api/employee', employeeRouter);
@@ -94,19 +112,7 @@ module.exports = function(app) {
     app.use('/api/maintenance', maintenanceRouter);
 
    
-     app.get('/api/testing-me', function(request, response) {
-      console.log('got to here');
-      County.findAll()
-      .then(function(address) {
-        if(request.session.user){
-          console.log('User found');
-        }
-        else{
-          console.log('no user found');
-        }
-        response.json(address);
-      })
-     });
+     
 
     //  app.get('/company', function(request, response) {
     //   Company.findAll({
