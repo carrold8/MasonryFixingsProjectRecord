@@ -35,7 +35,7 @@ const simpleAuth = require('./routes.sessionauth');
 // });
 
 
-router.get('/', simpleAuth, function(request, response) {
+router.get('/', simpleAuth, (request, response) => {
   County.findAll()
   .then(function(county) {
     response.json(county);
