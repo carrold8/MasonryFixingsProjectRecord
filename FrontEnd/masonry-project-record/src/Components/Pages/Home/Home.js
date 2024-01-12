@@ -17,13 +17,19 @@ function Home(){
         .then((response) => {
             if(response.status === 200){
                 setLoading(false);
-                setManagement(response.data.management);
+                setManagement(true);
+                // setManagement(response.data.management);
             }
         })
         .catch((err) => {
             console.log(err);
             if(err.response.status === 401){
-                navigate('/login');
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setLoading(false);
+                }
             }
         })
     }
