@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 // const countyService = require('../../services/county.service');
 const { County } = require('../models/county.model');
-const {userAuth} = require('./routes.sessionauth');
+const {userAuth, managementAuth} = require('./routes.sessionauth');
 
 // router.get('/', async function(req, res, next){
 //     try{
@@ -35,7 +35,7 @@ const {userAuth} = require('./routes.sessionauth');
 // });
 
 
-router.get('/', userAuth, function(request, response) {
+router.get('/', managementAuth, function(request, response) {
   County.findAll()
   .then(function(county) {
     response.json(county);
