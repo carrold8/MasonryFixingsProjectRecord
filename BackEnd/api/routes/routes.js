@@ -102,7 +102,7 @@ module.exports = function(app) {
 
 
     app.use('/api/authenticate', authenticateRouter);
-    app.use('/api/county', simpleAuth(req, res, countyRouter));
+    app.use('/api/county', simpleAuth, countyRouter);
     app.use('/api/company', companyRouter);
     app.use('/api/address', addressRouter);
     app.use('/api/employee', employeeRouter);
