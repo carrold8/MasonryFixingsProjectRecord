@@ -71,6 +71,7 @@ module.exports = function(app) {
         store: redisStore,
         credentials: true,
         name: 'sessionid',
+        rolling: true,
         resave: false,
         saveUninitialized: false,
         cookie: {
