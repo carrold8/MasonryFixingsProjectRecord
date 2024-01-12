@@ -103,7 +103,7 @@ module.exports = function(app) {
 
 
     app.use('/api/authenticate', authenticateRouter);
-    app.use('api/user-type', userTypeRouter);
+    app.use('/api/user-type', userTypeRouter);
     app.use('/api/county', countyRouter);
     app.use('/api/company', companyRouter);
     app.use('/api/address', addressRouter);
