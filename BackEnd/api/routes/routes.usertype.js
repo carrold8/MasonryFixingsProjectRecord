@@ -8,7 +8,7 @@ router.get('/', userAuth, function(request, response) {
         response.json({management: false});
     }
     else{
-        response.json({management: false});
+        response.json({management: true});
     }
 });
 
