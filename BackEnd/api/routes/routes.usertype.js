@@ -3,7 +3,7 @@ const router = express.Router();
 const {userAuth, managementAuth} = require('./routes.sessionauth');
 
 router.get('/', managementAuth, function(request, response) {
-    response.status(200);
+    response.status(200).send('success');
     // const userRole = request.session.user.role;
     // console.log('Role: ', userRole);
     // if(userRole === 'Sales'){
