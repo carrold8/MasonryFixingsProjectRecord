@@ -35,7 +35,7 @@ const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Project } = require('../models/project.model');
 
-const simpleAuth = require('./routes.sessionauth');
+
 
 module.exports = function(app) {
 
@@ -102,7 +102,7 @@ module.exports = function(app) {
 
 
     app.use('/api/authenticate', authenticateRouter);
-    app.use('/api/county', simpleAuth, countyRouter);
+    app.use('/api/county', countyRouter);
     app.use('/api/company', companyRouter);
     app.use('/api/address', addressRouter);
     app.use('/api/employee', employeeRouter);
