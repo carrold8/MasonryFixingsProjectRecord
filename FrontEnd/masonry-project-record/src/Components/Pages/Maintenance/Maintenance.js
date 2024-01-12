@@ -6,20 +6,24 @@ import UserTypeAPIs from "../../../MasonyFixingsAPIs/UserTypeAPIs/UserTypeAPIs";
 function Maintenance(){
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     const getUserType = () => {
         UserTypeAPIs.GetUserType()
         .then((response) => {
             if(response.status === 200){
-                if(response.data.management === false){
-                    navigate('/')
-                }
+                setLoading(false);
             }
         })
         .catch((err) => {
             console.log(err);
             if(err.response.status === 401){
-                navigate('/login');
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    navigate('/');
+                }
             }
         })
     }
@@ -31,7 +35,11 @@ function Maintenance(){
         <div className='maintenance-display'>
             <h1>Maintenance</h1>
             <hr/>
+            {loading? <h3>Loading Maintenance...</h3>
+            :   
             <Outlet/>
+            }
+            
             
         </div>
 
