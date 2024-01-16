@@ -19,6 +19,14 @@ const ProjectTaskAPIs = {
         return response;
     },
 
+    DeleteProjectTask: (projectTaskID) => {
+        const response = api.request({
+            url: 'project-task/' + projectTaskID,
+            method: 'DELETE'
+        }  )
+        return response;
+    },
+
 
     GetProjectTaskProductList: (projectTaskID) => {
         const response = api.request({

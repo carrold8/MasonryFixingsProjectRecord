@@ -22,6 +22,17 @@ router.get('/:projectTaskID',  function(request, response) {
     })
 });
 
+
+router.delete('/:projectTaskID',  function(request, response) {
+    ProjectTask.destroy({ 
+        where: {id: request.params.projectTaskID},
+    })
+    .then(function(projectTasks) {
+        response.json(projectTasks);
+    })
+});
+
+
 router.get('/:projectTaskID/product-list',  function(request, response) {
     ProjectTaskProduct.findAll({ 
         where: {project_task_id: request.params.projectTaskID}
@@ -63,6 +74,14 @@ router.put('/:projectTaskID/products/:projectTaskProductID',  function(request, 
     })
 });
 
+router.delete('/:projectTaskID/products/:projectTaskProductID',  function(request, response) {
+    ProjectTaskProduct.destroy({
+        where: {id: request.params.projectTaskProductID}
+    })
+    .then(function(projectTasksProduct) {
+        response.json(projectTasksProduct);
+    })
+});
 
 
 module.exports = router;
