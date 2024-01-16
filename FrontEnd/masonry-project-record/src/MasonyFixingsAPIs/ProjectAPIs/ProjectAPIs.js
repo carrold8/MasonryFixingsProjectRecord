@@ -18,6 +18,14 @@ const ProjectAPIs = {
         })
         return response;
     },
+
+    GetProject: (projectID) => {
+        const response = api.request({
+            url: 'project/' + projectID,
+            method: 'GET'
+        })
+        return response;
+    },
     
     GetProjectTitleInfo: (projectID) => {
         const response = api.request({

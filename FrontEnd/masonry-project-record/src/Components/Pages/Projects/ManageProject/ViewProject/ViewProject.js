@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './ViewProject.css';
 import ViewProjectInfo from "./ViewProjectInfo/ViewProjectInfo";
 import ViewProjectMaterials from "./ViewProjectMaterials/ViewProjectMaterials";
@@ -7,18 +7,43 @@ import ViewProjectInduction from "./ViewProjectInduction/ViewProjectInduction";
 import ViewProjectAnchorTraining from "./ViewProjectAnchorTraining/ViewProjectAnchorTraining";
 import ViewProjectTasks from "./ViewProjectTasks/ViewProjectTasks";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ProjectAPIs from "../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 
 export default function ViewProject(){
     
     const params = useParams();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
+    const getProject = () => {
+        ProjectAPIs.GetProject(params.ProjectID)
+        .then((response) => {
+            if(response.status === 200){
+                setLoading(false);
+            }
+        })
+        .catch((err) => {
+            if(err.response.status === 404){
+                navigate('/project');
+            }
+        })
+    }
+    
+    useEffect(() => {
+        getProject();
+    }, []);
+
+    if(loading){
+        return(<h3>Finding Project...</h3>);
+    }
+    else{
         return(
             <div className="project-page">
 
                 <ViewProjectInfo />
 
-                <ViewProjectTasks projectID={params.ProjectID} />
+                <ViewProjectTasks />
 
                 <ViewProjectMaterials />
 
@@ -38,5 +63,6 @@ export default function ViewProject(){
             </div>
         )
     // }
+    }
 
 }

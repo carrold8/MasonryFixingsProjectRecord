@@ -30,7 +30,12 @@ router.get('/',  function(request, response) {
         where: {id: request.params.projectID},
     })
     .then(function(project) {
-      response.json(project);
+        if(project === null){
+            response.status(404);
+        }
+        else{
+            response.status(200).send('Project Found');
+        }
     })
    });
 
@@ -41,17 +46,13 @@ router.get('/',  function(request, response) {
         .then(function() {
             ProjectTask.findAll({where: {project_id: request.params.projectID}})
             .then(async function(projectTasks){
-                console.log('1');
                 await projectTasks.map((projectTask) => {
                     ProjectTaskProduct.destroy({where: {project_task_id: projectTask.id}})
                     .then(function() {
-                        console.log('destroying product');
                     })
                 })
-                
                 ProjectTask.destroy({where: {project_id: request.params.projectID}})
                     .then(function(){
-                        console.log('3');
                         Project.destroy({ 
                             where: {id: request.params.projectID},
                         })
