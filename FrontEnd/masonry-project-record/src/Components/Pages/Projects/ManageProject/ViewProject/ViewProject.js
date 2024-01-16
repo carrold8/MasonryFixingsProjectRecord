@@ -24,6 +24,7 @@ export default function ViewProject(){
             }
         })
         .catch((err) => {
+            console.log(err)
             if(err.response.status === 404){
                 navigate('/project');
             }

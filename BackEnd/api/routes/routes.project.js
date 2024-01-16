@@ -31,7 +31,7 @@ router.get('/',  function(request, response) {
     })
     .then(function(project) {
         if(project === null){
-            response.status(404);
+            response.status(404).send('No Project Found');
         }
         else{
             response.status(200).send('Project Found');
