@@ -24,12 +24,18 @@ router.get('/:projectTaskID',  function(request, response) {
 
 
 router.delete('/:projectTaskID',  function(request, response) {
-    ProjectTask.destroy({ 
-        where: {id: request.params.projectTaskID},
+    ProjectTaskProduct.destroy({
+        where: {project_task_id: request.params.projectTaskID}
     })
-    .then(function(projectTasks) {
-        response.json(projectTasks);
+    .then(function() {
+        ProjectTask.destroy({ 
+            where: {id: request.params.projectTaskID},
+        })
+        .then(function(projectTasks) {
+            response.json(projectTasks);
+        })
     })
+    
 });
 
 
