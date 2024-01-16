@@ -40,27 +40,27 @@ router.get('/',  function(request, response) {
         InductionRegister.destroy({where: {project_id: request.params.projectID}})
         .then(function() {
             ProjectTask.findAll({where: {project_id: request.params.projectID}})
-            .then(function(projectTasks){
+            .then(async function(projectTasks){
                 console.log('1');
-                projectTasks.map((projectTask) => {
+                await projectTasks.map((projectTask) => {
                     ProjectTaskProduct.destroy({where: {project_task_id: projectTask.id}})
                     .then(function() {
                         console.log('destroying product');
                     })
                 })
-                .then(function() {
-                    ProjectTask.destroy({where: {project_id: request.params.projectID}})
-                        .then(function(){
-                            console.log('3');
-                            Project.destroy({ 
-                                where: {id: request.params.projectID},
-                            })
-                            .then(function(project) {
-                              response.json(project);
-                            })
-                           });
+                
+                ProjectTask.destroy({where: {project_id: request.params.projectID}})
+                    .then(function(){
+                        console.log('3');
+                        Project.destroy({ 
+                            where: {id: request.params.projectID},
                         })
-                })
+                        .then(function(project) {
+                            response.json(project);
+                        })
+                        });
+                    })
+                
             })
         })
     })
