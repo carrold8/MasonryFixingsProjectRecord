@@ -34,6 +34,16 @@ router.get('/',  function(request, response) {
     })
    });
 
+   router.delete('/:projectID',  function(request, response) {
+    Project.destroy({ 
+        // include: {all: true, nested: true},
+        where: {id: request.params.projectID},
+    })
+    .then(function(project) {
+      response.json(project);
+    })
+   });
+
    router.get('/:projectID/title-info',  function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
