@@ -41,14 +41,19 @@ router.get('/',  function(request, response) {
         .then(function() {
             ProjectTask.findAll({where: {project_id: request.params.projectID}})
             .then(function(projectTasks){
+                console.log('1');
                 projectTasks.map((projectTask) => {
                     ProjectTaskProduct.destroy({where: {project_task_id: projectTask.id}})
                     .then(function() {
-                        ProjectTask.destroy({where: {project_id: request.params.projectID}})
+                        console.log('destroying product');
+                    })
+                })
+                .then(function() {
+                    ProjectTask.destroy({where: {project_id: request.params.projectID}})
                         .then(function(projectTasksDeleted){
+                            console.log('3');
                             response.json(projectTasksDeleted);
                         })
-                    })
                 })
             })
         })
