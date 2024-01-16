@@ -50,22 +50,21 @@ router.get('/',  function(request, response) {
                 })
                 .then(function() {
                     ProjectTask.destroy({where: {project_id: request.params.projectID}})
-                        .then(function(projectTasksDeleted){
+                        .then(function(){
                             console.log('3');
-                            response.json(projectTasksDeleted);
+                            Project.destroy({ 
+                                where: {id: request.params.projectID},
+                            })
+                            .then(function(project) {
+                              response.json(project);
+                            })
+                           });
                         })
                 })
             })
         })
     })
-    Project.destroy({ 
-        // include: {all: true, nested: true},
-        where: {id: request.params.projectID},
-    })
-    .then(function(project) {
-      response.json(project);
-    })
-   });
+    
 
    router.get('/:projectID/title-info',  function(request, response) {
     Project.findOne({ 
