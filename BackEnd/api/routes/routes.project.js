@@ -35,6 +35,24 @@ router.get('/',  function(request, response) {
    });
 
    router.delete('/:projectID',  function(request, response) {
+    AnchorTraining.destroy({where: {project_id: request.params.projectID}})
+    .then(function(){
+        InductionRegister.destroy({where: {project_id: request.params.projectID}})
+        .then(function() {
+            ProjectTask.findAll({where: {project_id: request.params.projectID}})
+            .then(function(projectTasks){
+                projectTasks.map((projectTask) => {
+                    ProjectTaskProduct.destroy({where: {project_task_id: projectTask.id}})
+                    .then(function() {
+                        ProjectTask.destroy({where: {project_id: request.params.projectID}})
+                        .then(function(projectTasksDeleted){
+                            response.json(projectTasksDeleted);
+                        })
+                    })
+                })
+            })
+        })
+    })
     Project.destroy({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -389,6 +407,15 @@ router.post('/:projectID/inductions',  function(request, response) {
     })
 });
 
+router.delete('/:projectID/induction-list/:inductionID',  function(request, response) {
+    InductionRegister.destroy( 
+        {where: {id: request.params.inductionID}
+    })
+    .then(function(induction) {
+        response.json(induction);
+    })
+});
+
 router.get('/:projectID/anchor-training',  function(request, response) {
     AnchorTraining.findAll({ 
         where: {project_id: request.params.projectID},
@@ -417,6 +444,15 @@ router.put('/:projectID/anchor-training/:anchorTrainingID',  function(request, r
             date: request.body.date,
             note: request.body.note
         },
+        {where: {id: request.params.anchorTrainingID}
+    })
+    .then(function(anchorTraining) {
+        response.json(anchorTraining);
+    })
+});
+
+router.delete('/:projectID/anchor-training/:anchorTrainingID',  function(request, response) {
+    AnchorTraining.destroy( 
         {where: {id: request.params.anchorTrainingID}
     })
     .then(function(anchorTraining) {
