@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './ViewProjectAnchorTraining.css';
 import {Card, Table, Row, Col} from 'react-bootstrap';
 import AddAnchorTraining from "./AddAnchorTraining/AddAnchorTraining";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ViewAnchorTraining from "./ViewAnchorTraining";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
@@ -11,8 +11,9 @@ import ProjectAPIs from "../../../../../../MasonyFixingsAPIs/ProjectAPIs/Project
 export default function ViewProjectAnchorTraining(){
 
     const params = useParams();
+    const navigate = useNavigate();
 
-    const ColumnHeaders = ['Delviered By', 'Date', 'Note', 'Edit']
+    const ColumnHeaders = ['Delviered By', 'Date', 'Note', '']
 
     const [loading, setLoading] = useState(true);
     const [showTable, setShowTable] = useState(false);
@@ -28,7 +29,15 @@ export default function ViewProjectAnchorTraining(){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

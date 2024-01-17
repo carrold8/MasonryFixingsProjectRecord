@@ -26,6 +26,13 @@ const ProjectAPIs = {
         })
         return response;
     },
+    DeleteProject: (projectID) => {
+        const response = api.request({
+            url: 'project/' + projectID,
+            method: 'DELETE'
+        })
+        return response;
+    },
     
     GetProjectTitleInfo: (projectID) => {
         const response = api.request({
@@ -131,7 +138,7 @@ const ProjectAPIs = {
         })
         return response;
     },
-
+    
     // Gets list of inductons for a project
     GetProjectInductionList: (projectID) => {
         const response = api.request({
@@ -149,6 +156,13 @@ const ProjectAPIs = {
         })
         return response;
     },
+    DeleteProjectInductionList: (projectID, inductionID) => {
+        const response = api.request({
+            url: 'project/' + projectID + '/induction-list/' +  inductionID,
+            method: 'DELETE'
+        })
+        return response;
+    },
 
     GetProjectAnchorTraining: (projectID) => {
         const response = api.request({
@@ -157,9 +171,9 @@ const ProjectAPIs = {
         })
         return response;
     },
-    PutProjectAnchorTraining: (projectID, anchorTraining, putJSON) => {
+    PutProjectAnchorTraining: (projectID, anchorTrainingID, putJSON) => {
         const response = api.request({
-            url: 'project/' + projectID + '/anchor-training/' +  anchorTraining,
+            url: 'project/' + projectID + '/anchor-training/' +  anchorTrainingID,
             method: 'PUT',
             data: putJSON
         })
@@ -170,6 +184,13 @@ const ProjectAPIs = {
             url: 'project/' + projectID + '/anchor-training',
             method: 'POST',
             data: postJSON
+        })
+        return response;
+    },
+    DeleteProjectAnchorTraining: (projectID, anchorTrainingID) => {
+        const response = api.request({
+            url: 'project/' + projectID + '/anchor-training/' +  anchorTrainingID,
+            method: 'DELETE'
         })
         return response;
     },

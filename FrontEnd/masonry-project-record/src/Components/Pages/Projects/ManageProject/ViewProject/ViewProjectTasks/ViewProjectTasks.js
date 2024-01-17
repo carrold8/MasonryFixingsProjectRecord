@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProjectTask from './ProjectTask/ProjectTask';
 import AddProjectTask from './AddProjectTask';
 import ProjectAPIs from '../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ViewProjectTasks.css';
 import StageSelectionTabs from '../../../../../StageSelectionTabs/StageSelectionTabs';
 import { Card, Row, Col } from 'react-bootstrap';
@@ -11,6 +11,7 @@ import { MdAddCircle } from 'react-icons/md';
 export default function ViewProjectTasks(){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const [stageID, setStageID] = useState('');
     const [addNew, setAddNew] = useState(false);
@@ -25,6 +26,14 @@ export default function ViewProjectTasks(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

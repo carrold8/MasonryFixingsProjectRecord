@@ -4,10 +4,12 @@ import ProjectTaskAPIs from "../../../../../../../../MasonyFixingsAPIs/ProjectTa
 import AddTaskProduct from "./AddTaskProduct";
 import { Card, Row, Col, Table } from "react-bootstrap";
 import { MdAddCircle } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewTaskProducts({projectTaskID}){
 
-    const ColumnHeaders = ['Product', 'Quantity', 'Edit'];
+    const ColumnHeaders = ['Product', 'Quantity', '', ''];
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
     const [addNew, setAddNew] = useState(false);
@@ -19,6 +21,17 @@ export default function ViewTaskProducts({projectTaskID}){
             if(response.status === 200){
                 setTaskProducts(response.data);
                 setLoading(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
             }
         })
     }
@@ -72,7 +85,7 @@ export default function ViewTaskProducts({projectTaskID}){
                         {taskProducts.length > 0 ? 
                         taskProducts.map((product) => {
                             return(
-                                <TaskProduct key={product.id} projectTaskID={projectTaskID} taskProductID={product.id} />
+                                <TaskProduct key={product.id} getTaskProducts={getTaskProducts} projectTaskID={projectTaskID} taskProductID={product.id} />
                             )
                         })
                         :

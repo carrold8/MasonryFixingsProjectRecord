@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProjectAPIs from '../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
 import { Form} from 'react-bootstrap';
 import DropDown from '../../../../../../DropDown/DropDown';
-import { MdCancel } from 'react-icons/md';
+import { MdCancel, MdDelete } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import { AiFillEdit } from 'react-icons/ai';
 import {format} from 'date-fns';
@@ -11,6 +11,7 @@ import {format} from 'date-fns';
 export default function ViewInduction({induction, getInductionData}){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const [editing, setEditing] = useState(false);
     const [userID, setUserID] = useState(parseInt(induction.user.id));
@@ -34,16 +35,52 @@ export default function ViewInduction({induction, getInductionData}){
             })
             .catch((err) => {
                 console.log(err)
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        setEditing(false);
+                        window.alert(err.response.data.message)
+                    }
+                }
             })
         }
     }
 
+    const deleteInduction = () => {
+        ProjectAPIs.DeleteProjectInductionList(params.ProjectID, induction.id)
+        .then((response) => {
+            if(response.status === 200){
+                getInductionData(params.ProjectID);
+                setEditing(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
+        })
+    }
+
     const handleCancel = () => {
         setUserID(induction.user.id);
-        setDate(induction.date);
+        setDate(format(new Date(induction.date), 'yyyy-MM-dd'));
         setEditing(false);
     }
 
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you wish to delete this induction entry?')){
+            deleteInduction();
+        }
+    }
 
     if(editing){
         return(
@@ -55,10 +92,10 @@ export default function ViewInduction({induction, getInductionData}){
                 <Form.Control required type='date' value={date} onChange={(e) => setDate(e.target.value)} />
                 </td>
                 <td>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
+                    <button onClick={() => editInduction()}><FaSave/></button>
                 </td>
                 <td>
-                    <span onClick={() => editInduction()}><FaSave/></span>
+                    <button onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
             </tr>
         )
@@ -71,7 +108,10 @@ export default function ViewInduction({induction, getInductionData}){
                     {format(new Date(induction.date), 'yyyy-MM-dd')}
                 </td>
                 <td>
-                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                    <button onClick={() => handleDelete()}><MdDelete/></button>
+                </td>
+                <td>
+                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

@@ -5,9 +5,10 @@ const { Task } = require('../models/task.model');
 const { Company } = require('../models/company.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Product } = require('../models/product.model');
+const { managementAuth, userAuth } = require('./routes.sessionauth');
 const router = express.Router();
 
-router.get('/:projectTaskID',  function(request, response) {
+router.get('/:projectTaskID', userAuth, function(request, response) {
     ProjectTask.findOne({ 
         where: {id: request.params.projectTaskID},
         include: [
@@ -23,7 +24,7 @@ router.get('/:projectTaskID',  function(request, response) {
 });
 
 
-router.delete('/:projectTaskID',  function(request, response) {
+router.delete('/:projectTaskID', managementAuth,  function(request, response) {
     ProjectTaskProduct.destroy({
         where: {project_task_id: request.params.projectTaskID}
     })
@@ -39,7 +40,7 @@ router.delete('/:projectTaskID',  function(request, response) {
 });
 
 
-router.get('/:projectTaskID/product-list',  function(request, response) {
+router.get('/:projectTaskID/product-list', userAuth,  function(request, response) {
     ProjectTaskProduct.findAll({ 
         where: {project_task_id: request.params.projectTaskID}
     })
@@ -48,7 +49,7 @@ router.get('/:projectTaskID/product-list',  function(request, response) {
     })
 });
 
-router.post('/:projectTaskID/products',  function(request, response) {
+router.post('/:projectTaskID/products', userAuth,  function(request, response) {
     ProjectTaskProduct.create({ 
         project_task_id: request.params.projectTaskID,
         product_id: request.body.product_id,
@@ -60,7 +61,7 @@ router.post('/:projectTaskID/products',  function(request, response) {
 });
 
 
-router.get('/:projectTaskID/products/:projectTaskProductID',  function(request, response) {
+router.get('/:projectTaskID/products/:projectTaskProductID', userAuth,  function(request, response) {
     ProjectTaskProduct.findOne({
         include: [{model: Product, attributes: ['id', 'name']}],
         where: {id: request.params.projectTaskProductID}
@@ -70,7 +71,7 @@ router.get('/:projectTaskID/products/:projectTaskProductID',  function(request, 
     })
 });
 
-router.put('/:projectTaskID/products/:projectTaskProductID',  function(request, response) {
+router.put('/:projectTaskID/products/:projectTaskProductID', userAuth, function(request, response) {
     ProjectTaskProduct.update({ 
         product_id: request.body.product_id,
         quantity: request.body.quantity
@@ -80,7 +81,7 @@ router.put('/:projectTaskID/products/:projectTaskProductID',  function(request, 
     })
 });
 
-router.delete('/:projectTaskID/products/:projectTaskProductID',  function(request, response) {
+router.delete('/:projectTaskID/products/:projectTaskProductID', managementAuth,  function(request, response) {
     ProjectTaskProduct.destroy({
         where: {id: request.params.projectTaskProductID}
     })

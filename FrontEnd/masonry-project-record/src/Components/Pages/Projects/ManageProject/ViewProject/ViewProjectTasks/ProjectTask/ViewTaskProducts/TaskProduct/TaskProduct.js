@@ -3,15 +3,17 @@ import './TaskProduct.css'
 import ProjectTaskAPIs from "../../../../../../../../../MasonyFixingsAPIs/ProjectTaskAPIs/ProjectTaskAPIs";
 import { Form } from "react-bootstrap";
 import DropDown from "../../../../../../../../DropDown/DropDown";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import { FaSave } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
-export default function TaskProduct({projectTaskID, taskProductID}){
+export default function TaskProduct({getTaskProducts, projectTaskID, taskProductID}){
 
     //Use product Id to get the info related to the ProjectTaskProduct
 
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
 
@@ -31,7 +33,16 @@ export default function TaskProduct({projectTaskID, taskProductID}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -49,8 +60,45 @@ export default function TaskProduct({projectTaskID, taskProductID}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
         })
+    }
+
+    const deleteProduct = () => {
+        ProjectTaskAPIs.DeleteProjectTaskProduct(projectTaskID, taskProductID)
+        .then((response) => {
+            if(response.status === 200){
+                getTaskProducts(projectTaskID);
+                setEditing(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
+        })
+    }
+
+    const handleDeleteProduct = () => {
+        if(window.confirm('Are you sure you want to delete this Product from task?')){
+            deleteProduct();
+        }
     }
 
     const handleCancel = () => {
@@ -84,7 +132,13 @@ export default function TaskProduct({projectTaskID, taskProductID}){
                     />
                 </td>
 
-                {editing && <td><button onClick={() => handleEditTaskProduct()}><FaSave/></button></td>}
+                <td>
+                {editing ? 
+                    <button onClick={() => handleEditTaskProduct()}><FaSave/></button>
+                    :
+                    <button onClick={() => handleDeleteProduct()}><MdDelete/></button>
+                }
+                </td>
 
                 <td>
                     {editing ? 

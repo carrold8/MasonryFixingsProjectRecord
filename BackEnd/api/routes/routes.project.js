@@ -11,11 +11,12 @@ const { Company } = require('../models/company.model');
 const { HeadOffice } = require('../models/headoffice.model');
 const { Employee } = require('../models/employee.model');
 const { where } = require('sequelize');
+const { managementAuth, userAuth } = require('./routes.sessionauth');
 const router = express.Router();
 
 
 
-router.get('/',  function(request, response) {
+router.get('/', userAuth, function(request, response) {
     Project.findAll({ 
         // include: {all: true, nested: true},
     })
@@ -24,7 +25,7 @@ router.get('/',  function(request, response) {
     })
    });
    
-   router.get('/:projectID',  function(request, response) {
+   router.get('/:projectID', userAuth,  function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -39,7 +40,7 @@ router.get('/',  function(request, response) {
     })
    });
 
-   router.delete('/:projectID',  function(request, response) {
+   router.delete('/:projectID', managementAuth,  function(request, response) {
     AnchorTraining.destroy({where: {project_id: request.params.projectID}})
     .then(function(){
         InductionRegister.destroy({where: {project_id: request.params.projectID}})
@@ -67,7 +68,7 @@ router.get('/',  function(request, response) {
     })
     
 
-   router.get('/:projectID/title-info',  function(request, response) {
+   router.get('/:projectID/title-info', userAuth, function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -86,7 +87,7 @@ router.get('/',  function(request, response) {
     })
    });
 
-   router.get('/:projectID/materials',  function(request, response) {
+   router.get('/:projectID/materials', userAuth, function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -102,7 +103,7 @@ router.get('/',  function(request, response) {
       response.json(project);
     })
    });
-   router.put('/:projectID/materials',  function(request, response) {
+   router.put('/:projectID/materials', userAuth, function(request, response) {
     Project.update(
         { 
             frame_material_id: request.body.frame_material_id,
@@ -118,7 +119,7 @@ router.get('/',  function(request, response) {
     })
    });
 
-   router.get('/:projectID/main-contractor',  function(request, response) {
+   router.get('/:projectID/main-contractor', userAuth, function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
     })
@@ -140,7 +141,7 @@ router.get('/',  function(request, response) {
         
     })
    });
-   router.put('/:projectID/main-contractor',  function(request, response) {
+   router.put('/:projectID/main-contractor', userAuth, function(request, response) {
     Project.update(
         { 
             main_contractor_id: request.body.main_contractor_id,
@@ -157,7 +158,7 @@ router.get('/',  function(request, response) {
    });
 
 
-   router.get('/:projectID/engineer',  function(request, response) {
+   router.get('/:projectID/engineer', userAuth, function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
     })
@@ -184,7 +185,7 @@ router.get('/',  function(request, response) {
     })
    });
 
-   router.put('/:projectID/engineer',  function(request, response) {
+   router.put('/:projectID/engineer', userAuth, function(request, response) {
     Project.update(
         { 
             engineering_company_id: request.body.engineering_company_id,
@@ -207,7 +208,7 @@ router.get('/',  function(request, response) {
    });
 
 
-   router.get('/:projectID/architect',  function(request, response) {
+   router.get('/:projectID/architect', userAuth, function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
     })
@@ -233,7 +234,7 @@ router.get('/',  function(request, response) {
     })
    });
 
-   router.put('/:projectID/architect',  function(request, response) {
+   router.put('/:projectID/architect', userAuth, function(request, response) {
     Project.update(
         { 
             architect_company_id: request.body.architect_company_id,
@@ -254,7 +255,7 @@ router.get('/',  function(request, response) {
     })
    });
 
-router.post('/',  function(request, response) {
+router.post('/', userAuth, function(request, response) {
     Address.create({
         line1: request.body.address.line1,
         line2: request.body.address.line2,
@@ -300,7 +301,7 @@ router.post('/',  function(request, response) {
 
 });
 
-router.get('/:projectID/tasks',  function(request, response) {
+router.get('/:projectID/tasks', userAuth, function(request, response) {
     ProjectTask.findAll({ 
         where: {project_id: request.params.projectID},
         include: [{model: Task, attributes: ['stage_id']}],
@@ -310,7 +311,7 @@ router.get('/:projectID/tasks',  function(request, response) {
         response.json(projectTasks);
     })
 });
-router.put('/:projectID/task/:projectTaskID',  function(request, response) {
+router.put('/:projectID/task/:projectTaskID', userAuth, function(request, response) {
     ProjectTask.update(
         { 
             task_id: request.body.task_id,
@@ -328,7 +329,7 @@ router.put('/:projectID/task/:projectTaskID',  function(request, response) {
     })
 });
 
-router.post('/:projectID/task',  function(request, response) {
+router.post('/:projectID/task', userAuth, function(request, response) {
     ProjectTask.create({ 
         project_id: request.params.projectID,
         task_id: request.body.task_id,
@@ -344,7 +345,7 @@ router.post('/:projectID/task',  function(request, response) {
     })
 });
 
-router.post('/:projectID/task/product',  function(request, response) {
+router.post('/:projectID/task/product', userAuth, function(request, response) {
     ProjectTaskProduct.create({ 
         project_task_id: request.body.project_task_id,
         product_id: request.body.product_id,
@@ -356,7 +357,7 @@ router.post('/:projectID/task/product',  function(request, response) {
 });
 
 
-router.get('/:projectID/induction',  function(request, response) {
+router.get('/:projectID/induction', userAuth, function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
         attributes: ['induction_required', 'induction_provided']
@@ -365,7 +366,7 @@ router.get('/:projectID/induction',  function(request, response) {
         response.json(induction);
     })
 });
-router.put('/:projectID/induction',  function(request, response) {
+router.put('/:projectID/induction', userAuth, function(request, response) {
     Project.update( 
         {
             induction_required: request.body.induction_required,
@@ -378,7 +379,7 @@ router.put('/:projectID/induction',  function(request, response) {
     })
 });
 
-router.put('/:projectID/induction-list/:inductionID',  function(request, response) {
+router.put('/:projectID/induction-list/:inductionID', userAuth,  function(request, response) {
     InductionRegister.update( 
         {
             user_id: request.body.user_id,
@@ -391,7 +392,7 @@ router.put('/:projectID/induction-list/:inductionID',  function(request, respons
     })
 });
 
-router.get('/:projectID/induction-list',  function(request, response) {
+router.get('/:projectID/induction-list', userAuth,  function(request, response) {
     InductionRegister.findAll({ 
         where: {project_id: request.params.projectID},
         include: [{model: User, attributes: ['id', 'first_name', 'last_name']}],
@@ -401,7 +402,7 @@ router.get('/:projectID/induction-list',  function(request, response) {
         response.json(inductions);
     })
 });
-router.post('/:projectID/inductions',  function(request, response) {
+router.post('/:projectID/inductions', userAuth,  function(request, response) {
     InductionRegister.create({ 
         project_id: request.params.projectID,
         user_id: request.body.user_id,
@@ -412,7 +413,7 @@ router.post('/:projectID/inductions',  function(request, response) {
     })
 });
 
-router.delete('/:projectID/induction-list/:inductionID',  function(request, response) {
+router.delete('/:projectID/induction-list/:inductionID', managementAuth, function(request, response) {
     InductionRegister.destroy( 
         {where: {id: request.params.inductionID}
     })
@@ -421,7 +422,7 @@ router.delete('/:projectID/induction-list/:inductionID',  function(request, resp
     })
 });
 
-router.get('/:projectID/anchor-training',  function(request, response) {
+router.get('/:projectID/anchor-training', userAuth, function(request, response) {
     AnchorTraining.findAll({ 
         where: {project_id: request.params.projectID},
         include: [{model: User, attributes: ['id', 'first_name', 'last_name']}],
@@ -431,7 +432,7 @@ router.get('/:projectID/anchor-training',  function(request, response) {
         response.json(anchorTraining);
     })
 });
-router.post('/:projectID/anchor-training', function(request, response){
+router.post('/:projectID/anchor-training', userAuth, function(request, response){
     AnchorTraining.create({
         project_id: request.params.projectID,
         user_id: request.body.user_id,
@@ -442,7 +443,7 @@ router.post('/:projectID/anchor-training', function(request, response){
         response.json(anchorTraining);
     })
 });
-router.put('/:projectID/anchor-training/:anchorTrainingID',  function(request, response) {
+router.put('/:projectID/anchor-training/:anchorTrainingID', userAuth, function(request, response) {
     AnchorTraining.update( 
         {
             user_id: request.body.user_id,
@@ -456,7 +457,7 @@ router.put('/:projectID/anchor-training/:anchorTrainingID',  function(request, r
     })
 });
 
-router.delete('/:projectID/anchor-training/:anchorTrainingID',  function(request, response) {
+router.delete('/:projectID/anchor-training/:anchorTrainingID', managementAuth, function(request, response) {
     AnchorTraining.destroy( 
         {where: {id: request.params.anchorTrainingID}
     })
@@ -465,7 +466,7 @@ router.delete('/:projectID/anchor-training/:anchorTrainingID',  function(request
     })
 });
 
-router.put('/:projectID/title-info',  function(request, response) {
+router.put('/:projectID/title-info', userAuth, function(request, response) {
     Project.update(
         { 
             name: request.body.name,
@@ -484,7 +485,7 @@ router.put('/:projectID/title-info',  function(request, response) {
 });
 
 
-router.put('/:projectID/contacts',  function(request, response) {
+router.put('/:projectID/contacts', userAuth, function(request, response) {
     Project.update(
         { 
             architect_company_id: request.body.architect_company_id,

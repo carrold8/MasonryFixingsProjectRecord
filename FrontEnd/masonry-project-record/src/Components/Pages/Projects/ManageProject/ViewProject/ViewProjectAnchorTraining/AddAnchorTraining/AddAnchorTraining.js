@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import DropDown from '../../../../../../DropDown/DropDown';
 import ProjectAPIs from '../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AddAnchorTraining({projectID, handleAddNew}){
 
+    const navigate = useNavigate();
     const [userID, setUserID] = useState('');
     const [date, setDate] = useState('');
     const [note, setNote] = useState('');
@@ -28,7 +30,15 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err)
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        window.alert(err.response.data.message)
+                    }
+                }
             })
         }
 

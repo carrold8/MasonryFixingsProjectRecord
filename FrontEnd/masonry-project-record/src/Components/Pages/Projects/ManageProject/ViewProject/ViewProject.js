@@ -15,7 +15,7 @@ export default function ViewProject(){
     const params = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-
+    
     const getProject = () => {
         ProjectAPIs.GetProject(params.ProjectID)
         .then((response) => {
@@ -28,12 +28,15 @@ export default function ViewProject(){
             if(err.response.status === 404){
                 navigate('/project');
             }
+            if(err.response.status === 401){
+                navigate('/login');
+            }
         })
     }
     
     useEffect(() => {
         getProject();
-    }, []);
+    });
 
     if(loading){
         return(<h3>Finding Project...</h3>);

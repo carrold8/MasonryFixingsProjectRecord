@@ -6,14 +6,15 @@ import { AiFillEdit } from 'react-icons/ai';
 import DropDown from '../../../../../../DropDown/DropDown';
 import { Form, Row, Col } from 'react-bootstrap';
 import ProjectAPIs from '../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
-import { useParams } from 'react-router-dom';
-import { MdCancel, MdShoppingCart } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router-dom';
+import { MdCancel, MdDelete, MdShoppingCart } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import {format} from 'date-fns'
 
 export default function ProjectTask({projectTaskID, getProjectTasks}){
 
     const params = useParams();
+    const navigate = useNavigate();
     
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
@@ -47,7 +48,16 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     } 
 
@@ -72,8 +82,48 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
                 setEditing(false);
             }
         })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
+        })
     }
 
+    const deleteProjectTask = () => {
+        ProjectTaskAPIs.DeleteProjectTask(projectTaskID)
+        .then((response) => {
+            if(response.status === 200){
+                getProjectTasks(params.ProjectID);
+                setEditing(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    setEditing(false);
+                    window.alert(err.response.data.message)
+                }
+            }
+        })
+    }
+
+    const handledDelete = () => {
+
+        if(window.confirm('Are you sure you want to delete this task? You will lose all associated products and potential sales figures.')){
+            deleteProjectTask();
+        }
+    }
 
     const handleChangeTask = (e) => {
         setTaskID(e.target.value);
@@ -199,12 +249,17 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
 
                     <div align='end'>
                         <div>
-                            <button disabled={!editing} type={'submit'}><FaSave/></button>   
+                              
                             {editing ? 
-                            
-                            <button type='button' onClick={() => handleCancel()}><MdCancel/></button>    
+                            <div>
+                                <button type={'submit'}><FaSave/></button> 
+                                <button type='button' onClick={() => handleCancel()}><MdCancel/></button> 
+                            </div>   
                             :
-                            <button type='button' onClick={() => setEditing(true)}><AiFillEdit/></button>
+                            <div>
+                                <button type={'button'} onClick={() => handledDelete()}><MdDelete/></button> 
+                                <button type='button' onClick={() => setEditing(true)}><AiFillEdit/></button>
+                            </div>
                             }
                         </div>
                         

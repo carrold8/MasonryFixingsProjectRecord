@@ -30,12 +30,10 @@ function LogIn() {
         .then((response) => {
             setRequesting(false);
             if(response.status === 200){
-                localStorage.setItem("user", "Logged In");
                 navigate('/');
             }
         })
         .catch((err) => {
-            // console.log(err);
             setRequesting(false);
             if(err.response.status === 404){
                 setInvalidForm(true);

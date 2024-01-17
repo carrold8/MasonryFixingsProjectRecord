@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProjectAPIs from '../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs';
 import { Form} from 'react-bootstrap';
 import DropDown from '../../../../../DropDown/DropDown';
-import { MdCancel } from 'react-icons/md';
+import { MdCancel, MdDelete } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import { AiFillEdit } from 'react-icons/ai';
 import {format} from 'date-fns';
@@ -11,6 +11,7 @@ import {format} from 'date-fns';
 export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const [editing, setEditing] = useState(false);
     const [userID, setUserID] = useState(parseInt(anchorTraining.user.id));
@@ -34,6 +35,36 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
+        })
+    }
+
+    const deleteAnchorTraining = () => {
+
+        ProjectAPIs.DeleteProjectAnchorTraining(params.ProjectID, anchorTraining.id)
+        .then((response) => {
+            if(response.status === 200){
+                getAnchorTraining(params.ProjectID);
+                setEditing(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -42,6 +73,12 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
         setDate(anchorTraining.date);
         setNote(anchorTraining.note);
         setEditing(false);
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you wish to delete this anchor training?')){
+            deleteAnchorTraining();
+        }
     }
 
 
@@ -58,10 +95,10 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
                     <Form.Control value={note} onChange={(e) => setNote(e.target.value)} />
                 </td>
                 <td>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
+                    <button onClick={() => editAnchorTraining()}><FaSave/></button>
                 </td>
                 <td>
-                    <span onClick={() => editAnchorTraining()}><FaSave/></span>
+                    <button onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
             </tr>
         )
@@ -77,7 +114,10 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
                     {anchorTraining.note}
                 </td>
                 <td>
-                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                    <button onClick={() => handleDelete()}><MdDelete/></button>
+                </td>
+                <td>
+                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

@@ -4,10 +4,12 @@ import CreateCompany from './CreateCompany';
 import ViewCompany from './ViewCompany/ViewCompany';
 // import DropDown from '../../DropDown/DropDown';-
 import CompanyAPIs  from '../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs';
+import { useNavigate } from 'react-router-dom';
 
 export default function Companies(){
 
     const [addNew, setAddNew] = useState(false);
+    const navigate = useNavigate();
        
     const [CompaniesData, setCompaniesData] =  useState([])
 
@@ -18,7 +20,15 @@ export default function Companies(){
             setCompaniesData(response.data);
         }) 
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

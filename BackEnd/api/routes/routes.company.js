@@ -8,8 +8,9 @@ const { Employee } = require('../models/employee.model');
 const { EmployeeType } = require('../models/employeetype.model');
 const { CompanyCompanyType } = require('../models/companycompanytype.model');
 const { CompanyType } = require('../models/companytype.model');
+const { managementAuth, userAuth } = require('./routes.sessionauth');
 
-router.get('/', function(request, response) {
+router.get('/', userAuth, function(request, response) {
     Company.findAll({
         // include: {all: true, nested: true},
         // attributes: {exclude: ['company_type_id', 'head_office_id']}
@@ -19,7 +20,7 @@ router.get('/', function(request, response) {
     })
    });
 
-   router.post( '/', function(request, response) {
+   router.post( '/', userAuth, function(request, response) {
     Address.create({
         line1: request.body.head_office.address.line1,
         line2: request.body.head_office.address.line2,
@@ -45,7 +46,7 @@ router.get('/', function(request, response) {
     })
    });
 
-   router.get('/:id', function(request, response) {
+   router.get('/:id', userAuth, function(request, response) {
     Company.findOne({ 
         where: {id: request.params.id},
     })
@@ -54,7 +55,7 @@ router.get('/', function(request, response) {
     })
    });
 
-   router.get('/:companyID/head-office', function(request, response){
+   router.get('/:companyID/head-office', userAuth, function(request, response){
     Company.findOne(
       {where: {id: request.params.companyID}}
     )
@@ -68,7 +69,7 @@ router.get('/', function(request, response) {
     })
    });
 
-   router.put('/:companyID/head-office', function(request, response){
+   router.put('/:companyID/head-office', userAuth, function(request, response){
     Company.findOne(
       {where: {id: request.params.companyID}}
     )
@@ -96,7 +97,7 @@ router.get('/', function(request, response) {
    })
 
 
-   router.put('/:id', function(request, response) {
+   router.put('/:id', userAuth, function(request, response) {
       Company.update(
         {name: request.body.name},
         {where: {id: request.params.id}}
@@ -107,7 +108,7 @@ router.get('/', function(request, response) {
    });
 
 
-   router.get('/:id/employees', function(request, response) {
+   router.get('/:id/employees', userAuth, function(request, response) {
     Employee.findAll({
         
         where: {company_id: request.params.id},
@@ -119,7 +120,7 @@ router.get('/', function(request, response) {
     })
    });
 
-   router.post('/:companyID/employee', function(request, response) {
+   router.post('/:companyID/employee', userAuth, function(request, response) {
     Employee.create({
         first_name: request.body.first_name,
         last_name: request.body.last_name,
@@ -132,7 +133,7 @@ router.get('/', function(request, response) {
     })
    });
 
-   router.put('/:companyID/employee', function(request, response){
+   router.put('/:companyID/employee', userAuth, function(request, response){
 
         Employee.update({
         

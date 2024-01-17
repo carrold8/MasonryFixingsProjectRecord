@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 
 function PrivateRoute() {
 
-    const isLoggedIn = localStorage.getItem('user');
+    const isLoggedIn = true;
 
 
     if(isLoggedIn){

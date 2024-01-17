@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import DropDown from "../../../../../DropDown/DropDown";
 import ProjectAPIs from "../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddProjectTask({handleAddNew}){
 
     const params = useParams();
+    const navigate = useNavigate(); 
 
     const [stageID, setStageID] = useState('');
     const [taskID, setTaskID] = useState('');
@@ -49,7 +50,15 @@ export default function AddProjectTask({handleAddNew}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

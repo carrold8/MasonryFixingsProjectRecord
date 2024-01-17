@@ -60,6 +60,14 @@ const ProjectTaskAPIs = {
             data: putJSON
         })
         return response;
+    },
+
+    DeleteProjectTaskProduct: (projectTaskID, projectTaskProductID) => {
+        const response = api.request({
+            url: '/project-task/' + projectTaskID +'/products/' + projectTaskProductID,
+            method: 'DELETE',
+        })
+        return response;
     }
 
 
