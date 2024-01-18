@@ -18,7 +18,6 @@ function Home(){
             if(response.status === 200){
                 setLoading(false);
                 setManagement(true);
-                // setManagement(response.data.management);
             }
         })
         .catch((err) => {
@@ -64,8 +63,9 @@ function Home(){
 
                 <div className="my-active-projects-container">
                     <h4>My active projects.</h4> 
-                    <div>This will contain a list of all projects that the user has entered tasks in to.</div>
-                    <hr/>
+                    <div>This section is being developed and will contain a list of all projects that you have entered tasks in to.</div>
+                    <div>These projects will be presented in order of which task is has the closest future date to the current date</div>
+                    {/* <hr/>
                     <h4>Other notes:</h4>
                     <div>This project is still in development and contains no real data. All data found here has been created off the cuff.</div>
                     <div>Things to note:</div>
@@ -73,7 +73,7 @@ function Home(){
                         <li>Logins and user types have not yet been created</li>
                         <li>A managment dashboard option will appear when a manager logs in to the app in the future.</li>
                         <li>The maintenance option will not appear for people without permission to edit key features of this web app.</li>
-                    </ul>
+                    </ul> */}
                 </div>
 
             </div>
