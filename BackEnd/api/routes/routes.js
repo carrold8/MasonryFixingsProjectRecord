@@ -18,6 +18,7 @@ const Address = require('../models/address.model').Address;
 const Company = require('../models/company.model').Company;
 
 const authenticateRouter = require('./routes.authenticate');
+const userAccountRouter = require('./routes.useraccount');
 const userTypeRouter = require('./routes.usertype');
 const countyRouter = require('./routes.county');
 const companyRouter = require('./routes.company');
@@ -87,6 +88,7 @@ module.exports = function(app) {
     app.use(bodyParser.json());
 
     app.use('/api/authenticate', authenticateRouter);
+    app.use('/api/user-account', userAccountRouter);
     app.use('/api/user-type', userTypeRouter);
     app.use('/api/county', countyRouter);
     app.use('/api/company', companyRouter);

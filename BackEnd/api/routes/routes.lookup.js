@@ -126,7 +126,7 @@ router.get('/partitioning-material',  function(request, response) {
 });
 
 router.get('/users',  function(request, response) {
-    User.findAll()
+    User.findAll({attributes: {exclude: ['password']}})
     .then(function(users) {
         response.json(users);
     })

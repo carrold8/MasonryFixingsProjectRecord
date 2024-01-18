@@ -9,6 +9,13 @@ const AuthenticateAPIs = {
             data: postJON
         })
         return response;
+    },
+    GetLogout: () => {
+        const response = api.request({
+            url: 'authenticate/logout',
+            method: 'GET',
+        })
+        return response;
     }
 }
 export default AuthenticateAPIs;

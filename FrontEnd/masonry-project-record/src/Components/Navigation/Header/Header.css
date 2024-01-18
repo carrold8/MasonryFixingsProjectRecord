@@ -32,6 +32,7 @@
     flex: 1;
     color: #63666a;
     height: 100%;
+    position: relative;
 }
 .header-row .nav-item:hover{
     flex: 1;
@@ -43,9 +44,32 @@
     margin: 0.25rem;
 }
 
+.account-menu{
+    max-height: 0;
+    width: 20vw;
+    overflow: hidden;
+    position: absolute;
+    top: 90%;
+    background-color: white;
+    color: black;
+    right: 50%;
+}
+.account-menu.active{
+    border: 1px solid #63666a;
+    max-height: 40vh;
+    padding: 0.5rem 1rem;
+}
+
+.account-menu .option:hover{
+    color: #e87722;
+}
+
 @media screen and (max-width: 480px) {
     .header-row strong{
         display: none
+    }
+    .account-menu{
+        width: 50vw;
     };
 }
 

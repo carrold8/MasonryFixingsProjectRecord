@@ -7,6 +7,7 @@ import MaintenaceHome from "../Maintenance/MaintenanceHome/MaintenanceHome";
 import Companies from "../Companies/Companies";
 import LogIn from '../LogIn/LogIn'
 import ProjectsRoutes from "../Projects/ProjectsRoutes/ProjectsRoutes";
+import UserAccount from "../UserAccount/UserAccount";
 
 export default function PageRoutes(){
 
@@ -24,6 +25,8 @@ export default function PageRoutes(){
             </Route>
 
             <Route exact path='/companies' element={<Companies/>}/>
+
+            <Route exact path="my-account/*" element={<UserAccount/>} />
 
           </Route>
 
