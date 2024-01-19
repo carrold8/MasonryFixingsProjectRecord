@@ -4,9 +4,13 @@ import LookupAPIs from "../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
 import { Table, Card, Row, Col} from "react-bootstrap";
 import ViewUser from "./ViewUser";
 import { MdAddCircle } from "react-icons/md";
+import './UserMaintenance.css';
+import { useNavigate } from "react-router-dom";
+import UserPasswordChange from "./UserPasswordChange/UserPasswordChange";
 
 export default function UserMaintenance(){
 
+    const navigate = useNavigate();
 
     const [userData, setUserData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -31,6 +35,14 @@ export default function UserMaintenance(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -71,7 +83,7 @@ export default function UserMaintenance(){
                     {userData.length === 0 ?
                     <div>No Users</div>
                     :
-                    <Table striped hover responsive>
+                    <Table striped hover responsive className="user-table">
                         <thead>
                             <tr>
                                 {thData()}
@@ -86,6 +98,8 @@ export default function UserMaintenance(){
                         </tbody>
                     </Table>
                 }
+
+                    <UserPasswordChange/>
                     </Card.Body>
                 </Card>
                 

@@ -14,10 +14,10 @@ const { Sector } = require('../models/sector.model');
 const { Product } = require('../models/product.model');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const { managementAuth, userAuth } = require('./routes.sessionauth');
 
 
-
-router.post('/user', async function(request, response) {
+router.post('/user', managementAuth, async function(request, response) {
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
     User.findAll({where: {username: request.body.username }})
   .then(function(username) {
@@ -40,7 +40,7 @@ router.post('/user', async function(request, response) {
   })
     
 });
-router.put('/user/:userID', function(request, response) {
+router.put('/user/:userID', managementAuth, function(request, response) {
 
   User.findAll({where: {username: request.body.username }})
   .then(function(username) {
@@ -64,7 +64,7 @@ router.put('/user/:userID', function(request, response) {
  
 });
 
-router.put('/user/:userID/password', async function(request, response) {
+router.put('/user/:userID/password', managementAuth, async function(request, response) {
 
   const hashedPassword = await bcrypt.hash(request.body.password, 10);
   User.update({
@@ -76,7 +76,7 @@ router.put('/user/:userID/password', async function(request, response) {
   })
 });
 
-router.post('/category', function(request, response) {
+router.post('/category', managementAuth, function(request, response) {
   Category.create({
       name: request.body.name
   })
@@ -84,7 +84,7 @@ router.post('/category', function(request, response) {
     response.json(category);
   })
  });
- router.put('/category/:categoryID', function(request, response) {
+ router.put('/category/:categoryID', managementAuth, function(request, response) {
   Category.update({
       name: request.body.name
   },
@@ -95,7 +95,7 @@ router.post('/category', function(request, response) {
   })
  });
 
- router.post('/sector', function(request, response) {
+ router.post('/sector', managementAuth, function(request, response) {
   Sector.create({
       name: request.body.name,
       category_id: request.body.category_id
@@ -104,7 +104,7 @@ router.post('/category', function(request, response) {
     response.json(sector);
   })
  });
- router.put('/sector/:sectorID', function(request, response) {
+ router.put('/sector/:sectorID', managementAuth, function(request, response) {
   Sector.update({
       name: request.body.name
   },
@@ -114,7 +114,7 @@ router.post('/category', function(request, response) {
   })
  });
 
-router.post('/company-type', function(request, response) {
+router.post('/company-type', managementAuth, function(request, response) {
   CompanyType.create({
       name: request.body.name
   })
@@ -122,7 +122,7 @@ router.post('/company-type', function(request, response) {
     response.json(companyType);
   })
  });
- router.put('/company-type/:companyTypeID', function(request, response) {
+ router.put('/company-type/:companyTypeID', managementAuth, function(request, response) {
   CompanyType.update({
       name: request.body.name
   },
@@ -132,7 +132,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/employee-type', function(request, response) {
+ router.post('/employee-type', managementAuth, function(request, response) {
   EmployeeType.create({
       name: request.body.name
   })
@@ -140,7 +140,7 @@ router.post('/company-type', function(request, response) {
     response.json(employeeType);
   })
  });
- router.put('/employee-type/:employeeTypeID', function(request, response) {
+ router.put('/employee-type/:employeeTypeID', managementAuth, function(request, response) {
   EmployeeType.update({
       name: request.body.name
   },
@@ -150,7 +150,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/frame-material', function(request, response) {
+ router.post('/frame-material', managementAuth, function(request, response) {
   FrameMaterial.create({
       name: request.body.name
   })
@@ -158,7 +158,7 @@ router.post('/company-type', function(request, response) {
     response.json(frameMat);
   })
  });
- router.put('/frame-material/:frameMaterialID', function(request, response) {
+ router.put('/frame-material/:frameMaterialID', managementAuth, function(request, response) {
   FrameMaterial.update({
       name: request.body.name
   },
@@ -168,7 +168,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/floor-material', function(request, response) {
+ router.post('/floor-material', managementAuth, function(request, response) {
   FloorMaterial.create({
       name: request.body.name
   })
@@ -176,7 +176,7 @@ router.post('/company-type', function(request, response) {
     response.json(floorMat);
   })
  });
- router.put('/floor-material/:floorMaterialID', function(request, response) {
+ router.put('/floor-material/:floorMaterialID', managementAuth, function(request, response) {
   FloorMaterial.update({
       name: request.body.name
   }, 
@@ -186,7 +186,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/envelope-material', function(request, response) {
+ router.post('/envelope-material', managementAuth, function(request, response) {
   EnvelopeMaterial.create({
       name: request.body.name
   })
@@ -194,7 +194,7 @@ router.post('/company-type', function(request, response) {
     response.json(envMat);
   })
  });
- router.put('/envelope-material/:matID', function(request, response) {
+ router.put('/envelope-material/:matID', managementAuth, function(request, response) {
   EnvelopeMaterial.update({
       name: request.body.name
   },
@@ -204,7 +204,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/roof-material', function(request, response) {
+ router.post('/roof-material', managementAuth, function(request, response) {
   RoofMaterial.create({
       name: request.body.name
   })
@@ -212,7 +212,7 @@ router.post('/company-type', function(request, response) {
     response.json(roofMat);
   })
  });
- router.put('/roof-material/:matID', function(request, response) {
+ router.put('/roof-material/:matID', managementAuth, function(request, response) {
   RoofMaterial.update({
       name: request.body.name
   },
@@ -223,7 +223,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/partitioning-material', function(request, response) {
+ router.post('/partitioning-material', managementAuth, function(request, response) {
   PartitioningMaterial.create({
       name: request.body.name
   })
@@ -231,7 +231,7 @@ router.post('/company-type', function(request, response) {
     response.json(partitionMat);
   })
  });
- router.put('/partitioning-material/:matID', function(request, response) {
+ router.put('/partitioning-material/:matID', managementAuth, function(request, response) {
   PartitioningMaterial.update({
       name: request.body.name
   },
@@ -241,7 +241,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/task', function(request, response) {
+ router.post('/task', managementAuth, function(request, response) {
   Task.create({
       name: request.body.name,
       stage_id: request.body.stage_id
@@ -250,7 +250,7 @@ router.post('/company-type', function(request, response) {
     response.json(task);
   })
  });
- router.put('/task/:taskID', function(request, response) {
+ router.put('/task/:taskID', managementAuth, function(request, response) {
   Task.update({
       name: request.body.name
   },
@@ -260,7 +260,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/task-type', function(request, response) {
+ router.post('/task-type', managementAuth, function(request, response) {
   TaskType.create({
       name: request.body.name,
       task_id: request.body.task_id
@@ -269,7 +269,7 @@ router.post('/company-type', function(request, response) {
     response.json(taskType);
   })
  });
- router.put('/task-type/:taskTypeID', function(request, response) {
+ router.put('/task-type/:taskTypeID', managementAuth, function(request, response) {
   TaskType.update({
       name: request.body.name
   },
@@ -279,7 +279,7 @@ router.post('/company-type', function(request, response) {
   })
  });
 
- router.post('/product', function(request, response) {
+ router.post('/product', managementAuth, function(request, response) {
   Product.create({
       name: request.body.name,
       price: request.body.price
@@ -288,7 +288,7 @@ router.post('/company-type', function(request, response) {
     response.json(product);
   })
  });
- router.put('/product/:productID', function(request, response) {
+ router.put('/product/:productID', managementAuth, function(request, response) {
   Product.update({
       name: request.body.name,
       price: request.body.price

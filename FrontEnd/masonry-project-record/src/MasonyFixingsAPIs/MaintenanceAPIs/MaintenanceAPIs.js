@@ -20,6 +20,15 @@ const MaintenanceAPIs = {
     return response
     },
 
+    PutUserPassword: (userID, putJSON) => {
+      const response = api.request({
+         url: 'maintenance/user/' + userID + '/password',
+         method: 'PUT',
+         data: putJSON
+      })
+      return response
+    },
+
     PostCompanyType: (newCompanyType) => { 
         const response =  api.request({
            url: 'maintenance/company-type',

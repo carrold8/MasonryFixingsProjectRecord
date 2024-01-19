@@ -41,7 +41,7 @@ const { Project } = require('../models/project.model');
 module.exports = function(app) {
 
   var corsOptions = {
-    origin: '*'
+    origin: '*',
     // origin: 'http://localhost:3000',
     // credentials: true
 }
