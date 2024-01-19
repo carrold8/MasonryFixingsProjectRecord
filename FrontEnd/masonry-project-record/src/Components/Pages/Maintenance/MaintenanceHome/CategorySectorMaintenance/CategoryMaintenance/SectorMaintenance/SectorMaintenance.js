@@ -37,7 +37,7 @@ export default function SectorMaintenance({categoryID}){
 
     const handleAddNew = () => {
         setAddNew(false);
-        getSectorData();
+        getSectorData(categoryID);
     }
 
     useEffect(() => {
