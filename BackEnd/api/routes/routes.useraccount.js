@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const {userAuth, managementAuth} = require('./routes.sessionauth');
 const { User } = require('../models/user.model');
 
-router.get('/', userAuth, function(request, response) {
+router.get('/', function(request, response) {
     const user = request.session.user;
 
     User.findOne({
@@ -16,7 +15,7 @@ router.get('/', userAuth, function(request, response) {
     })
 });
 
-router.put('/password', userAuth, async function(request, response) {
+router.put('/password', async function(request, response) {
 
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
     User.update({

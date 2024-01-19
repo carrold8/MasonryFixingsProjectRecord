@@ -40,6 +40,7 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
                     navigate('/login');
                 }
                 else{
+                    handleCancel();
                     window.alert(err.response.data.message)
                 }
             }

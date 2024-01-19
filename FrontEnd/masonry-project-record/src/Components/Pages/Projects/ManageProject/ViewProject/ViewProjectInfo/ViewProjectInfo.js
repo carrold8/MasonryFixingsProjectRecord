@@ -133,7 +133,7 @@ export default function ViewProjectInfo(){
                     <strong>Building Description</strong>
                     <div>
                         {editing ? 
-                            <Form.Control size='sm' value={desc} onChange={(e) => setDesc(e.target.value)} />
+                            <Form.Control size='sm' as='textarea' rows={3} value={desc} onChange={(e) => setDesc(e.target.value)} />
                             :
                             desc
                         }

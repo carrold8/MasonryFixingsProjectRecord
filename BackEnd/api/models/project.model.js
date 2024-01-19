@@ -87,7 +87,7 @@ induction_provided: {
     allowNull: false 
 },
 building_description: { 
-    type: DataTypes.STRING, 
+    type: DataTypes.STRING(6000), 
     allowNull: false 
 },
 footprint: { 

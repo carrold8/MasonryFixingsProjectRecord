@@ -63,7 +63,7 @@ export default function ViewInduction({induction, getInductionData}){
                     navigate('/login');
                 }
                 else{
-                    setEditing(false);
+                    handleCancel();
                     window.alert(err.response.data.message)
                 }
             }

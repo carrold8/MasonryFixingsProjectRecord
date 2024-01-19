@@ -16,7 +16,7 @@ const router = express.Router();
 
 
 
-router.get('/', userAuth, function(request, response) {
+router.get('/', function(request, response) {
     Project.findAll({ 
         // include: {all: true, nested: true},
     })
@@ -25,7 +25,7 @@ router.get('/', userAuth, function(request, response) {
     })
    });
    
-   router.get('/:projectID', userAuth,  function(request, response) {
+   router.get('/:projectID', function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -68,7 +68,7 @@ router.get('/', userAuth, function(request, response) {
     })
     
 
-   router.get('/:projectID/title-info', userAuth, function(request, response) {
+   router.get('/:projectID/title-info', function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -87,7 +87,7 @@ router.get('/', userAuth, function(request, response) {
     })
    });
 
-   router.get('/:projectID/materials', userAuth, function(request, response) {
+   router.get('/:projectID/materials', function(request, response) {
     Project.findOne({ 
         // include: {all: true, nested: true},
         where: {id: request.params.projectID},
@@ -103,7 +103,7 @@ router.get('/', userAuth, function(request, response) {
       response.json(project);
     })
    });
-   router.put('/:projectID/materials', userAuth, function(request, response) {
+   router.put('/:projectID/materials', function(request, response) {
     Project.update(
         { 
             frame_material_id: request.body.frame_material_id,
@@ -119,7 +119,7 @@ router.get('/', userAuth, function(request, response) {
     })
    });
 
-   router.get('/:projectID/main-contractor', userAuth, function(request, response) {
+   router.get('/:projectID/main-contractor', function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
     })
@@ -141,7 +141,7 @@ router.get('/', userAuth, function(request, response) {
         
     })
    });
-   router.put('/:projectID/main-contractor', userAuth, function(request, response) {
+   router.put('/:projectID/main-contractor', function(request, response) {
     Project.update(
         { 
             main_contractor_id: request.body.main_contractor_id,
@@ -158,7 +158,7 @@ router.get('/', userAuth, function(request, response) {
    });
 
 
-   router.get('/:projectID/engineer', userAuth, function(request, response) {
+   router.get('/:projectID/engineer', function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
     })
@@ -185,7 +185,7 @@ router.get('/', userAuth, function(request, response) {
     })
    });
 
-   router.put('/:projectID/engineer', userAuth, function(request, response) {
+   router.put('/:projectID/engineer', function(request, response) {
     Project.update(
         { 
             engineering_company_id: request.body.engineering_company_id,
@@ -208,7 +208,7 @@ router.get('/', userAuth, function(request, response) {
    });
 
 
-   router.get('/:projectID/architect', userAuth, function(request, response) {
+   router.get('/:projectID/architect', function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
     })
@@ -234,7 +234,7 @@ router.get('/', userAuth, function(request, response) {
     })
    });
 
-   router.put('/:projectID/architect', userAuth, function(request, response) {
+   router.put('/:projectID/architect', function(request, response) {
     Project.update(
         { 
             architect_company_id: request.body.architect_company_id,
@@ -255,7 +255,7 @@ router.get('/', userAuth, function(request, response) {
     })
    });
 
-router.post('/', userAuth, function(request, response) {
+router.post('/', function(request, response) {
     Address.create({
         line1: request.body.address.line1,
         line2: request.body.address.line2,
@@ -301,7 +301,7 @@ router.post('/', userAuth, function(request, response) {
 
 });
 
-router.get('/:projectID/tasks', userAuth, function(request, response) {
+router.get('/:projectID/tasks', function(request, response) {
     ProjectTask.findAll({ 
         where: {project_id: request.params.projectID},
         include: [{model: Task, attributes: ['stage_id']}],
@@ -311,25 +311,39 @@ router.get('/:projectID/tasks', userAuth, function(request, response) {
         response.json(projectTasks);
     })
 });
-router.put('/:projectID/task/:projectTaskID', userAuth, function(request, response) {
-    ProjectTask.update(
-        { 
-            task_id: request.body.task_id,
-            company_id: request.body.company_id,
-            task_type_id: request.body.task_type_id,
-            approx_val: request.body.approx_val,
-            start_date: request.body.start_date,
-            end_date: request.body.end_date,
-            user_id: request.body.user_id
-        },
-        {where: {id: request.params.projectTaskID}
+router.put('/:projectID/task/:projectTaskID', function(request, response) {
+    const sessionUser = request.session.user;
+    
+    ProjectTask.findOne({where: {id: request.params.projectTaskID}})
+    .then(function(projectTask){
+        if(sessionUser.id === projectTask.user_id || sessionUser.role !== 'Sales'){
+            ProjectTask.update(
+                { 
+                    task_id: request.body.task_id,
+                    company_id: request.body.company_id,
+                    task_type_id: request.body.task_type_id,
+                    approx_val: request.body.approx_val,
+                    start_date: request.body.start_date,
+                    end_date: request.body.end_date,
+                    user_id: request.body.user_id
+                },
+                {where: {id: request.params.projectTaskID}
+            })
+            .then(function(projectTask) {
+                response.json(projectTask);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
-    .then(function(projectTask) {
-        response.json(projectTask);
-    })
+    
 });
 
-router.post('/:projectID/task', userAuth, function(request, response) {
+router.post('/:projectID/task', function(request, response) {
     ProjectTask.create({ 
         project_id: request.params.projectID,
         task_id: request.body.task_id,
@@ -345,7 +359,7 @@ router.post('/:projectID/task', userAuth, function(request, response) {
     })
 });
 
-router.post('/:projectID/task/product', userAuth, function(request, response) {
+router.post('/:projectID/task/product', function(request, response) {
     ProjectTaskProduct.create({ 
         project_task_id: request.body.project_task_id,
         product_id: request.body.product_id,
@@ -357,7 +371,7 @@ router.post('/:projectID/task/product', userAuth, function(request, response) {
 });
 
 
-router.get('/:projectID/induction', userAuth, function(request, response) {
+router.get('/:projectID/induction', function(request, response) {
     Project.findOne({ 
         where: {id: request.params.projectID},
         attributes: ['induction_required', 'induction_provided']
@@ -366,7 +380,7 @@ router.get('/:projectID/induction', userAuth, function(request, response) {
         response.json(induction);
     })
 });
-router.put('/:projectID/induction', userAuth, function(request, response) {
+router.put('/:projectID/induction', function(request, response) {
     Project.update( 
         {
             induction_required: request.body.induction_required,
@@ -379,20 +393,33 @@ router.put('/:projectID/induction', userAuth, function(request, response) {
     })
 });
 
-router.put('/:projectID/induction-list/:inductionID', userAuth,  function(request, response) {
-    InductionRegister.update( 
-        {
-            user_id: request.body.user_id,
-            date: request.body.date
-        },
-        {where: {id: request.params.inductionID}
-    })
-    .then(function(induction) {
-        response.json(induction);
+router.put('/:projectID/induction-list/:inductionID',  function(request, response) {
+
+    const sessionUser = request.session.user;
+    InductionRegister.findOne({where: {id: request.params.inductionID}})
+    .then(function(induction){
+        if(induction.user_id === sessionUser.id || sessionUser.role !== 'Sales'){
+            InductionRegister.update( 
+                {
+                    user_id: request.body.user_id,
+                    date: request.body.date
+                },
+                {where: {id: request.params.inductionID}
+            })
+            .then(function(induction) {
+                response.json(induction);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
 });
 
-router.get('/:projectID/induction-list', userAuth,  function(request, response) {
+router.get('/:projectID/induction-list',  function(request, response) {
     InductionRegister.findAll({ 
         where: {project_id: request.params.projectID},
         include: [{model: User, attributes: ['id', 'first_name', 'last_name']}],
@@ -402,7 +429,7 @@ router.get('/:projectID/induction-list', userAuth,  function(request, response) 
         response.json(inductions);
     })
 });
-router.post('/:projectID/inductions', userAuth,  function(request, response) {
+router.post('/:projectID/inductions', function(request, response) {
     InductionRegister.create({ 
         project_id: request.params.projectID,
         user_id: request.body.user_id,
@@ -413,16 +440,29 @@ router.post('/:projectID/inductions', userAuth,  function(request, response) {
     })
 });
 
-router.delete('/:projectID/induction-list/:inductionID', managementAuth, function(request, response) {
-    InductionRegister.destroy( 
-        {where: {id: request.params.inductionID}
-    })
-    .then(function(induction) {
-        response.json(induction);
+router.delete('/:projectID/induction-list/:inductionID', function(request, response) {
+    
+    const sessionUser = request.session.user;
+    InductionRegister.findOne({where: {id: request.params.inductionID}})
+    .then(function(induction){
+        if(induction.user_id === sessionUser.id || sessionUser.role !== 'Sales'){
+            InductionRegister.destroy( 
+                {where: {id: request.params.inductionID}
+            })
+            .then(function(induction) {
+                response.json(induction);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
 });
 
-router.get('/:projectID/anchor-training', userAuth, function(request, response) {
+router.get('/:projectID/anchor-training', function(request, response) {
     AnchorTraining.findAll({ 
         where: {project_id: request.params.projectID},
         include: [{model: User, attributes: ['id', 'first_name', 'last_name']}],
@@ -432,7 +472,7 @@ router.get('/:projectID/anchor-training', userAuth, function(request, response) 
         response.json(anchorTraining);
     })
 });
-router.post('/:projectID/anchor-training', userAuth, function(request, response){
+router.post('/:projectID/anchor-training', function(request, response){
     AnchorTraining.create({
         project_id: request.params.projectID,
         user_id: request.body.user_id,
@@ -443,30 +483,59 @@ router.post('/:projectID/anchor-training', userAuth, function(request, response)
         response.json(anchorTraining);
     })
 });
-router.put('/:projectID/anchor-training/:anchorTrainingID', userAuth, function(request, response) {
-    AnchorTraining.update( 
-        {
-            user_id: request.body.user_id,
-            date: request.body.date,
-            note: request.body.note
-        },
-        {where: {id: request.params.anchorTrainingID}
+router.put('/:projectID/anchor-training/:anchorTrainingID', function(request, response) {
+
+    const sessionUser = request.session.user;
+    AnchorTraining.findOne({where: {id: request.params.anchorTrainingID}})
+    .then(function(anchorTraining){
+        if(anchorTraining.user_id === sessionUser.id || sessionUser.role !== 'Sales'){
+            AnchorTraining.update( 
+                {
+                    user_id: request.body.user_id,
+                    date: request.body.date,
+                    note: request.body.note
+                },
+                {where: {id: request.params.anchorTrainingID}
+            })
+            .then(function(anchorTraining) {
+                response.json(anchorTraining);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
-    .then(function(anchorTraining) {
-        response.json(anchorTraining);
-    })
+    
 });
 
-router.delete('/:projectID/anchor-training/:anchorTrainingID', managementAuth, function(request, response) {
-    AnchorTraining.destroy( 
-        {where: {id: request.params.anchorTrainingID}
+router.delete('/:projectID/anchor-training/:anchorTrainingID', function(request, response) {
+
+    const sessionUser = request.session.user;
+    
+    AnchorTraining.findOne({where: {id: request.params.anchorTrainingID}})
+    .then(function(anchorTraining){
+        if(anchorTraining.user_id === sessionUser.id || sessionUser.role !== 'Sales'){
+            AnchorTraining.destroy( 
+                {where: {id: request.params.anchorTrainingID}
+            })
+            .then(function(anchorTraining) {
+                response.json(anchorTraining);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
-    .then(function(anchorTraining) {
-        response.json(anchorTraining);
-    })
+    
 });
 
-router.put('/:projectID/title-info', userAuth, function(request, response) {
+router.put('/:projectID/title-info', function(request, response) {
     Project.update(
         { 
             name: request.body.name,
@@ -485,7 +554,7 @@ router.put('/:projectID/title-info', userAuth, function(request, response) {
 });
 
 
-router.put('/:projectID/contacts', userAuth, function(request, response) {
+router.put('/:projectID/contacts', function(request, response) {
     Project.update(
         { 
             architect_company_id: request.body.architect_company_id,

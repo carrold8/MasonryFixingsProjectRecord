@@ -66,7 +66,7 @@ export default function TaskProduct({getTaskProducts, projectTaskID, taskProduct
                     navigate('/login');
                 }
                 else{
-                    setEditing(false);
+                    handleCancel();
                     window.alert(err.response.data.message)
                 }
             }

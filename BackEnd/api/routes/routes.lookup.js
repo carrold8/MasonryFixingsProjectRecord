@@ -16,65 +16,63 @@ const { User } = require('../models/user.model');
 const { Stage } = require('../models/stage.model');
 const { Product } = require('../models/product.model');
 const router = express.Router();
-const { userAuth } = require('./routes.sessionauth');
 
-
-router.get('/county', userAuth,  function(request, response) {
+router.get('/county', function(request, response) {
     County.findAll()
     .then(function(counties) {
         response.json(counties);
     })
 });
 
-router.get('/country', userAuth, function(request, response) {
+router.get('/country', function(request, response) {
     Country.findAll()
     .then(function(counties) {
         response.json(counties);
     })
 });
 
-router.get('/company-type', userAuth, function(request, response) {
+router.get('/company-type', function(request, response) {
     CompanyType.findAll()
     .then(function(companies) {
         response.json(companies);
     })
 });
 
-router.get('/employee-type', userAuth,  function(request, response) {
+router.get('/employee-type', function(request, response) {
     EmployeeType.findAll()
     .then(function(employeeType) {
         response.json(employeeType);
     })
 });
 
-router.get('/task-type', userAuth, function(request, response) {
+router.get('/task-type', function(request, response) {
     TaskType.findAll()
     .then(function(taskType) {
         response.json(taskType);
     })
 });
 
-router.get('/task', userAuth, function(request, response) {
+router.get('/task', function(request, response) {
     Task.findAll()
     .then(function(task) {
         response.json(task);
     })
 });
 
-router.get('/task/:taskID/task-type', userAuth, function(request, response) {
+router.get('/task/:taskID/task-type', function(request, response) {
     TaskType.findAll({where: {task_id: request.params.taskID}})
     .then(function(taskType) {
         response.json(taskType);
     })
 });
 
-router.get('/category', userAuth, function(request, response) {
+router.get('/category', function(request, response) {
     Category.findAll()
     .then(function(category) {
         response.json(category);
     })
 });
-router.get('/category/:categoryID/sectors', userAuth, function(request, response) {
+router.get('/category/:categoryID/sectors', function(request, response) {
     Sector.findAll(
       {where: {category_id: request.params.categoryID}}
     )
@@ -83,7 +81,7 @@ router.get('/category/:categoryID/sectors', userAuth, function(request, response
     })
    });
 
-router.get('/sector', userAuth, function(request, response) {
+router.get('/sector', function(request, response) {
     Sector.findAll()
     .then(function(sectorType) {
         response.json(sectorType);
@@ -91,62 +89,62 @@ router.get('/sector', userAuth, function(request, response) {
 });
 
 
-router.get('/frame-material', userAuth, function(request, response) {
+router.get('/frame-material', function(request, response) {
     FrameMaterial.findAll()
     .then(function(frameMaterial) {
         response.json(frameMaterial);
     })
 });
 
-router.get('/floor-material', userAuth, function(request, response) {
+router.get('/floor-material', function(request, response) {
     FloorMaterial.findAll()
     .then(function(floorMaterial) {
         response.json(floorMaterial);
     })
 });
 
-router.get('/envelope-material', userAuth, function(request, response) {
+router.get('/envelope-material', function(request, response) {
     EnvelopeMaterial.findAll()
     .then(function(envelopeMaterial) {
         response.json(envelopeMaterial);
     })
 });
 
-router.get('/roof-material', userAuth, function(request, response) {
+router.get('/roof-material', function(request, response) {
     RoofMaterial.findAll()
     .then(function(roofMaterial) {
         response.json(roofMaterial);
     })
 });
 
-router.get('/partitioning-material', userAuth, function(request, response) {
+router.get('/partitioning-material', function(request, response) {
     PartitioningMaterial.findAll()
     .then(function(partitioningMaterial) {
         response.json(partitioningMaterial);
     })
 });
 
-router.get('/users', userAuth, function(request, response) {
+router.get('/users', function(request, response) {
     User.findAll({attributes: {exclude: ['password']}})
     .then(function(users) {
         response.json(users);
     })
 });
 
-router.get('/stage', userAuth, function(request, response) {
+router.get('/stage', function(request, response) {
     Stage.findAll()
     .then(function(stages) {
         response.json(stages);
     })
 });
-router.get('/stage/:stageID/tasks', userAuth, function(request, response) {
+router.get('/stage/:stageID/tasks', function(request, response) {
     Task.findAll({where: {stage_id: request.params.stageID}})
     .then(function(tasks) {
         response.json(tasks);
     })
 });
 
-router.get('/products', userAuth, function(request, response) {
+router.get('/products', function(request, response) {
     Product.findAll()
     .then(function(products) {
         response.json(products);

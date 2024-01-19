@@ -36,6 +36,7 @@ const { Stage } = require('../models/stage.model');
 const { Task } = require('../models/task.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Project } = require('../models/project.model');
+const { userAuth, managementAuth } = require('./routes.sessionauth');
 
 
 module.exports = function(app) {
@@ -88,16 +89,16 @@ module.exports = function(app) {
     app.use(bodyParser.json());
 
     app.use('/api/authenticate', authenticateRouter);
-    app.use('/api/user-account', userAccountRouter);
-    app.use('/api/user-type', userTypeRouter);
-    app.use('/api/county', countyRouter);
-    app.use('/api/company', companyRouter);
-    app.use('/api/address', addressRouter);
-    app.use('/api/employee', employeeRouter);
-    app.use('/api/project', projectRouter);
-    app.use('/api/project-task', projectTaskRouter);
-    app.use('/api/lookup', lookupRouter);
-    app.use('/api/maintenance', maintenanceRouter);
+    app.use('/api/user-account', userAuth, userAccountRouter);
+    app.use('/api/user-type', userAuth, userTypeRouter);
+    app.use('/api/county', userAuth, countyRouter);
+    app.use('/api/company', userAuth, companyRouter);
+    app.use('/api/address', userAuth, addressRouter);
+    app.use('/api/employee', userAuth, employeeRouter);
+    app.use('/api/project', userAuth, projectRouter);
+    app.use('/api/project-task', userAuth, projectTaskRouter);
+    app.use('/api/lookup', userAuth, lookupRouter);
+    app.use('/api/maintenance', managementAuth, maintenanceRouter);
 
    
      

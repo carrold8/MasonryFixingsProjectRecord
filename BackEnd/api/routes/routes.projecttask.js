@@ -5,10 +5,9 @@ const { Task } = require('../models/task.model');
 const { Company } = require('../models/company.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Product } = require('../models/product.model');
-const { managementAuth, userAuth } = require('./routes.sessionauth');
 const router = express.Router();
 
-router.get('/:projectTaskID', userAuth, function(request, response) {
+router.get('/:projectTaskID', function(request, response) {
     ProjectTask.findOne({ 
         where: {id: request.params.projectTaskID},
         include: [
@@ -24,23 +23,36 @@ router.get('/:projectTaskID', userAuth, function(request, response) {
 });
 
 
-router.delete('/:projectTaskID', managementAuth,  function(request, response) {
-    ProjectTaskProduct.destroy({
-        where: {project_task_id: request.params.projectTaskID}
-    })
-    .then(function() {
-        ProjectTask.destroy({ 
-            where: {id: request.params.projectTaskID},
-        })
-        .then(function(projectTasks) {
-            response.json(projectTasks);
-        })
-    })
+router.delete('/:projectTaskID', function(request, response) {
+
+    const sessionUser = request.session.user;
     
+    ProjectTask.findOne({where: {id: request.params.projectTaskID}})
+    .then(function(projectTask) {
+        if(sessionUser.id === projectTask.user_id || sessionUser.role !== 'Sales'){
+            ProjectTaskProduct.destroy({
+                where: {project_task_id: request.params.projectTaskID}
+            })
+            .then(function() {
+                ProjectTask.destroy({ 
+                    where: {id: request.params.projectTaskID},
+                })
+                .then(function(projectTasks) {
+                    response.json(projectTasks);
+                })
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
+    })
 });
 
 
-router.get('/:projectTaskID/product-list', userAuth,  function(request, response) {
+router.get('/:projectTaskID/product-list', function(request, response) {
     ProjectTaskProduct.findAll({ 
         where: {project_task_id: request.params.projectTaskID}
     })
@@ -49,19 +61,34 @@ router.get('/:projectTaskID/product-list', userAuth,  function(request, response
     })
 });
 
-router.post('/:projectTaskID/products', userAuth,  function(request, response) {
-    ProjectTaskProduct.create({ 
-        project_task_id: request.params.projectTaskID,
-        product_id: request.body.product_id,
-        quantity: request.body.quantity
+router.post('/:projectTaskID/products', function(request, response) {
+
+    const sessionUser = request.session.user;
+    
+    ProjectTask.findOne({where: {id: request.params.projectTaskID}})
+    .then(function(projectTask) {
+        if(sessionUser.id === projectTask.user_id || sessionUser.role !== 'Sales'){
+            ProjectTaskProduct.create({ 
+                project_task_id: request.params.projectTaskID,
+                product_id: request.body.product_id,
+                quantity: request.body.quantity
+            })
+            .then(function(projectTasksProducts) {
+                response.json(projectTasksProducts);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
-    .then(function(projectTasksProducts) {
-        response.json(projectTasksProducts);
-    })
+    
 });
 
 
-router.get('/:projectTaskID/products/:projectTaskProductID', userAuth,  function(request, response) {
+router.get('/:projectTaskID/products/:projectTaskProductID', function(request, response) {
     ProjectTaskProduct.findOne({
         include: [{model: Product, attributes: ['id', 'name']}],
         where: {id: request.params.projectTaskProductID}
@@ -71,22 +98,50 @@ router.get('/:projectTaskID/products/:projectTaskProductID', userAuth,  function
     })
 });
 
-router.put('/:projectTaskID/products/:projectTaskProductID', userAuth, function(request, response) {
-    ProjectTaskProduct.update({ 
-        product_id: request.body.product_id,
-        quantity: request.body.quantity
-    }, {where: {id: request.params.projectTaskProductID}})
-    .then(function(projectTasksProducts) {
-        response.json(projectTasksProducts);
-    })
+router.put('/:projectTaskID/products/:projectTaskProductID', function(request, response) {
+    
+    const sessionUser = request.session.user;
+    
+    ProjectTask.findOne({where: {id: request.params.projectTaskID}})
+    .then(function(projectTask) {
+        if(sessionUser.id === projectTask.user_id || sessionUser.role !== 'Sales'){
+            ProjectTaskProduct.update({ 
+                product_id: request.body.product_id,
+                quantity: request.body.quantity
+            }, {where: {id: request.params.projectTaskProductID}})
+            .then(function(projectTasksProducts) {
+                response.json(projectTasksProducts);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
+    })    
 });
 
-router.delete('/:projectTaskID/products/:projectTaskProductID', managementAuth,  function(request, response) {
-    ProjectTaskProduct.destroy({
-        where: {id: request.params.projectTaskProductID}
-    })
-    .then(function(projectTasksProduct) {
-        response.json(projectTasksProduct);
+router.delete('/:projectTaskID/products/:projectTaskProductID',  function(request, response) {
+
+    const sessionUser = request.session.user;
+    
+    ProjectTask.findOne({where: {id: request.params.projectTaskID}})
+    .then(function(projectTask) {
+        if(sessionUser.id === projectTask.user_id || sessionUser.role !== 'Sales'){
+            ProjectTaskProduct.destroy({
+                where: {id: request.params.projectTaskProductID}
+            })
+            .then(function(projectTasksProduct) {
+                response.json(projectTasksProduct);
+            })
+        }
+        else{
+            response.status(401).json({
+                logout: false, 
+                message: 'Oops! It looks like you are not authorised to perform this operation'
+            });
+        }
     })
 });
 

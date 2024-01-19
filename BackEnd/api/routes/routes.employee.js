@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { where } = require('sequelize');
 const { Employee } = require('../models/employee.model');
-const { userAuth } = require('./routes.sessionauth');
 
 
-router.get('/:employeeID', userAuth, function(request, response) {
+router.get('/:employeeID', function(request, response) {
     Employee.findOne({ 
         where: {id: request.params.employeeID},
     })
@@ -14,7 +13,7 @@ router.get('/:employeeID', userAuth, function(request, response) {
     })
 });
 
-router.put('/:employeeID', userAuth, function(request, response){
+router.put('/:employeeID', function(request, response){
 
     Employee.update({
         first_name: request.body.first_name,
