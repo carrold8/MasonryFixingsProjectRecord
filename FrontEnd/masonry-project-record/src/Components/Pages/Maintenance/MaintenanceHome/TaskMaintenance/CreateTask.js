@@ -9,11 +9,13 @@ export default function CreateTask({handleAddNew}){
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [stageID, setStageID] = useState('');
+    const [sending, setSending] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
+        setSending(true);
         const postJSON = {
             name: name,
             stage_id: parseInt(stageID)
@@ -23,6 +25,7 @@ export default function CreateTask({handleAddNew}){
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
+                setSending(false);
             }
         })
         .catch((err) => {
@@ -32,7 +35,8 @@ export default function CreateTask({handleAddNew}){
                     navigate('/login');
                 }
                 else{
-                    window.alert(err.response.data.message)
+                    window.alert(err.response.data.message);
+                    setSending(false);
                 }
             }
         })
@@ -49,7 +53,7 @@ export default function CreateTask({handleAddNew}){
                     <DropDown.Stage required value={stageID} onChange={(e) => setStageID(e.target.value)} />
                 </Col>
                 <Col>
-                    <Button type='submit'>Save</Button>
+                    <Button disabled={sending} type='submit'>Save</Button>
                 </Col>
             </Form.Group>
             
