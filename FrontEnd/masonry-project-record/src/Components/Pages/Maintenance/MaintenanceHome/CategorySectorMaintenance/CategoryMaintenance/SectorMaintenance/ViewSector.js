@@ -21,7 +21,7 @@ export default function ViewSector({sector, getSectorData}){
         MaintenanceAPIs.PutSector(sector.id, putJSON)
         .then((response) => {
             if(response.status === 200){
-                getSectorData();
+                getSectorData(sector.id);
                 setEditing(false);
             }
         })

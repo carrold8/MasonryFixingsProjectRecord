@@ -20,4 +20,5 @@
 .category-container .sectors.active{
     max-height: 50vh;
     transition: 0.25s ease-in;
+    overflow: auto;
 }
