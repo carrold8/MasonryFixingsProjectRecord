@@ -46,7 +46,7 @@ router.get('/employee-type', function(request, response) {
 });
 
 router.get('/task-type', function(request, response) {
-    TaskType.findAll()
+    TaskType.findAll({order: ['stage_id', 'ASC']})
     .then(function(taskType) {
         response.json(taskType);
     })
