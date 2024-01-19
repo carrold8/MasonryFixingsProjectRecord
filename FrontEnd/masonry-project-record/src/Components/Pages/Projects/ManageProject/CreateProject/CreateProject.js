@@ -8,6 +8,7 @@ import ProjectAPIs from "../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPI
 export default function CreateProject(){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [name, setName] = useState('');
     const [cisID, setCisID] = useState('');
     // const [completed, setCompletedID] = useState(false);
@@ -59,6 +60,8 @@ export default function CreateProject(){
         e.preventDefault();
         e.stopPropagation();
 
+        setSending(true);
+
         const addressJSON = {
             line1: line1,
             line2: line2,
@@ -104,6 +107,7 @@ export default function CreateProject(){
         .then((newProject) => {
             if(newProject.status === 200){
             navigate('/project/' + newProject.data.id)
+            setSending(false);
             }
         })
         .catch((err) => {
@@ -114,6 +118,7 @@ export default function CreateProject(){
                 }
                 else{
                     window.alert(err.response.data.message)
+                    setSending(false);
                 }
             }
         })
@@ -366,7 +371,7 @@ export default function CreateProject(){
                                     <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
                                 </Col>
                                 <Col align='end'>
-                                <button type='submit'>Finish</button>
+                                <button type='submit' disabled={sending}>Finish</button>
                                 </Col>
                             </Row>
                             

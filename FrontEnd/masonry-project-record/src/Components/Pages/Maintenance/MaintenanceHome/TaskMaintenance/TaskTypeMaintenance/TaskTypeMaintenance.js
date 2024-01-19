@@ -37,7 +37,7 @@ export default function TaskTypeMaintenance({taskID}){
 
     const handleAddNew = () => {
         setAddNew(false);
-        getTaskTypeData();
+        getTaskTypeData(taskID);
     }
 
 
@@ -72,7 +72,7 @@ export default function TaskTypeMaintenance({taskID}){
                     <tbody>
                     {taskTypeData.map((filteredTaskType) => {
                         return(
-                            <ViewTaskType key={filteredTaskType.id} taskType={filteredTaskType} getTaskTypeData={getTaskTypeData}/>
+                            <ViewTaskType key={filteredTaskType.id} taskID={taskID} taskType={filteredTaskType} getTaskTypeData={getTaskTypeData}/>
                         )
                     })}
                     </tbody>

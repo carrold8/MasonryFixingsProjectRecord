@@ -8,10 +8,12 @@ import { useNavigate } from 'react-router-dom';
 export default function AddTaskProduct({projectTaskID, handleAddNew}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState()
     const [productID, setProductID] = useState('');
     const [quantity, setQuantity] = useState('');
 
     const addNewTaskProduct = () => {
+        setSending(true);
         const postJSON = {
             product_id: productID,
             quantity: quantity
@@ -21,6 +23,7 @@ export default function AddTaskProduct({projectTaskID, handleAddNew}){
             .then((response) => {
                 if(response.status === 200){
                     handleAddNew();
+                    setSending(false);
                 }
             })
             .catch((err) => {
@@ -31,6 +34,7 @@ export default function AddTaskProduct({projectTaskID, handleAddNew}){
                     }
                     else{
                         window.alert(err.response.data.message)
+                        setSending(false);
                     }
                 }
             })
@@ -46,7 +50,7 @@ export default function AddTaskProduct({projectTaskID, handleAddNew}){
                 <Form.Control type='number' required value={quantity} onChange={(e) => setQuantity(e.target.value)} />
             </td>
             <td>
-                <button onClick={() => addNewTaskProduct()}><MdAddCircle/></button>
+                <button disabled={sending} onClick={() => addNewTaskProduct()}><MdAddCircle/></button>
             </td>
         </tr>
     )

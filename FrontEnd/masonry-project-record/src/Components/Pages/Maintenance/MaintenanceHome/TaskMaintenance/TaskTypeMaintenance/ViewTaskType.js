@@ -6,7 +6,7 @@ import { FaSave } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 
-export default function ViewTaskType({taskType, getTaskTypeData}){
+export default function ViewTaskType({taskID, taskType, getTaskTypeData}){
 
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
@@ -21,7 +21,7 @@ export default function ViewTaskType({taskType, getTaskTypeData}){
         MaintenanceAPIs.PutTaskType(taskType.id, putJSON)
         .then((response) => {
             if(response.status === 200){
-                getTaskTypeData();
+                getTaskTypeData(taskID);
                 setEditing(false);
             }
         })

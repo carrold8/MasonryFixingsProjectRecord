@@ -8,6 +8,7 @@ export default function AddProjectTask({handleAddNew}){
 
     const params = useParams();
     const navigate = useNavigate(); 
+    const [sending, setSending] = useState(false);
 
     const [stageID, setStageID] = useState('');
     const [taskID, setTaskID] = useState('');
@@ -33,6 +34,8 @@ export default function AddProjectTask({handleAddNew}){
         e.preventDefault();
         e.stopPropagation();
 
+        setSending(true);
+
         const postJSON = {
             task_id: taskID,
             company_id: companyID,
@@ -47,6 +50,7 @@ export default function AddProjectTask({handleAddNew}){
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
+                setSending(false);
             }
         })
         .catch((err) => {
@@ -57,6 +61,7 @@ export default function AddProjectTask({handleAddNew}){
                 }
                 else{
                     window.alert(err.response.data.message)
+                    setSending(false);
                 }
             }
         })
@@ -130,7 +135,7 @@ export default function AddProjectTask({handleAddNew}){
 
             
 
-            <Button type="submit">Add</Button>
+            <Button type="submit" disabled={sending}>Add</Button>
         </Form>
         </div>
     )

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AddAnchorTraining({projectID, handleAddNew}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [userID, setUserID] = useState('');
     const [date, setDate] = useState('');
     const [note, setNote] = useState('');
@@ -15,6 +16,7 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
     const handleSubmit = () => {
         // e.stopPropagation();
         // e.preventDefault();
+        setSending(true);
 
         const postJSON = {
             user_id: userID,
@@ -27,6 +29,7 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
             .then((response) => {
                 if(response.status ===200){
                     handleAddNew(projectID);
+                    setSending(false);
                 }
             })
             .catch((err) => {
@@ -37,6 +40,7 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
                     }
                     else{
                         window.alert(err.response.data.message)
+                        setSending(false);
                     }
                 }
             })
@@ -57,7 +61,7 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
                     <Form.Control value={note} onChange={(e) => setNote(e.target.value)} />
                 </td>
                 <td>
-                    <Button onClick={() => handleSubmit()}>Add</Button>
+                    <Button disabled={sending} onClick={() => handleSubmit()}>Add</Button>
                 </td>
 
             </tr>
