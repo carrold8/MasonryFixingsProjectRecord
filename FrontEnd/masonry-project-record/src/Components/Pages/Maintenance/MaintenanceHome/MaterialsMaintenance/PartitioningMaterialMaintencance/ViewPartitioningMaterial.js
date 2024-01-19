@@ -3,11 +3,12 @@ import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ViewPartitioningMaterial({material, getMaterialData}){
 
-
+    const navigate = useNavigate();
     const [editedName, setEditedName] = useState(material.name);
     const [editing, setEditing] = useState(false);
 
@@ -22,6 +23,17 @@ export default function ViewPartitioningMaterial({material, getMaterialData}){
             if(response.status === 200){
                 setEditing(false);
                 getMaterialData();
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
             }
         })
     }

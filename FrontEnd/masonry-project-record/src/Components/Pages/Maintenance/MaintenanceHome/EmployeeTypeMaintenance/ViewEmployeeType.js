@@ -3,9 +3,11 @@ import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/Ma
 import { FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewEmployeeType({employeeType, getEmployeeTypeData}){
 
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [editedName, setEditedName] = useState(employeeType.name);
     
@@ -24,7 +26,15 @@ export default function ViewEmployeeType({employeeType, getEmployeeTypeData}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

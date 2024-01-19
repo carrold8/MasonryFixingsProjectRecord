@@ -7,7 +7,7 @@ import ProjectAPIs from "../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPI
 
 export default function CreateProject(){
 
-
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [cisID, setCisID] = useState('');
     // const [completed, setCompletedID] = useState(false);
@@ -53,9 +53,6 @@ export default function CreateProject(){
             setPageIndex(pageIndex+1);
         }
     }
-
-
-    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
 
@@ -105,13 +102,20 @@ export default function CreateProject(){
         
         ProjectAPIs.PostProject(PostJSON)
         .then((newProject) => {
-    
             if(newProject.status === 200){
             navigate('/project/' + newProject.data.id)
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

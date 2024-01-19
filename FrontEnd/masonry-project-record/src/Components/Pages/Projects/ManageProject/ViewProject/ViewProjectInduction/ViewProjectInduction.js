@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './ViewProjectInduction.css';
 import ViewInductionTable from "./ViewInductionTable/ViewInductionTable";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProjectAPIs from "../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 import { FaChevronUp, FaChevronDown, FaSave } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
@@ -11,6 +11,8 @@ import { Form } from "react-bootstrap";
 export default function ViewProjectInduction(){
 
     const params = useParams();
+    const navigate = useNavigate();
+
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
     const [showInductions, setShowInductions] = useState(false);
@@ -32,6 +34,14 @@ export default function ViewProjectInduction(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -53,6 +63,14 @@ export default function ViewProjectInduction(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

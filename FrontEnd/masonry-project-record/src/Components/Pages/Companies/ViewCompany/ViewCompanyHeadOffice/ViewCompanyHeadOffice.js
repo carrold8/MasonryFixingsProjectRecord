@@ -6,9 +6,11 @@ import { Form, Row, Col, Card } from "react-bootstrap";
 import { FaChevronUp, FaChevronDown, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewCompanyHeadOffice({companyID}){
 
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
     const [showHeadOffice, setShowHeadOffice] = useState(false);
@@ -42,12 +44,28 @@ export default function ViewCompanyHeadOffice({companyID}){
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.log(err)
+                    if(err.response.status === 401){
+                        if(err.response.data.logout){
+                            navigate('/login');
+                        }
+                        else{
+                            window.alert(err.response.data.message)
+                        }
+                    }
                 })
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -71,7 +89,15 @@ export default function ViewCompanyHeadOffice({companyID}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

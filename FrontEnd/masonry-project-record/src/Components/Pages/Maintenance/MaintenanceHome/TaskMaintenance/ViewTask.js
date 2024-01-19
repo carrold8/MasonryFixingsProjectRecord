@@ -5,9 +5,11 @@ import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import TaskTypeMaintenance from "./TaskTypeMaintenance/TaskTypeMaintenance";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewTask({task, getTaskData}){
 
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [editedName, setEditedName] = useState(task.name);
     const [showTaskTypes, setShowTaskTypes] = useState(false);
@@ -37,6 +39,14 @@ export default function ViewTask({task, getTaskData}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
 
     }

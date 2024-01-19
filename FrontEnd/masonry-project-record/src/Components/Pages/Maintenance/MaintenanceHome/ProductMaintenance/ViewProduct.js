@@ -3,9 +3,11 @@ import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/Ma
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewProduct({product, getProductData}){
 
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [productName, setProductName] = useState(product.name);
     const [price, setPrice] = useState(product.price);
@@ -27,7 +29,15 @@ export default function ViewProduct({product, getProductData}){
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err)
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        window.alert(err.response.data.message)
+                    }
+                }
             })
         }
     }

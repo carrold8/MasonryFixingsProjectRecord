@@ -4,10 +4,11 @@ import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPI
 import { Card, Row, Col, Table } from "react-bootstrap";
 import { MdAddCircle } from "react-icons/md";
 import ViewTaskType from "./ViewTaskType";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskTypeMaintenance({taskID}){
 
-
+    const navigate = useNavigate();
     const [taskTypeData, setTaskTypeData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addNew, setAddNew] = useState(false);
@@ -23,6 +24,14 @@ export default function TaskTypeMaintenance({taskID}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

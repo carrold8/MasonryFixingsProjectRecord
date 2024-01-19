@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import LookupAPIs from "../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
 import './StageSelectionTabs.css';
+import { useNavigate } from "react-router-dom";
 
 
 export default function StageSelectionTabs({value, setStageValue}){
 
+    const navigate = useNavigate();
     const [stageData, setStageData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currStage, setCurrStage] = useState(value);
@@ -17,7 +19,15 @@ export default function StageSelectionTabs({value, setStageValue}){
             setLoading(false);
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

@@ -4,9 +4,11 @@ import LookupAPIs from "../../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPI
 import { Card, Col, Row } from "react-bootstrap";
 import ViewCategory from "./ViewCategory";
 import { MdAddCircle } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function CategoryMaintenance(){
 
+    const navigate = useNavigate();
     const [categoryData, setCategoryData] = useState([]);
     const [addNew, setAddNew] = useState(false);
 
@@ -19,7 +21,15 @@ export default function CategoryMaintenance(){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

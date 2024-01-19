@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
+import { useNavigate } from 'react-router-dom';
 
 export default function FrameMatrialsDropDown(props){
 
+    const navigate = useNavigate();
     const [frameMaterialData, setFrameMaterialData] = useState([]);
     
     const getFrameMaterialData = () => {
@@ -12,7 +14,12 @@ export default function FrameMatrialsDropDown(props){
             setFrameMaterialData(frameMaterial.data)
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+            }
         })
     }
 

@@ -3,12 +3,13 @@ import { Form } from 'react-bootstrap';
 import DropDown from '../../../../../../../DropDown/DropDown';
 import ProjectTaskAPIs from '../../../../../../../../MasonyFixingsAPIs/ProjectTaskAPIs/ProjectTaskAPIs';
 import { MdAddCircle } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddTaskProduct({projectTaskID, handleAddNew}){
 
+    const navigate = useNavigate();
     const [productID, setProductID] = useState('');
     const [quantity, setQuantity] = useState('');
-
 
     const addNewTaskProduct = () => {
         const postJSON = {
@@ -23,10 +24,17 @@ export default function AddTaskProduct({projectTaskID, handleAddNew}){
                 }
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err)
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        window.alert(err.response.data.message)
+                    }
+                }
             })
         }
-        
     }
 
     return(

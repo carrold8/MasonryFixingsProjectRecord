@@ -5,9 +5,11 @@ import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs
 import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewCategory({category, getCategoryData}){
 
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [editedName, setEditedName] = useState(category.name);
     const [showSectors, setShowSectors] = useState(false);
@@ -36,6 +38,14 @@ export default function ViewCategory({category, getCategoryData}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
 
     }

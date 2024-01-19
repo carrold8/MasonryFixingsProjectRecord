@@ -5,9 +5,11 @@ import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import DropDown from "../../../../DropDown/DropDown";
 import {Form} from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 export default function ViewUser({user, getUserData}){
 
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
 
     const [firstName, setFirstName] = useState(user.first_name);
@@ -38,6 +40,15 @@ export default function ViewUser({user, getUserData}){
             }
         })
         .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
             if(err.response.status === 409){
                 setInvalidUserName(true);
             }

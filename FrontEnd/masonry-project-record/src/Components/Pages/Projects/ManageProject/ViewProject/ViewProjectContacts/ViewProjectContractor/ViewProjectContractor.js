@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ViewProjectContractor.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProjectAPIs from "../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 import DropDown from "../../../../../../DropDown/DropDown";
 import ViewProjectContractorEmployee from "./ViewProjectContractorEmployee/ViewProjectContractorEmployee";
@@ -12,6 +12,7 @@ import { Form } from "react-bootstrap";
 export default function ViewProjectContractor(){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
@@ -39,6 +40,14 @@ export default function ViewProjectContractor(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -63,6 +72,14 @@ export default function ViewProjectContractor(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

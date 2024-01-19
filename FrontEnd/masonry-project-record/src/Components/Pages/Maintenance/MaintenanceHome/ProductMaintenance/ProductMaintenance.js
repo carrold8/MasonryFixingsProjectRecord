@@ -4,13 +4,14 @@ import ViewProduct from './ViewProduct';
 import CreateProduct from './CreateProduct/CreateProduct';
 import { MdAddCircle } from 'react-icons/md';
 import {  Row, Col, Card, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductMaintenance(){
 
+    const navigate = useNavigate();
     const [productData, setProductData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addProduct, setAddProduct] = useState(false);
-
 
     const getProductData = () => {
 
@@ -23,6 +24,14 @@ export default function ProductMaintenance(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

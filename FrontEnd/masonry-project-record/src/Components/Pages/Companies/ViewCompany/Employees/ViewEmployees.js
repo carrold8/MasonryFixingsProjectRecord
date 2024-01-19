@@ -5,9 +5,11 @@ import ViewEmployee from "./ViewEmployee";
 import { Card, Row, Col, Table } from "react-bootstrap";
 import CompanyAPIs from "../../../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
 import { MdAddCircle } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewEmployees({CompanyID}){
 
+    const navigate = useNavigate();
     const ColumnHeaders = ['First Name', 'Last Name', 'Phone'];
     const [employeeData, setEmployeeData] = useState([]);
     const [showEmployees, setShowEmployees] = useState(false);
@@ -20,7 +22,15 @@ export default function ViewEmployees({CompanyID}){
             setEmployeeData(response.data);
         }) 
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
     

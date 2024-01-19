@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import ProjectAPIs from "../../../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
@@ -10,6 +10,7 @@ import DropDown from "../../../../../../DropDown/DropDown";
 export default function ViewProjectEngineer(){
     
     const params = useParams();
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
@@ -34,6 +35,14 @@ export default function ViewProjectEngineer(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

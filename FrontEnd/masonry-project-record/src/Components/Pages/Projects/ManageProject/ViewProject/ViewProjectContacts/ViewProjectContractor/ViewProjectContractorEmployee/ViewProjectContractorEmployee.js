@@ -4,10 +4,11 @@ import { Form } from 'react-bootstrap';
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewProjectContractorEmployee({employeeID}){
 
-
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
     const [employeeData, setEmployeeData] = useState();
@@ -26,6 +27,14 @@ export default function ViewProjectContractorEmployee({employeeID}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -44,6 +53,14 @@ export default function ViewProjectContractorEmployee({employeeID}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
+import { useNavigate } from 'react-router-dom';
 
 export default function CountyDropDown(props){
 
+    const navigate = useNavigate();
     const [countyData, setCountyData] = useState([]);
     
     const getCountyData = () => {
@@ -12,7 +14,12 @@ export default function CountyDropDown(props){
             setCountyData(counties.data)
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+            }
         })
     }
 

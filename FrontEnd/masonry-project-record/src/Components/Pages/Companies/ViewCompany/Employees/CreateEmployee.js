@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import CompanyAPIs from "../../../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
+import { useNavigate } from "react-router-dom";
 
 function CreateEmployee({companyID, handleAddNew}){
     
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -29,7 +31,15 @@ function CreateEmployee({companyID, handleAddNew}){
             })
             .catch((err) => {
                 console.log(err)
-            })        
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        window.alert(err.response.data.message)
+                    }
+                }
+            })     
         }
         
 

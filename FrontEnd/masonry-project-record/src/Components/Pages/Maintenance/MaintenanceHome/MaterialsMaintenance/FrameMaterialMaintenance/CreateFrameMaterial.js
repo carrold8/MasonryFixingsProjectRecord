@@ -2,9 +2,11 @@ import React, { useState } from "react";
 
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateFrameMaterial({handleAddNew}){
 
+    const navigate = useNavigate();
     const [name, setName] = useState('')
 
     const handleSubmit = (e) => {
@@ -22,7 +24,15 @@ export default function CreateFrameMaterial({handleAddNew}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

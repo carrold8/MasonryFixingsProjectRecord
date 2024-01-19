@@ -5,9 +5,11 @@ import ViewCompanyHeadOffice from "./ViewCompanyHeadOffice/ViewCompanyHeadOffice
 import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewCompany({companyID}){
 
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [showDetails, setShowDetails] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -28,7 +30,15 @@ export default function ViewCompany({companyID}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
@@ -48,7 +58,15 @@ export default function ViewCompany({companyID}){
                 }
             }) 
             .catch((err) => {
-                console.log((err))
+                console.log(err)
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        window.alert(err.response.data.message)
+                    }
+                }
             })
         }
         

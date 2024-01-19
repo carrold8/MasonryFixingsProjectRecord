@@ -4,9 +4,11 @@ import ViewEmployeeType from "./ViewEmployeeType";
 import { Card, Table, Row, Col } from "react-bootstrap";
 import { MdAddCircle } from "react-icons/md";
 import LookupAPIs from "../../../../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs";
+import { useNavigate } from "react-router-dom";
 
 export default function EmployeeTypeMaintenance(){
 
+    const navigate = useNavigate();
     const [employeeTypeData, setEmployeeTypeData] = useState([]);
     const [addNew, setAddNew] = useState(false);
 
@@ -18,7 +20,15 @@ export default function EmployeeTypeMaintenance(){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

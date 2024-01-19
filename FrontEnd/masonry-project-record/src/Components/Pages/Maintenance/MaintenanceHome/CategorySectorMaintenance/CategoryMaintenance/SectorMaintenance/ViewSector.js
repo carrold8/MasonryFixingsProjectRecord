@@ -3,10 +3,12 @@ import MaintenanceAPIs from "../../../../../../../MasonyFixingsAPIs/MaintenanceA
 import { AiFillEdit } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ViewSector({sector, getSectorData}){
 
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [sectorName, setSectorName] = useState(sector.name);
 
@@ -24,7 +26,15 @@ export default function ViewSector({sector, getSectorData}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

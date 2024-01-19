@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import DropDown from "../../DropDown/DropDown";
 import { Form, Row, Col } from "react-bootstrap";
 import CompanyAPIs from "../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateCompany({handleCancel, handleAddNew}){
 
-
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     // const [companyTypeID, setComanyTypeID] = useState(1);
 
@@ -49,10 +50,16 @@ export default function CreateCompany({handleCancel, handleAddNew}){
             }
         })
         .catch((err) => {
-            console.log(err);
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
-        
-
     }
 
 

@@ -5,10 +5,11 @@ import ViewTask from "./ViewTask";
 import { Card, Col, Row } from "react-bootstrap";
 import { MdAddCircle } from "react-icons/md";
 import StageSelectionTabs from "../../../../StageSelectionTabs/StageSelectionTabs";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskMaintenance(){
 
-
+    const navigate = useNavigate();
     const [taskData, setTaskData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addNew, setAddNew] = useState(false);
@@ -25,6 +26,14 @@ export default function TaskMaintenance(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import {Button, Col, Form, Row} from 'react-bootstrap';
 import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 import DropDown from "../../../../../DropDown/DropDown";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateUser({handleAddUser}){
 
+    const navigate = useNavigate();
     const [requesting, setRequesting] = useState(false);
 
     const [firstName, setFirstName] = useState('');
@@ -41,9 +43,18 @@ export default function CreateUser({handleAddUser}){
                 }
             })
             .catch((err) => {
+                console.log(err);
                 setRequesting(false);
                 if(err.response.status === 409){
                     setInvalidUserName(true);
+                }
+                if(err.response.status === 401){
+                    if(err.response.data.logout){
+                        navigate('/login');
+                    }
+                    else{
+                        window.alert(err.response.data.message)
+                    }
                 }
             })
         }

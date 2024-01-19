@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import LookupAPIs from '../../MasonyFixingsAPIs/LookupAPIs/LookupAPIs';
 import { Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductDropDown(props){
 
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [productData, setProductData] = useState();
 
@@ -14,6 +16,14 @@ export default function ProductDropDown(props){
             if(response.status === 200){
                 setProductData(response.data);
                 setLoading(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
             }
         })
     }

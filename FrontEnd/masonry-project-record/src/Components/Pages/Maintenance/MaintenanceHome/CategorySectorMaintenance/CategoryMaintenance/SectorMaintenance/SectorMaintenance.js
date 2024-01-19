@@ -4,9 +4,11 @@ import LookupAPIs from "../../../../../../../MasonyFixingsAPIs/LookupAPIs/Lookup
 import { Card, Row, Col, Table} from "react-bootstrap";
 import ViewSector from "./ViewSector";
 import { MdAddCircle } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function SectorMaintenance({categoryID}){
 
+    const navigate = useNavigate();
     const [sectorData, setSectorData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addNew, setAddNew] = useState(false);
@@ -22,6 +24,14 @@ export default function SectorMaintenance({categoryID}){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 

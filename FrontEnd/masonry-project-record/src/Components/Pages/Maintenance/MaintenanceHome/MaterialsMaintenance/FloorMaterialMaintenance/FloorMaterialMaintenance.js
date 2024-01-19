@@ -5,9 +5,11 @@ import ViewFloorMaterial from "./ViewFloorMaterial";
 import { Card, Row, Col, Table } from "react-bootstrap";
 import { MdAddCircle } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function FloorMaterialMaintenance(){
 
+    const navigate = useNavigate();
     const [materialData, setMaterialData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showMats, setShowMats] = useState(false);
@@ -24,6 +26,14 @@ export default function FloorMaterialMaintenance(){
         })
         .catch((err) => {
             console.log(err)
+            if(err.response.status === 401){
+                if(err.response.data.logout){
+                    navigate('/login');
+                }
+                else{
+                    window.alert(err.response.data.message)
+                }
+            }
         })
     }
 
