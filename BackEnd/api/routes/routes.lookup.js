@@ -53,7 +53,7 @@ router.get('/task-type', function(request, response) {
 });
 
 router.get('/task', function(request, response) {
-    Task.findAll({order: ['stage_id', 'ASC']})
+    Task.findAll({order: ['stage_id']})
     .then(function(task) {
         response.json(task);
     })
