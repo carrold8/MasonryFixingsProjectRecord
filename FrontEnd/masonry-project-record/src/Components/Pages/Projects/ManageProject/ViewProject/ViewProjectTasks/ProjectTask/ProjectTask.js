@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { MdCancel, MdDelete, MdShoppingCart } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import {format} from 'date-fns'
+import ApiResponseHandler from '../../../../../../../MasonyFixingsAPIs/ApiResponseHandler';
 
 export default function ProjectTask({projectTaskID, getProjectTasks}){
 
@@ -113,15 +114,7 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
         .catch((err) => {
             console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    setEditing(false);
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 

@@ -3,9 +3,10 @@ import './ViewTask.css';
 import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import TaskTypeMaintenance from "./TaskTypeMaintenance/TaskTypeMaintenance";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function ViewTask({task, getTaskData}){
 
@@ -41,18 +42,30 @@ export default function ViewTask({task, getTaskData}){
             }
         })
         .catch((err) => {
-            console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
+
+    const deleteTask = () => {
+        setSending(true);
+        MaintenanceAPIs.DeleteTask(task.id)
+        .then((response) => {
+            if(response.status === 200){
+                getTaskData();
+                setSending(false);
             }
         })
+        .catch((err) => {
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
 
+    const handleDelete = () => { 
+        if(window.confirm('Are you sure you want to permanently delete ' + task.name + '?')){
+            deleteTask();
+        }
     }
 
     return(
@@ -63,12 +76,18 @@ export default function ViewTask({task, getTaskData}){
                     <div>Stage: {task.stage_id}</div>
                     <div><button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button></div>
                     <div><button disabled={sending} onClick={() => editTask()}><FaSave/></button></div>
+                    <div>
+                        <span onClick={() => setShowTaskTypes(!showTaskTypes)}>
+                            {showTaskTypes ? <FaChevronUp/> : <FaChevronDown/>}
+                        </span>
+                    </div>
                 </div>
                 :
                 <div className="body">
                     <h4>{task.name}</h4>
                     <span>Stage: {task.stage_id}</span>
-                    <div><button onClick={() => setEditing(!editing)}><AiFillEdit/></button></div>
+                    <div><button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button></div>
+                    <div><button disabled={sending} onClick={() => setEditing(!editing)}><AiFillEdit/></button></div>
                     <div><span onClick={() => setShowTaskTypes(!showTaskTypes)}>
                         {showTaskTypes ? <FaChevronUp/> : <FaChevronDown/>}
                     </span>

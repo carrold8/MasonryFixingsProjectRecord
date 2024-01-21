@@ -4,8 +4,9 @@ import SectorMaintenance from "./SectorMaintenance/SectorMaintenance";
 import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function ViewCategory({category, getCategoryData}){
 
@@ -41,16 +42,30 @@ export default function ViewCategory({category, getCategoryData}){
         .catch((err) => {
             console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
 
+    }
+
+    const deleteCategory = () => {
+        setSending(true);
+        MaintenanceAPIs.DeleteCategory(category.id)
+        .then((response) => {
+            if(response.status === 200){
+                getCategoryData();
+                setSending(false);
+            }
+        })
+        .catch((err) => {
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you want to permanently delete ' + category.name + ' from the system.')){
+            deleteCategory();
+        }
     }
 
     return(
@@ -59,13 +74,20 @@ export default function ViewCategory({category, getCategoryData}){
             {editing ? 
                 <div className="body">
                     <input value={editedName} onChange={(e) => setEditedName(e.target.value)} />
-                    <div><button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button></div>
                     <div><button disabled={sending} onClick={() => editCategory()}><FaSave/></button></div>
+                    <div><button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button></div>
+                    <div>
+                        {showSectors ? 
+                            <FaChevronUp onClick={() => setShowSectors(false)}/>
+                            : 
+                            <FaChevronDown onClick={() => setShowSectors(true)}/>}
+                    </div>
                 </div>
                 :
                 <div className="body">
                     <h4>{category.name}</h4>
-                    <div> <button onClick={() => setEditing(!editing)}><AiFillEdit/></button> </div>
+                    <div> <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button> </div>
+                    <div> <button disabled={sending} onClick={() => setEditing(!editing)}><AiFillEdit/></button> </div>
                     <div>
                         {showSectors ? 
                             <FaChevronUp onClick={() => setShowSectors(false)}/>

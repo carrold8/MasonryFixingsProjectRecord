@@ -9,6 +9,7 @@ import ViewProjectTasks from "./ViewProjectTasks/ViewProjectTasks";
 
 import { useNavigate, useParams } from "react-router-dom";
 import ProjectAPIs from "../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
+import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function ViewProject(){
     
@@ -25,12 +26,13 @@ export default function ViewProject(){
         })
         .catch((err) => {
             console.log(err)
-            if(err.response.status === 404){
-                navigate('/project');
-            }
-            if(err.response.status === 401){
-                navigate('/login');
-            }
+            // if(err.response.status === 404){
+            //     navigate('/project');
+            // }
+            // if(err.response.status === 401){
+            //     navigate('/login');
+            // }
+            ApiResponseHandler(err.response, navigate)
         })
     }
     

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import MaintenanceAPIs from "../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function ViewEnvelopeMaterial({material, getMaterialData}){
 
@@ -28,22 +29,35 @@ export default function ViewEnvelopeMaterial({material, getMaterialData}){
             }
         })
         .catch((err) => {
-            console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
+
+    const deleteEnvelopeMaterial = () => {
+        setSending(true);
+        MaintenanceAPIs.DeleteEnvelopeMaterial(material.id)
+        .then((response) => {
+            if(response.status === 200){
+                getMaterialData();
+                setSending(false);
             }
+        })
+        .catch((err) => {
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
         })
     }
 
     const handleCancel = () => {
         setEditing(false);
         setEditedName(material.name)
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you want to delete ' + material.name + ' from Envelope Materials?')){
+            deleteEnvelopeMaterial();
+        }
     }
 
     
@@ -54,10 +68,10 @@ export default function ViewEnvelopeMaterial({material, getMaterialData}){
                     <input value={editedName} onChange={(e) => setEditedName(e.target.value)}/>
                 </td>
                 <td>
-                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
+                    <button disabled={sending} onClick={() => editMaterial()}><FaSave/></button>
                 </td>
                 <td>
-                    <button disabled={sending} onClick={() => editMaterial()}><FaSave/></button>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
             </tr>
         )
@@ -67,7 +81,10 @@ export default function ViewEnvelopeMaterial({material, getMaterialData}){
             <tr>
                 <td width={'75%'}>{material.name}</td>
                 <td>
-                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
+                    <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button>
+                </td>
+                <td>
+                    <button disabled={sending} onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

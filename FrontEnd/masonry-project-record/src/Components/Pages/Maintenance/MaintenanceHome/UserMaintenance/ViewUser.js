@@ -1,11 +1,12 @@
 import React, { useState }  from "react";
 import MaintenanceAPIs from "../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import DropDown from "../../../../DropDown/DropDown";
 import {Form} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function ViewUser({user, getUserData}){
 
@@ -45,20 +46,27 @@ export default function ViewUser({user, getUserData}){
         .catch((err) => {
             console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
             if(err.response.status === 409){
                 setInvalidUserName(true);
             }
         })
     }
 
+    const deleteUser = () => {
+        setSending(true);
+        MaintenanceAPIs.DeleteUser(user.id)
+        .then((response) => {
+            if(response.status === 200){
+                getUserData();
+                setSending(false);
+            }
+        })
+        .catch((err) => {
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
     const handleEdit = () => {
         if(user.role === 'Management' && role !== 'Management'){
             if(window.confirm('Are you sure you want to remove ' + user.username + ' from a Management role?')){
@@ -78,6 +86,12 @@ export default function ViewUser({user, getUserData}){
         }
         else{
             editUser();
+        }
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you want to delete ' + user.username + 'from the system?')){
+            deleteUser();
         }
     }
 
@@ -126,7 +140,10 @@ export default function ViewUser({user, getUserData}){
             <td>{user.email}</td>
             <td>{user.role}</td>
             <td>
-                <button onClick={() => setEditing(true)}><AiFillEdit/></button>
+                <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button>
+            </td>
+            <td>
+                <button disabled={sending} onClick={() => setEditing(true)}><AiFillEdit/></button>
             </td>
         </tr>
     )

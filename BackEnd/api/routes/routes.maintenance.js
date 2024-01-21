@@ -61,6 +61,17 @@ router.put('/user/:userID', function(request, response) {
   })
  
 });
+router.delete('/user/:userID', function(request, response) {
+
+  User.destroy({where: {id: request.params.userID }})
+  .then(function(user) {
+    response.json(user);
+  })
+  // .catch((err) => {
+  //   response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  // })
+ 
+});
 
 router.put('/user/:userID/password', async function(request, response) {
 
@@ -92,6 +103,15 @@ router.post('/category', function(request, response) {
     response.json(category);
   })
  });
+ router.delete('/category/:categoryID', function(request, response) {
+  Category.destroy({where: {id: request.params.categoryID}})
+  .then(function(category) {
+    response.json(category);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
 
  router.post('/sector', function(request, response) {
   Sector.create({
@@ -109,6 +129,15 @@ router.post('/category', function(request, response) {
   {where: {id: request.params.sectorID}})
   .then(function(sector) {
     response.json(sector);
+  })
+ });
+ router.delete('/sector/:sectorID', function(request, response) {
+  Sector.destroy({where: {id: request.params.sectorID}})
+  .then(function(sector) {
+    response.json(sector);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
   })
  });
 
@@ -129,6 +158,15 @@ router.post('/company-type', function(request, response) {
     response.json(companyType);
   })
  });
+ router.delete('/company-type/:companyTypeID', function(request, response) {
+  CompanyType.destroy({where: {id: request.params.companyTypeID}})
+  .then(function(companyType) {
+    response.json(companyType);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
 
  router.post('/employee-type', function(request, response) {
   EmployeeType.create({
@@ -145,6 +183,15 @@ router.post('/company-type', function(request, response) {
   {where: {id: request.params.employeeTypeID}})
   .then(function(employeeType) {
     response.json(employeeType);
+  })
+ });
+ router.delete('/employee-type/:employeeTypeID', function(request, response) {
+  EmployeeType.destroy({where: {id: request.params.employeeTypeID}})
+  .then(function(employeeType) {
+    response.json(employeeType);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
   })
  });
 
@@ -165,6 +212,15 @@ router.post('/company-type', function(request, response) {
     response.json(frameMat);
   })
  });
+ router.delete('/frame-material/:frameMaterialID', function(request, response) {
+  FrameMaterial.destroy({where: {id: request.params.frameMaterialID}})
+  .then(function(frameMat) {
+    response.json(frameMat);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
 
  router.post('/floor-material', function(request, response) {
   FloorMaterial.create({
@@ -183,6 +239,15 @@ router.post('/company-type', function(request, response) {
     response.json(floorMat);
   })
  });
+ router.delete('/floor-material/:floorMaterialID', function(request, response) {
+  FloorMaterial.destroy({where: {id: request.params.floorMaterialID}})
+  .then(function(floorMat) {
+    response.json(floorMat);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
 
  router.post('/envelope-material', function(request, response) {
   EnvelopeMaterial.create({
@@ -199,6 +264,15 @@ router.post('/company-type', function(request, response) {
   {where: {id: request.params.matID}})
   .then(function(envMat) {
     response.json(envMat);
+  })
+ });
+ router.delete('/envelope-material/:matID', function(request, response) {
+  EnvelopeMaterial.destroy({where: {id: request.params.matID}})
+  .then(function(envMat) {
+    response.json(envMat);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
   })
  });
 
@@ -220,6 +294,16 @@ router.post('/company-type', function(request, response) {
     response.json(roofMat);
   })
  });
+ router.delete('/roof-material/:matID', function(request, response) {
+  RoofMaterial.destroy({where: {id: request.params.matID}}
+  )
+  .then(function(roofMat) {
+    response.json(roofMat);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
 
  router.post('/partitioning-material', function(request, response) {
   PartitioningMaterial.create({
@@ -239,6 +323,16 @@ router.post('/company-type', function(request, response) {
   })
  });
 
+ router.delete('/partitioning-material/:matID', function(request, response) {
+  PartitioningMaterial.destroy({where: {id: request.params.matID}})
+  .then(function(partitionMat) {
+    response.json(partitionMat);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
+
  router.post('/task', function(request, response) {
   Task.create({
       name: request.body.name,
@@ -255,6 +349,15 @@ router.post('/company-type', function(request, response) {
   {where: {id: request.params.taskID}})
   .then(function(task) {
     response.json(task);
+  })
+ });
+ router.delete('/task/:taskID', function(request, response) {
+  Task.destroy({where: {id: request.params.taskID}})
+  .then(function(task) {
+    response.json(task);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
   })
  });
 
@@ -277,6 +380,16 @@ router.post('/company-type', function(request, response) {
   })
  });
 
+ router.delete('/task-type/:taskTypeID', function(request, response) {
+  TaskType.destroy({where: {id: request.params.taskTypeID}})
+  .then(function(taskType) {
+    response.json(taskType);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
+
  router.post('/product', function(request, response) {
   Product.create({
       name: request.body.name,
@@ -296,8 +409,16 @@ router.post('/company-type', function(request, response) {
     response.json(product);
   })
  });
+
+ router.delete('/product/:productID', function(request, response) {
+  Product.destroy({where: {id: request.params.productID}})
+  .then(function(product) {
+    response.json(product);
+  })
+  .catch((err) => {
+    response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+  })
+ });
  
-
-
 
 module.exports = router;

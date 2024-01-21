@@ -7,6 +7,7 @@ import { MdAddCircle } from "react-icons/md";
 import './UserMaintenance.css';
 import { useNavigate } from "react-router-dom";
 import UserPasswordChange from "./UserPasswordChange/UserPasswordChange";
+import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function UserMaintenance(){
 
@@ -16,7 +17,7 @@ export default function UserMaintenance(){
     const [loading, setLoading] = useState(true);
     const [addUser, setAddUser] = useState(false);
 
-    const ColumnHeaders = ['First', 'Last', 'Username', 'Email', 'Role'];
+    const ColumnHeaders = ['First', 'Last', 'Username', 'Email', 'Role', '',''];
 
     const thData = () => {
         return ColumnHeaders.map((header, index) => {
@@ -35,14 +36,7 @@ export default function UserMaintenance(){
         })
         .catch((err) => {
             console.log(err)
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 

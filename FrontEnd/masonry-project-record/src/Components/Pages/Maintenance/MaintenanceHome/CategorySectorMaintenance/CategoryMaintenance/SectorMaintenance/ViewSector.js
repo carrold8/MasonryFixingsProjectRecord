@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import MaintenanceAPIs from "../../../../../../../MasonyFixingsAPIs/MaintenanceAPIs/MaintenanceAPIs";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 
 export default function ViewSector({sector, getSectorData}){
@@ -23,22 +24,14 @@ export default function ViewSector({sector, getSectorData}){
         MaintenanceAPIs.PutSector(sector.id, putJSON)
         .then((response) => {
             if(response.status === 200){
-                getSectorData(sector.id);
+                getSectorData(sector.category_id);
                 setEditing(false);
                 setSending(false);
             }
         })
         .catch((err) => {
-            console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 
@@ -48,6 +41,26 @@ export default function ViewSector({sector, getSectorData}){
         setSectorName(sector.name);
     }
 
+    const deleteSector = () => {
+        setSending(true);
+        MaintenanceAPIs.DeleteSector(sector.id)
+        .then((response) => {
+            if(response.status === 200){
+                getSectorData(sector.category_id);
+                setSending(false);
+            }
+        })
+        .catch((err) => {
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you want to permanently delete ' + sector.name + 'from the system?')){
+            deleteSector();
+        }
+    }
     if(editing){
         return(
             <tr>
@@ -68,7 +81,10 @@ export default function ViewSector({sector, getSectorData}){
             <tr>
                 <td>{sector.name}</td>
                 <td>
-                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
+                    <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button>
+                </td>
+                <td>
+                <button disabled={sending} onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

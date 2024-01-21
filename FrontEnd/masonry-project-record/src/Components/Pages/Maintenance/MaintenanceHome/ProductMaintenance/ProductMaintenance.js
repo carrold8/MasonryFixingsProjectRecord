@@ -77,7 +77,8 @@ export default function ProductMaintenance(){
                             <tr>
                                 <th>Name</th>
                                 <th>Price</th>
-                                <th>Edit</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>

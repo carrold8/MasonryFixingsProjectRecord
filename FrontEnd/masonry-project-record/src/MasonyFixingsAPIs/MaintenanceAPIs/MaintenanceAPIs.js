@@ -19,6 +19,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteUser: (userID) => { 
+      const response =  api.request({
+         url: 'maintenance/user/' + userID,
+         method: 'DELETE'
+      })
+      return response
+      },
 
     PutUserPassword: (userID, putJSON) => {
       const response = api.request({
@@ -46,6 +53,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteCompanyType: (companyTypeID) => { 
+      const response =  api.request({
+         url: 'maintenance/company-type/' + companyTypeID,
+         method: 'DELETE'
+      })
+      return response
+   },
 
     PostEmployeeType: (newEmployeeType) => { 
         const response =  api.request({
@@ -64,6 +78,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteEmployeeType: (employeeTypeID) => { 
+      const response =  api.request({
+         url: 'maintenance/employee-type/' + employeeTypeID,
+         method: 'DELETE',
+      })
+      return response
+   },
 
     PostCategory: (newCategory) => { 
         const response =  api.request({
@@ -82,6 +103,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteCategory: (categoryID) => { 
+      const response =  api.request({
+         url: 'maintenance/category/' + categoryID,
+         method: 'DELETE'
+      })
+      return response
+   },
 
     PostSector: (newSector) => { 
         const response =  api.request({
@@ -99,6 +127,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteSector: (sectorID) => { 
+      const response =  api.request({
+         url: 'maintenance/sector/' + sectorID,
+         method: 'DELETE'
+      })
+      return response
+      },
 
     PostTask: (newTask) => { 
         const response =  api.request({
@@ -116,6 +151,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteTask: (taskID) => { 
+      const response =  api.request({
+         url: 'maintenance/task/' + taskID,
+         method: 'DELETE'
+      })
+      return response
+      },
 
     PostTaskType: (newTaskType) => { 
         const response =  api.request({
@@ -133,6 +175,13 @@ const MaintenanceAPIs = {
     })
     return response
     },
+    DeleteTaskType: (taskTypeID) => { 
+      const response =  api.request({
+         url: 'maintenance/task-type/' + taskTypeID,
+         method: 'DELETE'
+      })
+      return response
+   },
 
 
     PostFrameMaterial: (newFrameMaterial) => { 
@@ -151,6 +200,13 @@ const MaintenanceAPIs = {
             })
         return response
     },
+   DeleteFrameMaterial: (frameMaterialID) => { 
+   const response =  api.request({
+            url: 'maintenance/frame-material/' + frameMaterialID,
+            method: 'DELETE'
+         })
+   return response
+  },
 
     PostFloorMaterial: (newFloorMaterial) => { 
         const response =  api.request({
@@ -168,6 +224,13 @@ const MaintenanceAPIs = {
             })
         return response
     },
+    DeleteFloorMaterial: (floorMaterialID) => { 
+      const response =  api.request({
+              url: 'maintenance/floor-material/' + floorMaterialID,
+              method: 'DELETE'
+          })
+      return response
+  },
 
     PostEnvelopeMaterial: (newEnvelopeMaterial) => { 
         const response =  api.request({
@@ -185,6 +248,13 @@ const MaintenanceAPIs = {
             })
         return response
     },
+    DeleteEnvelopeMaterial: (envelopeMaterialID) => { 
+      const response =  api.request({
+              url: 'maintenance/envelope-material/' + envelopeMaterialID,
+              method: 'DELETE'
+          })
+      return response
+  },
 
     PostRoofMaterial: (newRoofMaterial) => { 
         const response =  api.request({
@@ -202,6 +272,13 @@ const MaintenanceAPIs = {
             })
         return response
     },
+    DeleteRoofMaterial: (roofMaterialID) => { 
+      const response =  api.request({
+              url: 'maintenance/roof-material/' + roofMaterialID,
+              method: 'DELETE'
+          })
+      return response
+  },
 
     PostPartitioningMaterial: (newPartitioningMaterial) => { 
         const response =  api.request({
@@ -219,6 +296,13 @@ const MaintenanceAPIs = {
             })
         return response
     },
+    DeletePartitioningMaterial: (partitioningMaterialID) => { 
+      const response =  api.request({
+              url: 'maintenance/partitioning-material/' + partitioningMaterialID,
+              method: 'DELETE'
+          })
+      return response
+  },
 
     PostProduct: (postJSON) => { 
       const response =  api.request({
@@ -236,6 +320,13 @@ const MaintenanceAPIs = {
           })
       return response
   },
+  DeleteProduct: (productID) => { 
+   const response =  api.request({
+           url: 'maintenance/product/' + productID,
+           method: 'DELETE'
+       })
+   return response
+},
 
 
 }

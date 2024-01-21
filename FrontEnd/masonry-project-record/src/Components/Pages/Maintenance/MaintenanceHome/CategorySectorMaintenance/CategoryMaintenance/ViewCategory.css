@@ -8,7 +8,7 @@
 
 .category-container .body{
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr 1fr;
 }
 .category-container .body div{
     display: flex;

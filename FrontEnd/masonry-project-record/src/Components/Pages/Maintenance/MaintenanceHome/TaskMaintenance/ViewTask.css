@@ -9,7 +9,7 @@
 
 .task-maintenance-container .body{
     display: grid;
-    grid-template-columns: 4fr 2fr 1fr 1fr;
+    grid-template-columns: 4fr 1.5fr 1fr 1fr 0.5fr;
 }
 
 .task-maintenance-container .body div{
