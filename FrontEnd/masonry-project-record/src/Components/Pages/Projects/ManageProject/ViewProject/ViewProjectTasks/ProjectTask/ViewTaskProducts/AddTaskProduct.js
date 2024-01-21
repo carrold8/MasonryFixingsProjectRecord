@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AddTaskProduct({projectTaskID, handleAddNew}){
 
     const navigate = useNavigate();
-    const [sending, setSending] = useState()
+    const [sending, setSending] = useState(false);
     const [productID, setProductID] = useState('');
     const [quantity, setQuantity] = useState('');
 

@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 export default function ViewFloorMaterial({material, getMaterialData}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [editedName, setEditedName] = useState(material.name);
     const [editing, setEditing] = useState(false);
 
     const editMaterial = () => {
 
+        setSending(true);
         const putJSON = {
             name: editedName
         }
@@ -22,10 +24,12 @@ export default function ViewFloorMaterial({material, getMaterialData}){
             if(response.status === 200){
                 setEditing(false);
                 getMaterialData();
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -50,10 +54,10 @@ export default function ViewFloorMaterial({material, getMaterialData}){
                     <input value={editedName} onChange={(e) => setEditedName(e.target.value)}/>
                 </td>
                 <td>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 <td>
-                    <span onClick={() => editMaterial()}><FaSave/></span>
+                    <button disabled={sending} onClick={() => editMaterial()}><FaSave/></button>
                 </td>
             </tr>
         )
@@ -63,7 +67,7 @@ export default function ViewFloorMaterial({material, getMaterialData}){
             <tr>
                 <td width={'75%'}>{material.name}</td>
                 <td>
-                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

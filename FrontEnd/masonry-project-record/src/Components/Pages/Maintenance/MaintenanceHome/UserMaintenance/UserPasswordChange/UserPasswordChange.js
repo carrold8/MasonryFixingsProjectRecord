@@ -82,7 +82,7 @@ export default function UserPasswordChange(){
                         </div>
                     </Col>
                     <Col sm={2}>
-                        <button disabled={sending} type='submit'>Submit</button>
+                        <button disabled={sending} type='submit'>{sending ? 'Saving...' : 'Submit'}</button>
                     </Col>
                 </Row>
             </Form>

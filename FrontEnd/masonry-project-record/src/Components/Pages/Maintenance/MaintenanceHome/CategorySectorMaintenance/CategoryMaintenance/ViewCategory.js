@@ -11,6 +11,7 @@ export default function ViewCategory({category, getCategoryData}){
 
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [editedName, setEditedName] = useState(category.name);
     const [showSectors, setShowSectors] = useState(false);
 
@@ -23,10 +24,11 @@ export default function ViewCategory({category, getCategoryData}){
     const handleEdited = () => {
         setEditing(false);
         getCategoryData();
+        setSending(false);
     }
 
     const editCategory = () => {
-
+        setSending(true);
         const putJSON = {
             name: editedName
         }
@@ -38,6 +40,7 @@ export default function ViewCategory({category, getCategoryData}){
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -56,16 +59,19 @@ export default function ViewCategory({category, getCategoryData}){
             {editing ? 
                 <div className="body">
                     <input value={editedName} onChange={(e) => setEditedName(e.target.value)} />
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
-                    <span onClick={() => editCategory()}><FaSave/></span>
+                    <div><button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button></div>
+                    <div><button disabled={sending} onClick={() => editCategory()}><FaSave/></button></div>
                 </div>
                 :
                 <div className="body">
                     <h4>{category.name}</h4>
-                    <span onClick={() => setEditing(!editing)}><AiFillEdit/></span>
-                    <span onClick={() => setShowSectors(!showSectors)}>
-                        {showSectors ? <FaChevronUp/> : <FaChevronDown/>}
-                    </span>
+                    <div> <button onClick={() => setEditing(!editing)}><AiFillEdit/></button> </div>
+                    <div>
+                        {showSectors ? 
+                            <FaChevronUp onClick={() => setShowSectors(false)}/>
+                            : 
+                            <FaChevronDown onClick={() => setShowSectors(true)}/>}
+                    </div>
                 </div>
             }
 

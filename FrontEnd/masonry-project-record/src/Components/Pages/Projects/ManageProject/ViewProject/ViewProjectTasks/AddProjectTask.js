@@ -55,13 +55,13 @@ export default function AddProjectTask({handleAddNew}){
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
                 }
                 else{
                     window.alert(err.response.data.message)
-                    setSending(false);
                 }
             }
         })
@@ -135,7 +135,7 @@ export default function AddProjectTask({handleAddNew}){
 
             
 
-            <Button type="submit" disabled={sending}>Add</Button>
+            <Button type="submit" disabled={sending}>{sending ? 'Adding':'Add'}</Button>
         </Form>
         </div>
     )

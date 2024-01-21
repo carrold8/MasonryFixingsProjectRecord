@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 export default function CreateRoofMaterial({handleAddNew}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false)
     const [name, setName] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault();
         e.stopPropagation();
+
+        setSending(true)
 
         const postJSON = {
             name: name
@@ -20,10 +23,12 @@ export default function CreateRoofMaterial({handleAddNew}){
         .then((response) => {
             if(response.status === 200){
                 handleAddNew();
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -43,7 +48,7 @@ export default function CreateRoofMaterial({handleAddNew}){
                     <Form.Control required value={name} onChange={(e) => setName(e.target.value)} />
                 </Col>
                 <Col>
-                    <Button type='submit'>Save</Button>
+                    <Button disabled={sending} type='submit'>{sending ? 'Saving...':'Save'}</Button>
                 </Col>
             </Form.Group>
         </Form>

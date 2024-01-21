@@ -14,13 +14,14 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
     const navigate = useNavigate();
 
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [userID, setUserID] = useState(parseInt(anchorTraining.user.id));
     const [date, setDate] = useState(format(new Date(anchorTraining.date), 'yyyy-MM-dd'));
     const [note, setNote] = useState(anchorTraining.note);
 
 
     const editAnchorTraining = () => {
-
+        setSending(true);
         const putJSON = {
             user_id: userID,
             date: date,
@@ -31,10 +32,12 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
             if(response.status === 200){
                 getAnchorTraining(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -49,15 +52,18 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
 
     const deleteAnchorTraining = () => {
 
+        setSending(true);
         ProjectAPIs.DeleteProjectAnchorTraining(params.ProjectID, anchorTraining.id)
         .then((response) => {
             if(response.status === 200){
                 getAnchorTraining(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -96,10 +102,10 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
                     <Form.Control value={note} onChange={(e) => setNote(e.target.value)} />
                 </td>
                 <td>
-                    <button onClick={() => editAnchorTraining()}><FaSave/></button>
+                    <button disabled={sending} onClick={() => editAnchorTraining()}><FaSave/></button>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}><MdCancel/></button>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
             </tr>
         )
@@ -115,10 +121,10 @@ export default function ViewAnchorTraining({anchorTraining, getAnchorTraining}){
                     {anchorTraining.note}
                 </td>
                 <td>
-                    <button onClick={() => handleDelete()}><MdDelete/></button>
+                    <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button>
                 </td>
                 <td>
-                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
+                    <button disabled={sending} onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

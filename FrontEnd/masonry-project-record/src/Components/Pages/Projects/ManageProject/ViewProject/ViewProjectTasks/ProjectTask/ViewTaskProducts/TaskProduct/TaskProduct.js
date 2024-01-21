@@ -16,6 +16,7 @@ export default function TaskProduct({getTaskProducts, projectTaskID, taskProduct
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
 
     const [taskProductInfo, setTaskProductInfo] = useState();
     const [productID, setProductID] = useState();
@@ -47,6 +48,7 @@ export default function TaskProduct({getTaskProducts, projectTaskID, taskProduct
     }
 
     const handleEditTaskProduct = () => {
+        setSending(true);
         const putJSON = {
             product_id: productID,
             quantity: quantity
@@ -57,10 +59,12 @@ export default function TaskProduct({getTaskProducts, projectTaskID, taskProduct
             if(response.status === 200){
                 getTaskProductInfo(projectTaskID, taskProductID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -74,15 +78,18 @@ export default function TaskProduct({getTaskProducts, projectTaskID, taskProduct
     }
 
     const deleteProduct = () => {
+        setSending(true);
         ProjectTaskAPIs.DeleteProjectTaskProduct(projectTaskID, taskProductID)
         .then((response) => {
             if(response.status === 200){
                 getTaskProducts(projectTaskID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -134,15 +141,15 @@ export default function TaskProduct({getTaskProducts, projectTaskID, taskProduct
 
                 <td>
                 {editing ? 
-                    <button onClick={() => handleEditTaskProduct()}><FaSave/></button>
+                    <button disabled={sending} onClick={() => handleEditTaskProduct()}><FaSave/></button>
                     :
-                    <button onClick={() => handleDeleteProduct()}><MdDelete/></button>
+                    <button disabled={sending} onClick={() => handleDeleteProduct()}><MdDelete/></button>
                 }
                 </td>
 
                 <td>
                     {editing ? 
-                        <button onClick={() => handleCancel()}><MdCancel/></button>
+                        <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                         :
                         <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                     }

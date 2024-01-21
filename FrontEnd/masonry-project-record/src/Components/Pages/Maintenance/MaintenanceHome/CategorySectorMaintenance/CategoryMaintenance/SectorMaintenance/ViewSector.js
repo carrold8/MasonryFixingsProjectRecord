@@ -10,10 +10,12 @@ export default function ViewSector({sector, getSectorData}){
 
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [sectorName, setSectorName] = useState(sector.name);
 
     const editSector = () => {
 
+        setSending(true);
         const putJSON = {
             name: sectorName
         }
@@ -23,10 +25,12 @@ export default function ViewSector({sector, getSectorData}){
             if(response.status === 200){
                 getSectorData(sector.id);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -51,10 +55,10 @@ export default function ViewSector({sector, getSectorData}){
                     <input value={sectorName} onChange={(e) => setSectorName(e.target.value)}/>
                 </td>
                 <td>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 <td>
-                    <span onClick={() => editSector()}><FaSave/></span>
+                    <button disabled={sending} onClick={() => editSector()}><FaSave/></button>
                 </td>
             </tr>
         )
@@ -64,7 +68,7 @@ export default function ViewSector({sector, getSectorData}){
             <tr>
                 <td>{sector.name}</td>
                 <td>
-                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

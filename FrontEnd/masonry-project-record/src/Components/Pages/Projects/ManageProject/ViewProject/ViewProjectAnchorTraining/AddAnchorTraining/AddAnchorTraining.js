@@ -61,7 +61,7 @@ export default function AddAnchorTraining({projectID, handleAddNew}){
                     <Form.Control value={note} onChange={(e) => setNote(e.target.value)} />
                 </td>
                 <td>
-                    <Button disabled={sending} onClick={() => handleSubmit()}>Add</Button>
+                    <Button disabled={sending} onClick={() => handleSubmit()}>{sending? 'Adding...': 'Add'}</Button>
                 </td>
 
             </tr>

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function ViewTask({task, getTaskData}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [editing, setEditing] = useState(false);
     const [editedName, setEditedName] = useState(task.name);
     const [showTaskTypes, setShowTaskTypes] = useState(false);
@@ -23,11 +24,13 @@ export default function ViewTask({task, getTaskData}){
     const handleEdited = () => {
         setEditing(false);
         getTaskData();
+        setSending(false);
     }
 
 
     const editTask = () => {
 
+        setSending(true);
         const putJSON = {
             name: editedName
         }
@@ -39,6 +42,7 @@ export default function ViewTask({task, getTaskData}){
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -56,18 +60,19 @@ export default function ViewTask({task, getTaskData}){
             {editing ? 
                 <div className="body">
                     <input value={editedName} onChange={(e) => setEditedName(e.target.value)} />
-                    <span>Stage: {task.stage_id}</span>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
-                    <span onClick={() => editTask()}><FaSave/></span>
+                    <div>Stage: {task.stage_id}</div>
+                    <div><button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button></div>
+                    <div><button disabled={sending} onClick={() => editTask()}><FaSave/></button></div>
                 </div>
                 :
                 <div className="body">
                     <h4>{task.name}</h4>
                     <span>Stage: {task.stage_id}</span>
-                    <span onClick={() => setEditing(!editing)}><AiFillEdit/></span>
-                    <span onClick={() => setShowTaskTypes(!showTaskTypes)}>
+                    <div><button onClick={() => setEditing(!editing)}><AiFillEdit/></button></div>
+                    <div><span onClick={() => setShowTaskTypes(!showTaskTypes)}>
                         {showTaskTypes ? <FaChevronUp/> : <FaChevronDown/>}
                     </span>
+                    </div>
                 </div>
             }
 

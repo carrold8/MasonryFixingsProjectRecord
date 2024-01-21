@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function ViewUser({user, getUserData}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [editing, setEditing] = useState(false);
 
     const [firstName, setFirstName] = useState(user.first_name);
@@ -23,6 +24,7 @@ export default function ViewUser({user, getUserData}){
 
     const editUser = () => {
 
+        setSending(true);
         const putJSON = {
             first_name: firstName,
             last_name: lastName,
@@ -37,10 +39,12 @@ export default function ViewUser({user, getUserData}){
                 getUserData();
                 setInvalidUserName(false);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -106,10 +110,10 @@ export default function ViewUser({user, getUserData}){
                     <DropDown.Role value={role} onChange={(e) => setRole(e.target.value)}/>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}><MdCancel/></button>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 <td>
-                    <button onClick={() => handleEdit()}><FaSave/></button>
+                    <button disabled={sending} onClick={() => handleEdit()}><FaSave/></button>
                 </td>
             </tr>
         )

@@ -18,6 +18,7 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
     
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [showProducts, setShowProducts] = useState(false);
 
     const [projectTaskInfo, setProjectTaskInfo] = useState();
@@ -65,6 +66,7 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
         e.preventDefault();
         e.stopPropagation();
 
+        setSending(true);
         const putJSON = {
             task_id: taskID,
             company_id: companyID,
@@ -80,10 +82,12 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
             if(response.status === 200){
                 getProjectTasks(params.ProjectID)
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -97,15 +101,18 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
     }
 
     const deleteProjectTask = () => {
+        setSending(true);
         ProjectTaskAPIs.DeleteProjectTask(projectTaskID)
         .then((response) => {
             if(response.status === 200){
                 getProjectTasks(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -252,12 +259,12 @@ export default function ProjectTask({projectTaskID, getProjectTasks}){
                               
                             {editing ? 
                             <div>
-                                <button type={'submit'}><FaSave/></button> 
-                                <button type='button' onClick={() => handleCancel()}><MdCancel/></button> 
+                                <button disabled={sending} type={'submit'}><FaSave/></button> 
+                                <button disabled={sending} type='button' onClick={() => handleCancel()}><MdCancel/></button> 
                             </div>   
                             :
                             <div>
-                                <button type={'button'} onClick={() => handledDelete()}><MdDelete/></button> 
+                                <button disabled={sending} type={'button'} onClick={() => handledDelete()}><MdDelete/></button> 
                                 <button type='button' onClick={() => setEditing(true)}><AiFillEdit/></button>
                             </div>
                             }

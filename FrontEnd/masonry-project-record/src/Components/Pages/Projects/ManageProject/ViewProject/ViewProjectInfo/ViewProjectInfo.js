@@ -15,6 +15,7 @@ export default function ViewProjectInfo(){
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
 
     const [projTitleData, setProjTitleData] = useState();
     
@@ -58,7 +59,7 @@ export default function ViewProjectInfo(){
     }
 
     const handleEdit = (projID) => {
-
+        setSending(true);
         const putJSON = {
             name: title,
             cis_id: cisID,
@@ -74,10 +75,12 @@ export default function ViewProjectInfo(){
             .then((response) => {
                 if(response.status === 200){
                     getProjectTitleInfo(projID);
+                    setSending(false);
                 }
             })
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -114,8 +117,8 @@ export default function ViewProjectInfo(){
                 <div align='end'>
                     {editing ? 
                         <>
-                            <button onClick={() => handleEdit(params.ProjectID)}><FaSave/></button>
-                            <button onClick={() => handleCancel()}><MdCancel/></button>
+                            <button disabled={sending} onClick={() => handleEdit(params.ProjectID)}><FaSave/></button>
+                            <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                             
                         </>
                         :

@@ -371,7 +371,7 @@ export default function CreateProject(){
                                     <button type='button' onClick={() => setPageIndex(pageIndex-1)}>Back</button>
                                 </Col>
                                 <Col align='end'>
-                                <button type='submit' disabled={sending}>Finish</button>
+                                <button type='submit' disabled={sending}>{sending ? 'Creating...' : 'Finish'}</button>
                                 </Col>
                             </Row>
                             

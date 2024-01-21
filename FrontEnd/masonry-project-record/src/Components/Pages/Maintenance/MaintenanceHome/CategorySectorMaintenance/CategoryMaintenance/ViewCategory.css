@@ -10,6 +10,11 @@
     display: grid;
     grid-template-columns: 4fr 1fr 1fr;
 }
+.category-container .body div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .category-container .sectors{
     max-height: 0vh;

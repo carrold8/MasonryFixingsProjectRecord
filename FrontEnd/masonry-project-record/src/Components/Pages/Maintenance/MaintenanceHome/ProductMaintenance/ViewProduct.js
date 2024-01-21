@@ -9,11 +9,12 @@ export default function ViewProduct({product, getProductData}){
 
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [productName, setProductName] = useState(product.name);
     const [price, setPrice] = useState(product.price);
 
     const editProduct = () => {
-
+        setSending(true);
         const putJSON = {
             name: productName,
             price: price
@@ -26,10 +27,12 @@ export default function ViewProduct({product, getProductData}){
                 if(response.status === 200){
                     getProductData();
                     setEditing(false);
+                    setSending(false);
                 }
             })
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -59,10 +62,10 @@ export default function ViewProduct({product, getProductData}){
                     <input type="number" value={price} onChange={(e) => setPrice(e.target.value)}/>
                 </td>
                 <td>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 <td>
-                    <span onClick={() => editProduct()}><FaSave/></span>
+                    <button disabled={sending} onClick={() => editProduct()}><FaSave/></button>
                 </td>
             </tr>
         )
@@ -72,7 +75,7 @@ export default function ViewProduct({product, getProductData}){
             <td>{product.name}</td>
             <td>{product.price}</td>
             <td>
-                <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                <button onClick={() => setEditing(true)}><AiFillEdit/></button>
             </td>
         </tr>
     )

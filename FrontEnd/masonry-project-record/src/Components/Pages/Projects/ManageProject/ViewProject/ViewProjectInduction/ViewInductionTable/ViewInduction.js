@@ -14,13 +14,14 @@ export default function ViewInduction({induction, getInductionData}){
     const navigate = useNavigate();
 
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [userID, setUserID] = useState(parseInt(induction.user.id));
     const [date, setDate] = useState(format(new Date(induction.date), 'yyyy-MM-dd'));
 
 
 
     const editInduction = () => {
-
+        setSending(true);
         const putJSON = {
             user_id: userID,
             date: date
@@ -31,10 +32,12 @@ export default function ViewInduction({induction, getInductionData}){
                 if(response.status === 200){
                     getInductionData(params.ProjectID);
                     setEditing(false);
+                    setSending(false);
                 }
             })
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -49,15 +52,18 @@ export default function ViewInduction({induction, getInductionData}){
     }
 
     const deleteInduction = () => {
+        setSending(true);
         ProjectAPIs.DeleteProjectInductionList(params.ProjectID, induction.id)
         .then((response) => {
             if(response.status === 200){
                 getInductionData(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -92,10 +98,10 @@ export default function ViewInduction({induction, getInductionData}){
                 <Form.Control required type='date' value={date} onChange={(e) => setDate(e.target.value)} />
                 </td>
                 <td>
-                    <button onClick={() => editInduction()}><FaSave/></button>
+                    <button disabled={sending} onClick={() => editInduction()}><FaSave/></button>
                 </td>
                 <td>
-                    <button onClick={() => handleCancel()}><MdCancel/></button>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
             </tr>
         )
@@ -108,10 +114,10 @@ export default function ViewInduction({induction, getInductionData}){
                     {format(new Date(induction.date), 'yyyy-MM-dd')}
                 </td>
                 <td>
-                    <button onClick={() => handleDelete()}><MdDelete/></button>
+                    <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button>
                 </td>
                 <td>
-                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
+                    <button disabled={sending} onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

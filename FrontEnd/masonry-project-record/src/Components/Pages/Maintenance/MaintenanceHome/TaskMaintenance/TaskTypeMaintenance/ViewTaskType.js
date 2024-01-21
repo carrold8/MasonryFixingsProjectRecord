@@ -10,10 +10,11 @@ export default function ViewTaskType({taskID, taskType, getTaskTypeData}){
 
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [taskTypeName, setTaskTypeName] = useState(taskType.name);
 
     const editTaskType = () => {
-
+        setSending(true);
         const putJSON = {
             name: taskTypeName
         }
@@ -23,10 +24,12 @@ export default function ViewTaskType({taskID, taskType, getTaskTypeData}){
             if(response.status === 200){
                 getTaskTypeData(taskID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -51,10 +54,10 @@ export default function ViewTaskType({taskID, taskType, getTaskTypeData}){
                     <input value={taskTypeName} onChange={(e) => setTaskTypeName(e.target.value)}/>
                 </td>
                 <td>
-                    <span onClick={() => handleCancel()}><MdCancel/></span>
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 <td>
-                    <span onClick={() => editTaskType()}><FaSave/></span>
+                    <button disabled={sending} onClick={() => editTaskType()}><FaSave/></button>
                 </td>
             </tr>
         )
@@ -64,7 +67,7 @@ export default function ViewTaskType({taskID, taskType, getTaskTypeData}){
             <tr>
                 <td>{taskType.name}</td>
                 <td>
-                    <span onClick={() => setEditing(true)}><AiFillEdit/></span>
+                    <button onClick={() => setEditing(true)}><AiFillEdit/></button>
                 </td>
             </tr>
         )

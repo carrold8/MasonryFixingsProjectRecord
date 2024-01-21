@@ -16,6 +16,7 @@ export default function ViewProjectContractor(){
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [showEmployees, setShowEmployees] = useState(false);
 
     const [contractorData, setContractorData] = useState();
@@ -55,6 +56,7 @@ export default function ViewProjectContractor(){
         
         e.stopPropagation();
         e.preventDefault();
+        setSending(true);
         const putJSON = {
             main_contractor_id: parseInt(mainContractorID),
             account_contact_id: parseInt(accContactID),
@@ -68,10 +70,12 @@ export default function ViewProjectContractor(){
             if(response.status === 200){
                 getProjectContractorData(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -128,8 +132,8 @@ export default function ViewProjectContractor(){
                     <div align='end'>
                         {editing ? 
                             <>
-                                <button type="button" onClick={() => handleCancel()}><MdCancel/></button>
-                                <button type={"submit"} ><FaSave/></button>
+                                <button disabled={sending} type="button" onClick={() => handleCancel()}><MdCancel/></button>
+                                <button disabled={sending} type={"submit"} ><FaSave/></button>
                             </>
                             :
                             <button type="button" onClick={() => setEditing(true)}><AiFillEdit/></button>

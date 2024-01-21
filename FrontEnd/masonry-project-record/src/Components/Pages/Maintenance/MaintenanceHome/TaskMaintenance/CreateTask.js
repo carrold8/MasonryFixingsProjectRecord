@@ -53,7 +53,7 @@ export default function CreateTask({handleAddNew}){
                     <DropDown.Stage required value={stageID} onChange={(e) => setStageID(e.target.value)} />
                 </Col>
                 <Col>
-                    <Button disabled={sending} type='submit'>Save</Button>
+                    <Button disabled={sending} type='submit'>{sending ? 'Saving...':'Save'}</Button>
                 </Col>
             </Form.Group>
             

@@ -12,6 +12,12 @@
     grid-template-columns: 4fr 2fr 1fr 1fr;
 }
 
+.task-maintenance-container .body div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
 .task-maintenance-container .task-types{
     max-height: 0vh;
     overflow: hidden;
@@ -19,6 +25,7 @@
 }
 
 .task-maintenance-container .task-types.active{
-    max-height: 50vh;
+    max-height: 70vh;
     transition: 0.25s ease-in;
+    overflow: auto;
 }

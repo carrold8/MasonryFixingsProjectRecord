@@ -15,6 +15,7 @@ export default function ViewProjectInduction(){
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [showInductions, setShowInductions] = useState(false);
 
     const [inductionData, setInductionData] = useState();
@@ -50,6 +51,8 @@ export default function ViewProjectInduction(){
         e.preventDefault();
         e.stopPropagation();
 
+        setSending(true);
+
         const putJSON = {
             induction_required: indRequired,
             induction_provided: providedOn
@@ -59,10 +62,12 @@ export default function ViewProjectInduction(){
             if(response.status === 200){
                 getInductionData(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -104,8 +109,8 @@ export default function ViewProjectInduction(){
                     <div align='end'>
                         {editing ? 
                             <>
-                                <button type="button" onClick={() => handleCancel()}><MdCancel/></button>
-                                <button type={"submit"} ><FaSave/></button>
+                                <button disabled={sending} type="button" onClick={() => handleCancel()}><MdCancel/></button>
+                                <button disabled={sending} type={"submit"} ><FaSave/></button>
                             </>
                             :
                             <button type="button" onClick={() => setEditing(true)}><AiFillEdit/></button>

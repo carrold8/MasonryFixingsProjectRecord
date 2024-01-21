@@ -7,10 +7,13 @@ import { useNavigate } from "react-router-dom";
 export default function CreateProduct({handleAddNew}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [productName, setProductName] = useState('');
     const [price, setPrice] = useState('');
 
     const addNewTaskProduct = () => {
+
+        setSending(true);
         const postJSON = {
             name: productName,
             price: price
@@ -20,10 +23,12 @@ export default function CreateProduct({handleAddNew}){
             .then((response) => {
                 if(response.status === 200){
                     handleAddNew();
+                    setSending(false);
                 }
             })
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -46,7 +51,7 @@ export default function CreateProduct({handleAddNew}){
                 <Form.Control type='number' value={price} onChange={(e) => setPrice(e.target.value)} />
             </td>
             <td>
-                <button onClick={() => addNewTaskProduct()}><MdAddCircle/></button>
+                <button disabled={sending} onClick={() => addNewTaskProduct()}><MdAddCircle/></button>
             </td>
         </tr>
     )

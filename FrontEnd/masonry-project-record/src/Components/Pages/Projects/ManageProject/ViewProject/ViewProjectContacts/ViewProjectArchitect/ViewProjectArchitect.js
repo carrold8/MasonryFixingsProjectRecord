@@ -14,6 +14,7 @@ export default function ViewProjectArchitect(){
 
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [architectData, setArchitectData] = useState();
 
     const [architectCompanyID, setArchitectCompanyID] = useState();
@@ -47,6 +48,7 @@ export default function ViewProjectArchitect(){
 
         e.preventDefault();
         e.stopPropagation();
+        setSending(true);
         const putJSON = {
             architect_company_id: parseInt(architectCompanyID),
             architect_id: parseInt(architectID)
@@ -57,10 +59,12 @@ export default function ViewProjectArchitect(){
             if(response.status === 200){
                 getArchitectData(params.ProjectID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -101,8 +105,8 @@ export default function ViewProjectArchitect(){
                         <div align='end'>
                             {editing ? 
                                 <>
-                                    <button type="button" onClick={() => handleCancel()}><MdCancel/></button>
-                                    <button type={"submit"} ><FaSave/></button>
+                                    <button disabled={sending} type="button" onClick={() => handleCancel()}><MdCancel/></button>
+                                    <button disabled={sending} type={"submit"} ><FaSave/></button>
                                 </>
                                 :
                                 <button type="button" onClick={() => setEditing(true)}><AiFillEdit/></button>

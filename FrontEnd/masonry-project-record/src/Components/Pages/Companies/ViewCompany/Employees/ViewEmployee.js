@@ -10,6 +10,7 @@ export default function ViewEmployee({employeeID}){
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [edit, setEdit] = useState(false);
+    const [sending, setSending] = useState(false);
 
     const [employeeData, setEmployeeData] = useState();
     const [firstName, setFirstName] = useState();
@@ -45,6 +46,7 @@ export default function ViewEmployee({employeeID}){
 
     const updateEmployee = () => {
 
+        setSending(true);
         const putJSON = {
             first_name: firstName,
             last_name: lastName,
@@ -63,10 +65,12 @@ export default function ViewEmployee({employeeID}){
                 if(response.status === 200){
                     setEdit(false);
                     getEmployee(employeeID);
+                    setSending(false);
                 }
             })
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -106,7 +110,8 @@ export default function ViewEmployee({employeeID}){
             <td>{edit ? <input value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</td> 
             {edit ? 
                 <td>
-                    <button onClick={() => updateEmployee()}><FaSave/></button> <button onClick={() => handleCancel()}><MdCancel/></button>
+                    <button disabled={sending} onClick={() => updateEmployee()}><FaSave/></button> 
+                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 :
                 <td><button onClick={() => setEdit(true)}><AiFillEdit/></button></td> 

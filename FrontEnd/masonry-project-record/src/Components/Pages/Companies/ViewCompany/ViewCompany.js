@@ -11,14 +11,12 @@ export default function ViewCompany({companyID}){
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const [sending, setSending] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [edit, setEdit] = useState(false);
 
     const [companyData, setCompanyData] = useState();
     const [companyName, setCompanyName] = useState();
-    // const [companyTypeID, setCompanyTypeID] = useState(1);
-
-    
 
     const getCompanyData = (companyID) => {
         CompanyAPIs.GetCompany(companyID)
@@ -43,7 +41,7 @@ export default function ViewCompany({companyID}){
     }
 
     const updateCompany = () => {
-        
+        setSending(true);
         const putJSON = {
             name: companyName,
             company_type_id: 1,
@@ -55,10 +53,12 @@ export default function ViewCompany({companyID}){
                 if(response.status === 200){
                     setEdit(false);
                     getCompanyData(companyID);
+                    setSending(false);
                 }
             }) 
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -94,8 +94,8 @@ export default function ViewCompany({companyID}){
                     <div>
                         {edit ?
                         <>
-                            <button onClick={() => updateCompany()}><FaSave/></button>
-                            <button onClick={() => handleCancel()}><MdCancel/></button>
+                            <button disabled={sending} onClick={() => updateCompany()}><FaSave/></button>
+                            <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                         </>
                         :
                         <button onClick={() => setEdit(true)}><AiFillEdit/></button>

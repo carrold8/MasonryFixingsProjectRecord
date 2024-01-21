@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function CreateCompany({handleCancel, handleAddNew}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [name, setName] = useState('');
     // const [companyTypeID, setComanyTypeID] = useState(1);
 
@@ -23,6 +24,7 @@ export default function CreateCompany({handleCancel, handleAddNew}){
         e.preventDefault();
         e.stopPropagation();
         
+        setSending(true);
         const addressJSON = {
             line1: line1,
             line2: line2,
@@ -47,10 +49,12 @@ export default function CreateCompany({handleCancel, handleAddNew}){
             console.log(response);
             if(response.status === 200){
                 handleAddNew();
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -70,7 +74,7 @@ export default function CreateCompany({handleCancel, handleAddNew}){
                     <button type="button" onClick={() => handleCancel()}>Cancel</button>
                 </Col>
                 <Col align='end'>
-                    <button type="submit">Create</button>
+                    <button disabled={sending} type="submit">{sending?'Creating...':'Create'}</button>
                 </Col>
             </Row>
             

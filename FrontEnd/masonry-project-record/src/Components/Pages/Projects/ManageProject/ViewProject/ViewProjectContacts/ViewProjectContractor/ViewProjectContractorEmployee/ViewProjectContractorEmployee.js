@@ -11,6 +11,7 @@ export default function ViewProjectContractorEmployee({employeeID}){
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [employeeData, setEmployeeData] = useState();
 
     const [phone, setPhone] = useState();
@@ -39,7 +40,7 @@ export default function ViewProjectContractorEmployee({employeeID}){
     }
 
     const editEmployee = () => {
-
+        setSending(true)
         const putJSON = {
             phone: phone
         }
@@ -49,10 +50,12 @@ export default function ViewProjectContractorEmployee({employeeID}){
             if(response.status === 200){
                 setEditing(false);
                 getEmployee(employeeID);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -81,8 +84,8 @@ export default function ViewProjectContractorEmployee({employeeID}){
                 <div align='end'>
                     {editing ? 
                         <>
-                            <button type="button" onClick={() => handleCancel()}><MdCancel/></button>
-                            <button type={"submit"} onClick={() => editEmployee()}><FaSave/></button>
+                            <button disabled={sending} type="button" onClick={() => handleCancel()}><MdCancel/></button>
+                            <button disabled={sending} type={"submit"} onClick={() => editEmployee()}><FaSave/></button>
                         </>
                         :
                         <button type="button" onClick={() => setEditing(true)}><AiFillEdit/></button>

@@ -13,6 +13,7 @@ export default function ViewCompanyHeadOffice({companyID}){
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
+    const [sending, setSending] = useState(false);
     const [showHeadOffice, setShowHeadOffice] = useState(false);
 
     const [headOfficeData, setHeadOfficeData] = useState();
@@ -71,6 +72,7 @@ export default function ViewCompanyHeadOffice({companyID}){
 
     const editHeadOffice = () => {
 
+        setSending(true);
         const putJSON = {
             phone: phone,
             address_id: headOfficeData.address_id,
@@ -86,10 +88,12 @@ export default function ViewCompanyHeadOffice({companyID}){
             if(response.status === 200){
                 getHeadOffice(companyID);
                 setEditing(false);
+                setSending(false);
             }
         })
         .catch((err) => {
             console.log(err)
+            setSending(false);
             if(err.response.status === 401){
                 if(err.response.data.logout){
                     navigate('/login');
@@ -144,8 +148,8 @@ export default function ViewCompanyHeadOffice({companyID}){
                         <div align='end'>
                         {editing ? 
                             <>
-                                <button onClick={() => editHeadOffice()}><FaSave/></button>
-                                <button onClick={() => handleCancel()}><MdCancel/></button>
+                                <button disabled={sending} onClick={() => editHeadOffice()}><FaSave/></button>
+                                <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
                             </>
                             :
                             <button onClick={() => setEditing(true)}><AiFillEdit/></button>

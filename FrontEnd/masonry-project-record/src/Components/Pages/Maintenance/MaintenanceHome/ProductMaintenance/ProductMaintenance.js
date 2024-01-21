@@ -67,7 +67,7 @@ export default function ProductMaintenance(){
                     </Card.Header>
                     <Card.Body>
 
-                    {addProduct && <CreateProduct handleAddNew={handleAddProduct} />}
+                    
 
                     {productData.length === 0 ?
                     <div>No Users</div>
@@ -81,6 +81,7 @@ export default function ProductMaintenance(){
                             </tr>
                         </thead>
                         <tbody>
+                            {addProduct && <CreateProduct handleAddNew={handleAddProduct} />}
                             {productData.map((product) => {
                                 return(
                                     <ViewProduct key={product.id} product={product} getProductData={getProductData}/>

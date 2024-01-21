@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 export default function AddInduction({projectID, handleAddNew}){
 
     const navigate = useNavigate();
+    const [sending, setSending] = useState(false);
     const [userID, setUserID] = useState('');
     const [date, setDate] = useState('');
 
     const handleSubmit = () => {
         // e.stopPropagation();
         // e.preventDefault();
+        setSending(true);
 
         const postJSON = {
             user_id: userID,
@@ -24,10 +26,12 @@ export default function AddInduction({projectID, handleAddNew}){
             .then((response) => {
                 if(response.status ===200){
                     handleAddNew();
+                    setSending(false)
                 }
             })
             .catch((err) => {
                 console.log(err)
+                setSending(false);
                 if(err.response.status === 401){
                     if(err.response.data.logout){
                         navigate('/login');
@@ -51,7 +55,7 @@ export default function AddInduction({projectID, handleAddNew}){
                     <Form.Control required type='date' value={date} onChange={(e) => setDate(e.target.value)} />
                 </td>
                 <td>
-                    <Button onClick={() => handleSubmit()}>Add</Button>
+                    <Button disabled={sending} onClick={() => handleSubmit()}>{sending?'Adding...':'Add'}</Button>
                 </td>
 
             </tr>
