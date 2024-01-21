@@ -55,6 +55,27 @@ export default function ViewUser({user, getUserData}){
         })
     }
 
+    const handleEdit = () => {
+        if(user.role === 'Management' && role !== 'Management'){
+            if(window.confirm('Are you sure you want to remove ' + user.username + ' from a Management role?')){
+                editUser();
+            }
+            else{
+                handleCancel();
+            }
+        }
+        if(user.role !== 'Management' && role === 'Management'){
+            if(window.confirm('Are you sure you wish to add ' + user.username + ' to a Management role')){
+                editUser();
+            }
+            else{
+                handleCancel();
+            }
+        }
+        else{
+            editUser();
+        }
+    }
 
     const handleCancel = () => {
         setEditing(false);
@@ -88,7 +109,7 @@ export default function ViewUser({user, getUserData}){
                     <button onClick={() => handleCancel()}><MdCancel/></button>
                 </td>
                 <td>
-                    <button onClick={() => editUser()}><FaSave/></button>
+                    <button onClick={() => handleEdit()}><FaSave/></button>
                 </td>
             </tr>
         )

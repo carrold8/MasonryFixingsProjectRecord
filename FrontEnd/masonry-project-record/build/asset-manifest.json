@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.6fc02902.css",
-    "main.js": "/static/js/main.516a2f8f.js",
+    "main.js": "/static/js/main.a217c72e.js",
     "static/js/787.4842887c.chunk.js": "/static/js/787.4842887c.chunk.js",
     "static/media/MF_IconOrange.png": "/static/media/MF_IconOrange.7d11a50bb0313d4d78be.png",
     "index.html": "/index.html",
     "main.6fc02902.css.map": "/static/css/main.6fc02902.css.map",
-    "main.516a2f8f.js.map": "/static/js/main.516a2f8f.js.map",
+    "main.a217c72e.js.map": "/static/js/main.a217c72e.js.map",
     "787.4842887c.chunk.js.map": "/static/js/787.4842887c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6fc02902.css",
-    "static/js/main.516a2f8f.js"
+    "static/js/main.a217c72e.js"
   ]
 }
