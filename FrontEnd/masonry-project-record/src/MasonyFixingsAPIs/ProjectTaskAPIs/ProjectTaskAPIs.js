@@ -2,6 +2,14 @@ import { api } from "../ApiConfig";
 
 const ProjectTaskAPIs = {
 
+    GetUpcomingTasks: () => {
+        const response = api.request({
+            url: 'project-task/upcoming',
+            method: 'GET'
+        })
+        return response;
+    },
+
     GetProjectTask: (projectTaskID) => {
         const response = api.request({
             url: 'project-task/' + projectTaskID,

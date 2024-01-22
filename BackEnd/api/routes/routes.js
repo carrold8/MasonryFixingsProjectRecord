@@ -51,27 +51,27 @@ module.exports = function(app) {
 
   //--------------- REDIS CLIENT CONFIGURATION ---------------------
 
-  const redisClient = redis.createClient();
-  redisClient.connect().catch(console.error);
+  // const redisClient = redis.createClient();
+  // redisClient.connect().catch(console.error);
 
-  redisClient.on('error', function (err) {
-    console.log('Could not establish a connection with redis. ' + err);
-  });
-  redisClient.on('connect', function (err) {
-      console.log('Connected to redis successfully');
-  });
+  // redisClient.on('error', function (err) {
+  //   console.log('Could not establish a connection with redis. ' + err);
+  // });
+  // redisClient.on('connect', function (err) {
+  //     console.log('Connected to redis successfully');
+  // });
   
-  const redisStore = new RedisStore({
-    client: redisClient,
-    prefix: "myapp:",
-  })
+  // const redisStore = new RedisStore({
+  //   client: redisClient,
+  //   prefix: "myapp:",
+  // })
 
   //----------------------------------------------------------
 
   app.use(
     session({
         secret: 'mysecretkey',
-        store: redisStore,
+        // store: redisStore,
         credentials: true,
         name: 'sessionid',
         rolling: true,

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {Card, Row, Col, Button, Table} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import { MdAddCircle } from "react-icons/md";
+import { MdAddCircle, MdDelete } from "react-icons/md";
 import ProjectAPIs from "../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import './ProjectsTable.css';
+import ApiResponseHandler from "../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 function ProjectsTable(){
 
     const [projectList, setProjectList] = useState([]);
 
     const navigate = useNavigate();
-    const headerColumns = ["CIS ID", "Title"];
+    const headerColumns = ["CIS ID", "Title", 'Delete', 'View'];
     const [loading, setLoading] = useState(true);
+    const [sending, setSending] = useState(false);
 
     const getProjectList = () => {
        
@@ -21,34 +25,22 @@ function ProjectsTable(){
         })
         .catch((err) => {
             console.log(err)
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 
     const deleteProject = (projectID) => {
+        setSending(true);
         ProjectAPIs.DeleteProject(projectID)
         .then((response) => {
             if(response.status === 200){
                 getProjectList();
+                setSending(false);
             }
         })
         .catch((err) => {
-            console.log(err)
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
         })
     }
     const handleClick = (projectID) => {
@@ -78,8 +70,8 @@ function ProjectsTable(){
                 <tr key={project.id}>
                     <td>{project.cis_id}</td>
                     <td>{project.name}</td>
-                    <td><Button size="sm" variant="danger" onClick={() => handleDelete(project.id)}>Delete</Button></td>
-                    <td><Button size="sm" onClick={() => handleClick(project.id)}>View</Button></td>
+                    <td><button disabled={sending} onClick={() => handleDelete(project.id)}><MdDelete/></button></td>
+                    <td><button disabled={sending} onClick={() => handleClick(project.id)}><FaArrowAltCircleRight/></button></td>
                 </tr>
             );
 
@@ -98,7 +90,7 @@ function ProjectsTable(){
     }
     else{
         return(
-            <Card >
+            <Card className="projects-table">
                 <Card.Header>
                     <Row>
                         <Col sm={10}>

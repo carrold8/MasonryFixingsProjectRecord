@@ -4,6 +4,7 @@ import './Home.css';
 import { TiGroup } from "react-icons/ti";
 import { MdConstruction, MdSettings } from "react-icons/md";
 import UserTypeAPIs from "../../../MasonyFixingsAPIs/UserTypeAPIs/UserTypeAPIs";
+import ViewUpcomingTasks from "./ViewUpcomingTasks/ViewUpcomingTasks";
 
 
 function Home(){
@@ -62,18 +63,8 @@ function Home(){
                 </div>
 
                 <div className="my-active-projects-container">
-                    <h4>My active projects.</h4> 
-                    <div>This section is being developed and will contain a list of all projects that you have entered tasks in to.</div>
-                    <div>These projects will be presented in order of which task is has the closest future date to the current date</div>
-                    {/* <hr/>
-                    <h4>Other notes:</h4>
-                    <div>This project is still in development and contains no real data. All data found here has been created off the cuff.</div>
-                    <div>Things to note:</div>
-                    <ul>
-                        <li>Logins and user types have not yet been created</li>
-                        <li>A managment dashboard option will appear when a manager logs in to the app in the future.</li>
-                        <li>The maintenance option will not appear for people without permission to edit key features of this web app.</li>
-                    </ul> */}
+                    <h4>Upcoming Tasks:</h4> 
+                    <ViewUpcomingTasks/>
                 </div>
 
             </div>

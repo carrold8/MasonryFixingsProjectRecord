@@ -5,7 +5,18 @@ const { Task } = require('../models/task.model');
 const { Company } = require('../models/company.model');
 const { TaskType } = require('../models/tasktype.model');
 const { Product } = require('../models/product.model');
+const { Op } = require('sequelize');
 const router = express.Router();
+
+
+router.get('/upcoming', function(request, response) {
+    ProjectTask.findAll({where: 
+        {user_id: request.session.user.id, start_date: {[Op.gte]: Date()} },
+    })
+    .then(function(upcomingTasks){
+        response.json(upcomingTasks);
+    })
+})
 
 router.get('/:projectTaskID', function(request, response) {
     ProjectTask.findOne({ 
