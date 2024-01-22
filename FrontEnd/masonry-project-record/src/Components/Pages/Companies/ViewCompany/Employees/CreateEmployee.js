@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CompanyAPIs from "../../../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 function CreateEmployee({companyID, handleAddNew}){
     
@@ -32,20 +33,10 @@ function CreateEmployee({companyID, handleAddNew}){
                 }
             })
             .catch((err) => {
-                console.log(err)
                 setSending(false);
-                if(err.response.status === 401){
-                    if(err.response.data.logout){
-                        navigate('/login');
-                    }
-                    else{
-                        window.alert(err.response.data.message)
-                    }
-                }
+                ApiResponseHandler(err.response, navigate)
             })     
         }
-        
-
     }
     
 
@@ -53,7 +44,6 @@ function CreateEmployee({companyID, handleAddNew}){
 
     return(
         <tr>
-        
             <td><input onChange={(e) => setFirstName(e.target.value)} required value={firstName} /></td>
             <td><input onChange={(e) => setLastName(e.target.value)} required value={lastName} /></td>
             <td><input onChange={(e) => setPhone(e.target.value)} required value={phone} /></td>

@@ -4,10 +4,11 @@ import CompanyAPIs from "../../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
 import ViewCompanyHeadOffice from "./ViewCompanyHeadOffice/ViewCompanyHeadOffice";
 import { FaChevronDown, FaChevronUp, FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
-export default function ViewCompany({companyID}){
+export default function ViewCompany({companyID, getCompanies}){
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -28,15 +29,7 @@ export default function ViewCompany({companyID}){
             }
         })
         .catch((err) => {
-            console.log(err)
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 
@@ -57,25 +50,36 @@ export default function ViewCompany({companyID}){
                 }
             }) 
             .catch((err) => {
-                console.log(err)
                 setSending(false);
-                if(err.response.status === 401){
-                    if(err.response.data.logout){
-                        navigate('/login');
-                    }
-                    else{
-                        window.alert(err.response.data.message)
-                    }
-                }
+                ApiResponseHandler(err.response, navigate);
             })
         }
-        
+    }
 
+    const deleteCompany = () => {
+        setSending(true);
+        CompanyAPIs.DeleteCompany(companyID)
+        .then((response) => {
+            if(response.status === 200){
+                getCompanies();
+                setSending(false);
+            }
+        })
+        .catch((err) => {
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
+        })
     }
 
     const handleCancel = () => {
         setCompanyName(companyData.name);
         setEdit(false);
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you want to delete ' + companyData.name + 'from system?')){
+            deleteCompany();
+        }
     }
 
     useEffect(() => {
@@ -91,17 +95,22 @@ export default function ViewCompany({companyID}){
                 
                 <div className="component-card-title">
                     <h2>{edit ? <input value={companyName} onChange={(e) => setCompanyName(e.target.value)} /> : companyName}</h2>
+                    
                     <div>
-                        {edit ?
-                        <>
+                        {edit ? 
                             <button disabled={sending} onClick={() => updateCompany()}><FaSave/></button>
-                            <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
-                        </>
-                        :
-                        <button onClick={() => setEdit(true)}><AiFillEdit/></button>
+                            :
+                            <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button>
                         }
-                        
                     </div>
+                    <div>
+                    {edit ?
+                        <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
+                        :
+                        <button disabled={sending} onClick={() => setEdit(true)}><AiFillEdit/></button>
+                    
+                    }
+                    </div>   
                     <div>{showDetails ? <FaChevronUp onClick={() => setShowDetails(!showDetails)} /> : <FaChevronDown onClick={() => setShowDetails(!showDetails)} />}</div>
                 </div>
                 

@@ -1,6 +1,7 @@
 
 export default function ApiResponseHandler(response, navigate){
 
+    console.log(response)
     if(response.status === 401){
         if(response.data.logout){
             navigate('/login');

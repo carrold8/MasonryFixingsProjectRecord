@@ -54,6 +54,7 @@ export default function ViewProjectArchitect(){
             architect_id: parseInt(architectID)
             // phone: phone
         }
+        console.log(putJSON);
         ProjectAPIs.PutProjectArchitect(params.ProjectID, putJSON)
         .then((response) => {
             if(response.status === 200){

@@ -16,6 +16,13 @@ const EmployeeAPIs = {
             data: putJSON
         })
         return response;
+    },
+    DeleteEmployee: (employeeID) => {
+        const response = api.request({
+            url: 'employee/' + employeeID,
+            method: 'DELETE'
+        })
+        return response;
     }
 }
 export default EmployeeAPIs;

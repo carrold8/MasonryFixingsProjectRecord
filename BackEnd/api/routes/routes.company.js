@@ -8,12 +8,10 @@ const { Employee } = require('../models/employee.model');
 const { EmployeeType } = require('../models/employeetype.model');
 const { CompanyCompanyType } = require('../models/companycompanytype.model');
 const { CompanyType } = require('../models/companytype.model');
+const { managementAuth } = require('./routes.sessionauth');
 
 router.get('/', function(request, response) {
-    Company.findAll({
-        // include: {all: true, nested: true},
-        // attributes: {exclude: ['company_type_id', 'head_office_id']}
-    })
+    Company.findAll()
     .then(function(address) {
       response.json(address);
     })
@@ -105,6 +103,30 @@ router.get('/', function(request, response) {
         response.json(company);
       })
    });
+
+   router.delete('/:id', managementAuth, function(request, response) {
+
+    Company.findOne({where: {id: request.params.id}})
+    .then(function(getCompany){
+      HeadOffice.findOne({where: {id: getCompany.head_office_id}})
+      .then(function(headOffice) {
+        Company.destroy({where: {id: request.params.id}})
+        .then(function() {
+          HeadOffice.destroy({where: {id: headOffice.id}})
+          .then(function(){
+            Address.destroy({where: {id: headOffice.address_id}})
+            .then(function(address){
+              response.json(address);
+            })
+          })
+        })
+        .catch((err) => {
+          response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+        })
+      })
+    })
+    
+ });
 
 
    router.get('/:id/employees', function(request, response) {

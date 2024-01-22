@@ -136,12 +136,6 @@ export default function ViewProjectEngineer(){
                             required
                             size='sm'
                         />
-                        {/* <div>
-                            {editing ?
-                            <Form.Control value={phone} onChange={(e) => setPhone(e.target.value)} />
-                            :  
-                            phone}
-                        </div> */}
                     </div>
                 </div>
 

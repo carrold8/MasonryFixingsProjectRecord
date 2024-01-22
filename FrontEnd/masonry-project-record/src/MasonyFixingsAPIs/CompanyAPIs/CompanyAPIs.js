@@ -37,6 +37,14 @@ const CompanyAPIs = {
         return response;
     },
 
+    DeleteCompany: (companyID) => {
+        const response = api.request({
+            url: 'company/' + companyID,
+            method: 'DELETE'
+        })
+        return response;
+    },
+
     GetCompanyHeadOffice: (companyID) => {
         const response =  api.request({
             url: 'company/' + companyID + '/head-office',

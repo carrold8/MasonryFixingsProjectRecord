@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import EmployeeAPIs from "../../../../../MasonyFixingsAPIs/EmployeeAPIs/EmployeeAPIs";
 import {  FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
 
-export default function ViewEmployee({employeeID}){
+export default function ViewEmployee({employeeID, companyID, getEmployees}){
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -32,15 +33,7 @@ export default function ViewEmployee({employeeID}){
             }
         })
         .catch((err) => {
-            console.log(err)
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 
@@ -64,32 +57,46 @@ export default function ViewEmployee({employeeID}){
             .then((response) => {
                 if(response.status === 200){
                     setEdit(false);
-                    getEmployee(employeeID);
+                    getEmployees(companyID);
                     setSending(false);
                 }
             })
             .catch((err) => {
-                console.log(err)
                 setSending(false);
-                if(err.response.status === 401){
-                    if(err.response.data.logout){
-                        navigate('/login');
-                    }
-                    else{
-                        window.alert(err.response.data.message)
-                    }
-                }
+                ApiResponseHandler(err.response, navigate);
             })
         }
 
     }
 
+    const deleteEmployee = () => {
+        setSending(true);
+        EmployeeAPIs.DeleteEmployee(employeeID)
+        .then((response) => {
+            if(response.status === 200){
+                getEmployees(companyID);
+                setSending(false);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            setSending(false);
+            ApiResponseHandler(err.response, navigate);
+        })
+    }
+
     const handleCancel = () => {
         setFirstName(employeeData.first_name);
-        setLastName(employeeData.lastName);
+        setLastName(employeeData.last_name);
         setPhone(employeeData.phone);
         setEmployeeTypeID(employeeData.employee_type_id);
         setEdit(false);
+    }
+
+    const handleDelete = () => {
+        if(window.confirm('Are you sure you want to permanently delete ?')){
+            deleteEmployee();
+        }
     }
 
     useEffect(() => {
@@ -103,18 +110,28 @@ export default function ViewEmployee({employeeID}){
     return(
         
         <tr>
-        
-       
             <td>{edit ? <input value={firstName} onChange={(e) => setFirstName(e.target.value)} /> : firstName} </td> 
             <td>{edit ? <input value={lastName} onChange={(e) => setLastName(e.target.value)} /> : lastName} </td> 
             <td>{edit ? <input value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</td> 
             {edit ? 
-                <td>
-                    <button disabled={sending} onClick={() => updateEmployee()}><FaSave/></button> 
-                    <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
-                </td>
+                <>
+                    <td>
+                        <button disabled={sending} onClick={() => updateEmployee()}><FaSave/></button> 
+                    </td>
+                    <td>
+                        <button disabled={sending} onClick={() => handleCancel()}><MdCancel/></button>
+                    </td>
+                </>
                 :
-                <td><button onClick={() => setEdit(true)}><AiFillEdit/></button></td> 
+                <>
+                    <td>
+                        <button disabled={sending} onClick={() => handleDelete()}><MdDelete/></button> 
+                    </td>
+                    <td>
+                        <button disabled={sending} onClick={() => setEdit(true)}><AiFillEdit/></button>
+                    </td>
+                </>
+                 
             }
     
         </tr>

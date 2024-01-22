@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function ViewEmployees({CompanyID}){
 
     const navigate = useNavigate();
-    const ColumnHeaders = ['First Name', 'Last Name', 'Phone'];
+    const ColumnHeaders = ['First Name', 'Last Name', 'Phone', '', ''];
     const [employeeData, setEmployeeData] = useState([]);
     const [showEmployees, setShowEmployees] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
@@ -80,7 +80,7 @@ export default function ViewEmployees({CompanyID}){
                             {employeeData.map((employee) => {
                                 
                                 return (
-                                    <ViewEmployee key={employee.id} employeeID={employee.id} />      
+                                    <ViewEmployee key={employee.id} companyID={CompanyID} getEmployees={getCompanyEmployees} employeeID={employee.id} />      
                                 )
                             })}
                         </tbody>

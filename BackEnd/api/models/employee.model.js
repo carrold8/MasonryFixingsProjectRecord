@@ -1,5 +1,6 @@
 const database = require('../../config/database').database;
 const {  DataTypes } = require('sequelize');
+const { Company } = require('./company.model');
 
 const EmployeeType = require('./employeetype.model').EmployeeType;
 
@@ -32,5 +33,6 @@ var Employee = database.define('employee', {
 }, {freezeTableName: true, timestamps: false})
 
 Employee.belongsTo(EmployeeType, {foreignKey: 'employee_type_id'});
+Employee.belongsTo(Company, {foreignKey: 'company_id'});
 
 module.exports.Employee = Employee;

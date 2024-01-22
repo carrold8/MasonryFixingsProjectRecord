@@ -29,4 +29,15 @@ router.put('/:employeeID', function(request, response){
 })
 });
 
+router.delete('/:employeeID', function(request, response){
+
+    Employee.destroy({where: { id: request.params.employeeID}})
+    .then(function(employee) {
+        response.json(employee);
+    })
+    .catch((err) => {
+        response.status(403).json({message: "This resource cannot be deleted as it is being referenced elsewhere in the system. If you wish to delete this resource you need to remove all references to it."});
+    })
+});
+
 module.exports = router;

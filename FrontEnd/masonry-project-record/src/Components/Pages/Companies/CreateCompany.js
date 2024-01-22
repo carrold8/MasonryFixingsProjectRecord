@@ -3,6 +3,7 @@ import DropDown from "../../DropDown/DropDown";
 import { Form, Row, Col } from "react-bootstrap";
 import CompanyAPIs from "../../../MasonyFixingsAPIs/CompanyAPIs/CompanyAPIs";
 import { useNavigate } from "react-router-dom";
+import ApiResponseHandler from "../../../MasonyFixingsAPIs/ApiResponseHandler";
 
 export default function CreateCompany({handleCancel, handleAddNew}){
 
@@ -46,7 +47,6 @@ export default function CreateCompany({handleCancel, handleAddNew}){
 
         CompanyAPIs.PostCompany(postJSON)
         .then((response) => {
-            console.log(response);
             if(response.status === 200){
                 handleAddNew();
                 setSending(false);
@@ -55,14 +55,7 @@ export default function CreateCompany({handleCancel, handleAddNew}){
         .catch((err) => {
             console.log(err)
             setSending(false);
-            if(err.response.status === 401){
-                if(err.response.data.logout){
-                    navigate('/login');
-                }
-                else{
-                    window.alert(err.response.data.message)
-                }
-            }
+            ApiResponseHandler(err.response, navigate);
         })
     }
 

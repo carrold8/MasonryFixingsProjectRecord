@@ -61,7 +61,7 @@ export default function Companies(){
                 <button onClick={() => setAddNew(true)}>Add New</button>
                 {CompaniesData.map((company) => {
                     return(
-                        <ViewCompany key={company.id} companyID={company.id}/>
+                        <ViewCompany key={company.id} getCompanies={getAllCompanies} companyID={company.id}/>
                     )
                 })}
             </div>

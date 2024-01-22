@@ -238,7 +238,7 @@ router.get('/', function(request, response) {
     Project.update(
         { 
             architect_company_id: request.body.architect_company_id,
-            architect: request.body.architect,
+            architect_id: request.body.architect_id,
         },
         {where: {id: request.params.projectID}
     })
