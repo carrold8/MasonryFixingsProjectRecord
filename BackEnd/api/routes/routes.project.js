@@ -301,6 +301,35 @@ router.post('/', function(request, response) {
 
 });
 
+router.get('/:projectID/address', function(request, response) {
+    Project.findOne({ 
+        where: {id: request.params.projectID},
+    })
+    .then(function(project) {
+        Address.findOne({where: {id: project.address_id}})
+        .then(function(address){
+            response.json(address);
+        })
+    })
+})
+
+router.put('/address/:addressID', function(request, response) {
+    
+    Address.update(
+        {
+            line1: request.body.line1,
+            line2: request.body.line2,
+            city: request.body.city,
+            county_id: request.body.county_id,
+            country_id: request.body.country_id,
+        },
+        {where: {id: request.params.addressID}
+    })
+    .then(function(address) {
+        response.json(address);
+    })
+})
+
 router.get('/:projectID/tasks', function(request, response) {
     ProjectTask.findAll({ 
         where: {project_id: request.params.projectID},

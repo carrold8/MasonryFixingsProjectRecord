@@ -10,6 +10,7 @@ import ViewProjectTasks from "./ViewProjectTasks/ViewProjectTasks";
 import { useNavigate, useParams } from "react-router-dom";
 import ProjectAPIs from "../../../../../MasonyFixingsAPIs/ProjectAPIs/ProjectAPIs";
 import ApiResponseHandler from "../../../../../MasonyFixingsAPIs/ApiResponseHandler";
+import ViewProjectAddress from "./ViewProjectAddress/ViewProjectAddress";
 
 export default function ViewProject(){
     
@@ -48,6 +49,8 @@ export default function ViewProject(){
             <div className="project-page">
 
                 <ViewProjectInfo />
+
+                <ViewProjectAddress/>
 
                 <ViewProjectTasks />
 

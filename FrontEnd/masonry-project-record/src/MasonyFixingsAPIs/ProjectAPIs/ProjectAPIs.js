@@ -50,6 +50,22 @@ const ProjectAPIs = {
         return response;
     },
 
+    GetProjectAddress: (projectID) => {
+        const response = api.request({
+            url: 'project/' + projectID + '/address',
+            method: 'GET'
+        })
+        return response;
+    },
+
+    PutProjectAddress: (addressID, putJSON) => {
+        const response = api.request({
+            url: 'project/address/' + addressID,
+            method: 'PUT',
+            data: putJSON
+        })
+        return response;
+    },
     GetProjectMaterials: (projectID) => {
         const response = api.request({
             url: 'project/' + projectID + '/materials',
